@@ -5,22 +5,40 @@
 //  Created by Wedad Almehmadi on 15/05/2023.
 //
 
-import Foundation
-import Firebase
+import SwiftUI
+import FirebaseAuth
+import FirebaseFirestore
+import CryptoKit
 
 class ViewModel: ObservableObject {
     
     @Published var list = [Users]()
     
+    @State var users : Users
+    
+    init(){
+        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
+        self._users = .init(initialValue: user)
+        
+    }
     //----------------------------------
     
     func updateData(UsersUpdate: Users) {
         
         // Get a reference to the database
         let db = Firestore.firestore()
-        
+
         // Set the data to update
-        db.collection("Users").document(UsersUpdate.id).setData(["name":UsersUpdate.name], merge: true) { error in
+        db.collection("Users").document(users.id).setData([
+                                                     "name":UsersUpdate.name ?? "",
+                                                     "phoneNumber":UsersUpdate.phoneNumber ?? "",
+//                                                   "favorite":UsersUpdate.favorite!,
+                                                     "desinger":UsersUpdate.desinger ?? "",
+                                                     "brief":UsersUpdate.brief ?? "",
+                                                     "field":UsersUpdate.field ?? "",
+                                                     "experiance":UsersUpdate.experiance ?? "",
+                                                     "rate_number":UsersUpdate.rate_number ?? "",
+                                                     "rate_value":UsersUpdate.rate_value ?? ""], merge: true) { error in
             
             // Check for errors
             if error == nil {
@@ -38,7 +56,7 @@ class ViewModel: ObservableObject {
         let db = Firestore.firestore()
         
         // Specify the document to delete
-        db.collection("Users").document(UsersDelete.id).delete { error in
+        db.collection("Users").document(users.id).delete { error in
             
             // Check for errors
             if error == nil {
@@ -63,13 +81,17 @@ class ViewModel: ObservableObject {
     
     //----------------------------------
     
-    func addData(name: String, email: String) {
+    func addData(id: String,
+                 email: String?,
+                 name : String?) {
         
         // Get a reference to the database
         let db = Firestore.firestore()
         
         // Add a document to a collection
-        db.collection("Users").addDocument(data: ["name":name, "email":email]) { error in
+        db.collection("Users").document(users.id).setData([ "id": users.id,
+                                                                  "email": email ?? "",
+                                                                  "name":name ?? ""]) { error in
             
             // Check for errors
             if error == nil {
@@ -111,7 +133,7 @@ class ViewModel: ObservableObject {
                                          name: d["name"] as? String ?? "",
                                          email: d["email"] as? String ?? "",
                                          phoneNumber: d["phoneNumber"] as? String ?? "",
-                                         favorite: d["favorite"] as? [String] ?? [""],
+//                                         favorite: d["favorite"] as? [String] ?? [""],
                                          desinger: d["desinger"] as? Bool ?? false,
                                          brief: d["brief"] as? String ?? "",
                                          field: d["field"] as? String ?? "",
@@ -128,6 +150,30 @@ class ViewModel: ObservableObject {
                 // Handle the error
             }
         }
+    }
+    
+    func signOut() {
+        do{
+            try Auth.auth().signOut();
+        } catch let logoutError {
+            print(logoutError)
+        }
+        
+        let user1 = Auth.auth().currentUser;
+        
+        if ((user1) != nil) {
+            // User is signed in.
+            print("User is signed in.")
+        } else {
+            // No user is signed in.
+            print("\(String(describing: Auth.auth().currentUser?.uid))")
+            print("No user is signed in.")
+            let domain = Bundle.main.bundleIdentifier!
+            UserDefaults.standard.removePersistentDomain(forName: domain)
+            UserDefaults.standard.synchronize()
+            print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
+        }
+        
     }
     
 }
