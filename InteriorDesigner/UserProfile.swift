@@ -123,7 +123,7 @@ struct UserProfile: View {
                             .bold()
                             .foregroundColor(.white)
                             .background(RoundedRectangle(cornerRadius: 8)
-                            .fill(Color("Pr"))
+                            .fill(Color("Primary"))
                             .frame(width: 330, height: 48.58)
                                 )
                             .padding(.top, 470)

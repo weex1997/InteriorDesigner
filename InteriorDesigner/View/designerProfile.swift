@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Home: View {
+struct designerProfile: View {
     
     var size: CGSize
     var safeArea: EdgeInsets
@@ -51,7 +51,7 @@ struct Home: View {
             
             ZStack {
                 Rectangle()
-                    .fill (Color("Pr").gradient)
+                    .fill (Color("Primary").gradient)
                 
                 
                 VStack(spacing: 15) {
@@ -65,11 +65,11 @@ struct Home: View {
                             .clipShape (Circle ())
                     }
                     .frame (width: headerHeight * 0.5, height: headerHeight * 0.5)
-                    Text ("Prifile Designer")
+                    Text ("Best Designer")
                         .font (.title)
                         .fontWeight (.bold)
                         .foregroundColor (.white)
-                    Text("Modren , Classic")
+                    Text("Modern , Classic")
                         .foregroundColor (.white)
                     HStack{
                         Image(systemName: "star.fill")

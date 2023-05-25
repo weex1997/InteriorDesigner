@@ -16,7 +16,7 @@ struct info: View {
             VStack{
                 Text("About Me")
                     .font(.title)
-                    .foregroundColor(Color("Pr"))
+                    .foregroundColor(Color("Primary"))
                     .bold()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(5)
@@ -31,7 +31,7 @@ struct info: View {
                 Text("Intereste")
                     .font(.title)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(Color("Pr"))
+                    .foregroundColor(Color("Primary"))
                     .bold()
                     .padding(5)
                 Text("classic, modern, new classic")
@@ -43,7 +43,7 @@ struct info: View {
                 Text("field")
                     .font(.title)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(Color("Pr"))
+                    .foregroundColor(Color("Primary"))
                     .bold()
                     .padding(5)
                 HStack{
@@ -51,7 +51,7 @@ struct info: View {
                         
                         
                         Capsule()
-                            .fill(Color("Pr"))
+                            .fill(Color("Primary"))
                             .frame(width: 80, height: 28)
                         Text("Home")
                             
@@ -60,7 +60,7 @@ struct info: View {
                     
                     ZStack{
                         Capsule()
-                            .fill(Color("Pr"))
+                            .fill(Color("Primary"))
                             .frame(width: 80, height: 28)
                         Text("Coffee")
                          
@@ -70,7 +70,7 @@ struct info: View {
                     Text("Protofolio")
                         .font(.title)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .foregroundColor(Color("Pr"))
+                        .foregroundColor(Color("Primary"))
                         .bold()
                         .padding(5)
                         .padding(.trailing,00)
@@ -113,7 +113,7 @@ struct info: View {
                 }
                 .background(RoundedRectangle(cornerRadius: 8)
                             
-                    .fill(Color("Pr"))
+                    .fill(Color("Primary"))
                     .frame(width: 330, height: 48.58))
                 
               Spacer()

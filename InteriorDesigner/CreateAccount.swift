@@ -45,10 +45,10 @@ struct CreateAccount: View {
                             Toggle(isOn: $Designer) {
                                 
                                     Text("Are you Designer ?")
-                                    .foregroundColor(Color("Pr"))
+                                    .foregroundColor(Color("Primary"))
                                 
                             }
-                            .tint(Color("Pr"))
+                            .tint(Color("Primary"))
                             .padding()
                             
                            
@@ -62,7 +62,7 @@ struct CreateAccount: View {
                             .foregroundColor(.white)
                     }
                     .background(RoundedRectangle(cornerRadius: 8)
-                            .fill(Color("Pr"))
+                            .fill(Color("Primary"))
                             .frame(width: 330, height: 48.58)
                                 )
                             .padding(.top, 70)

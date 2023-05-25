@@ -77,7 +77,7 @@ struct CreateAccountD: View {
                                 .bold()
                                 .foregroundColor(.white)
                                 .background(RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color("Pr"))
+                                    .fill(Color("Primary"))
                                     .frame(width: 330, height: 48.58)
                                 )
                         })
@@ -95,7 +95,7 @@ struct CreateAccountD: View {
             .navigationBarItems(
                 trailing: NavigationLink(destination:ContentView()) {
                     Text("Skip")
-                        .foregroundColor(Color("Pr"))
+                        .foregroundColor(Color("Primary"))
                 })
             
             

@@ -17,7 +17,7 @@
 //                    VStack{
 //                        Text("About Me")
 //                            .font(.title)
-//                            .foregroundColor(Color("Pr"))
+//                            .foregroundColor(Color("Primary"))
 //                            .bold()
 //                            .frame(maxWidth: .infinity, alignment: .leading)
 //                        
@@ -29,7 +29,7 @@
 //                        Text("Intereste")
 //                            .font(.title)
 //                            .frame(maxWidth: .infinity, alignment: .leading)
-//                            .foregroundColor(Color("Pr"))
+//                            .foregroundColor(Color("Primary"))
 //                            .bold()
 //                        Text("classic, modern, new classic")
 //                            .frame(maxWidth: .infinity, alignment: .leading)
@@ -39,14 +39,14 @@
 //                        Text("field")
 //                            .font(.title)
 //                            .frame(maxWidth: .infinity, alignment: .leading)
-//                            .foregroundColor(Color("Pr"))
+//                            .foregroundColor(Color("Primary"))
 //                            .bold()
 //                        HStack{
 //                            ZStack{
 //                                
 //                                
 //                                Capsule()
-//                                    .fill(Color("Pr"))
+//                                    .fill(Color("Primary"))
 //                                    .frame(width: 80, height: 28)
 //                                Text("Home")
 //                                
@@ -54,7 +54,7 @@
 //                            
 //                            ZStack{
 //                                Capsule()
-//                                    .fill(Color("Pr"))
+//                                    .fill(Color("Primary"))
 //                                    .frame(width: 80, height: 28)
 //                                Text("Coffee")
 //                                
@@ -64,7 +64,7 @@
 //                            Text("Protofolio")
 //                                .font(.title)
 //                                .frame(maxWidth: .infinity, alignment: .leading)
-//                                .foregroundColor(Color("Pr"))
+//                                .foregroundColor(Color("Primary"))
 //                                .bold()
 //                           
 //                            ScrollView(.horizontal) {
@@ -124,7 +124,7 @@
 //                            Image(systemName: "pencil.circle.fill")
 //                        })
 //                    .toolbarColorScheme(.dark, for: .navigationBar)
-//                    .toolbarBackground( Color("Pr"), for: .navigationBar)
+//                    .toolbarBackground( Color("Primary"), for: .navigationBar)
 //                    .toolbarBackground(.visible, for: .navigationBar)
 //                }
 //            }

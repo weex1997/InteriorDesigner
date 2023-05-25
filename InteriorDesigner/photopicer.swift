@@ -24,7 +24,7 @@ struct photopicer: View {
                 photoLibrary: .shared()) {
                     
                     Image(systemName: "camera.fill")
-                        .foregroundColor(Color("Pr"))       
+                        .foregroundColor(Color("Primary"))       
                     
                 }
                 .onChange(of: selectedItem) { newItem in
