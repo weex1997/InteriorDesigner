@@ -6,8 +6,13 @@
 //
 
 import SwiftUI
+import PhotosUI
+
 
 struct info: View {
+    @State private var selectedItem: PhotosPickerItem? = nil
+    @State private var selectedImageData: Data? = nil
+    
     var body: some View {
         //Spacer()
         
@@ -105,23 +110,67 @@ struct info: View {
                     }
                 }
             }
-                Button(action: { }) {
-                    Text("Upload")
-                        .bold()
-                        .foregroundColor(.white)
-                        .frame(width: 150,height: 50)
-                }
-                .background(RoundedRectangle(cornerRadius: 8)
-                            
-                    .fill(Color("Primary"))
-                    .frame(width: 330, height: 48.58))
+
+                PhotosPicker(
+                    selection: $selectedItem,
+                    matching: .images,
+                    photoLibrary: .shared()) {
+                        Button(action: { }) {
+                            Text("Upload")
+                                .bold()
+                                .foregroundColor(.white)
+                                .frame(width: 150,height: 50)
+                        }
+                        .background(RoundedRectangle(cornerRadius: 8)
+                            .fill(Color("Primary"))
+                            .frame(width: 330, height: 48.58))
+                        
+                      Spacer()
+                    }
+                    .padding(.leading, 90.0)
+                    .frame(width: 330, height: 48.58)
+                    .onChange(of: selectedItem) { newItem in
+                        Task {
+                            // Retrieve selected asset in the form of Data
+                            if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                selectedImageData = data
+                            }
+                        }
+                    }
                 
-              Spacer()
-         //   VStack{
-                Text(" * JPEG, PNG,  Pdf ( Max size : 5M )")
-                    .padding(.bottom,20)
-                    .padding(.trailing,60)
+                if let selectedImageData,
+                   let uiImage = UIImage(data: selectedImageData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 120.0, height:120)
+                        .clipShape(Circle())
+                        .frame(width: 400, height: 200)
+                    //                    .padding(.top,-10)
+                    //                    .padding(.bottom,-10)
+                }
+            
+//                Button(action: { }) {
+//                    Text("Upload")
+//                        .bold()
+//                        .foregroundColor(.white)
+//                        .frame(width: 150,height: 50)
+//                }
+//                .background(RoundedRectangle(cornerRadius: 8)
+//
+//                    .fill(Color("Primary"))
+//                    .frame(width: 330, height: 48.58))
+//
+//              Spacer()
+//         //   VStack{
+//                Text(" * JPEG, PNG,  Pdf ( Max size : 5M )")
+//                    .padding(.bottom,20)
+//                    .padding(.trailing,60)
           //  }
+            Text(" * JPEG, PNG ( Max size : 5M )")
+                .padding(.bottom,20)
+                .padding(.trailing,60)
+            
             Button(action: { }) {
                 Text("Log out")
                     .bold()
