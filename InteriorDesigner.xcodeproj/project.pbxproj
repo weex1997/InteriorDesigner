@@ -15,6 +15,9 @@
 		26DD7C652A1CBFBD0030A521 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DD7C642A1CBFBD0030A521 /* Home.swift */; };
 		26DD7C682A1DEC980030A521 /* ScrollDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DD7C672A1DEC980030A521 /* ScrollDetector.swift */; };
 		26DD7C6A2A1DF6B80030A521 /* info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DD7C692A1DF6B80030A521 /* info.swift */; };
+		4E6C2B7A2A16594300D93DA6 /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6C2B782A16594300D93DA6 /* OnBoarding.swift */; };
+		4E6C2B7B2A16594300D93DA6 /* OffsetPageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6C2B792A16594300D93DA6 /* OffsetPageTabView.swift */; };
+		4E6C2B7E2A16596900D93DA6 /* BoardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6C2B7D2A16596900D93DA6 /* BoardingScreen.swift */; };
 		FCF59BB72A10DB0A00543D51 /* InteriorDesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */; };
 		FCF59BB92A10DB0A00543D51 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF59BB82A10DB0A00543D51 /* ContentView.swift */; };
 		FCF59BBB2A10DB0B00543D51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCF59BBA2A10DB0B00543D51 /* Assets.xcassets */; };
@@ -30,6 +33,9 @@
 		26DD7C642A1CBFBD0030A521 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		26DD7C672A1DEC980030A521 /* ScrollDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDetector.swift; sourceTree = "<group>"; };
 		26DD7C692A1DF6B80030A521 /* info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = info.swift; sourceTree = "<group>"; };
+		4E6C2B782A16594300D93DA6 /* OnBoarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
+		4E6C2B792A16594300D93DA6 /* OffsetPageTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetPageTabView.swift; sourceTree = "<group>"; };
+		4E6C2B7D2A16596900D93DA6 /* BoardingScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardingScreen.swift; sourceTree = "<group>"; };
 		FCF59BB32A10DB0A00543D51 /* InteriorDesigner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteriorDesigner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteriorDesignerApp.swift; sourceTree = "<group>"; };
 		FCF59BB82A10DB0A00543D51 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -49,20 +55,26 @@
 
 /* Begin PBXGroup section */
 		26DD7C632A1CBF780030A521 /* View */ = {
+		4E6C2B772A16594300D93DA6 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				26DD7C642A1CBFBD0030A521 /* Home.swift */,
 				26DD7C692A1DF6B80030A521 /* info.swift */,
+				4E6C2B782A16594300D93DA6 /* OnBoarding.swift */,
+				4E6C2B792A16594300D93DA6 /* OffsetPageTabView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
 		26DD7C662A1DEC6D0030A521 /* Helpers */ = {
+		4E6C2B7C2A16596900D93DA6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				26DD7C672A1DEC980030A521 /* ScrollDetector.swift */,
+				4E6C2B7D2A16596900D93DA6 /* BoardingScreen.swift */,
 			);
 			path = Helpers;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		FCF59BAA2A10DB0A00543D51 = {
@@ -86,6 +98,7 @@
 			children = (
 				26DD7C662A1DEC6D0030A521 /* Helpers */,
 				26DD7C5F2A1A10D60030A521 /* DesignerInfo.swift */,
+				4E6C2B7C2A16596900D93DA6 /* Model */,
 				FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */,
 				26DD7C592A19F06F0030A521 /* UserProfile.swift */,
 				26DD7C5D2A1A0FD10030A521 /* CreateAccount.swift */,
@@ -93,6 +106,7 @@
 				26DD7C5B2A19FA7A0030A521 /* photopicer.swift */,
 				26DD7C632A1CBF780030A521 /* View */,
 				FCF59BB82A10DB0A00543D51 /* ContentView.swift */,
+				4E6C2B772A16594300D93DA6 /* View */,
 				FCF59BBA2A10DB0B00543D51 /* Assets.xcassets */,
 				FCF59BBC2A10DB0B00543D51 /* Preview Content */,
 			);
@@ -180,10 +194,13 @@
 				26DD7C622A1A15900030A521 /* CreateAccountD.swift in Sources */,
 				26DD7C5C2A19FA7A0030A521 /* photopicer.swift in Sources */,
 				26DD7C682A1DEC980030A521 /* ScrollDetector.swift in Sources */,
+				4E6C2B7B2A16594300D93DA6 /* OffsetPageTabView.swift in Sources */,
 				FCF59BB92A10DB0A00543D51 /* ContentView.swift in Sources */,
 				26DD7C602A1A10D60030A521 /* DesignerInfo.swift in Sources */,
 				26DD7C6A2A1DF6B80030A521 /* info.swift in Sources */,
 				26DD7C5E2A1A0FD10030A521 /* CreateAccount.swift in Sources */,
+				4E6C2B7E2A16596900D93DA6 /* BoardingScreen.swift in Sources */,
+				4E6C2B7A2A16594300D93DA6 /* OnBoarding.swift in Sources */,
 				FCF59BB72A10DB0A00543D51 /* InteriorDesignerApp.swift in Sources */,
 				26DD7C652A1CBFBD0030A521 /* Home.swift in Sources */,
 				26DD7C5A2A19F06F0030A521 /* UserProfile.swift in Sources */,
