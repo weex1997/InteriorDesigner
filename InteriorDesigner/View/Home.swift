@@ -1,46 +1,57 @@
-//
-//  Home.swift
-//  InteriorDesigner
-//
-//  Created by AtheerAlshehri on 23/05/2023.
-//
-
 import SwiftUI
 
 struct Home: View {
     
     var size: CGSize
     var safeArea: EdgeInsets
+  //  @State private var showImage : Bool = false
     
     var body: some View {
-        // NavigationView{
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 0) {
-                HeaderView()
-                info()
-                // SampleCardsView()
-                    .zIndex(1000)
-            }
-            .background {
-                ScrollDetector { offset in
-                    print(offset)
-                    
-                } onDraggingEnd: { offset, velocity in
-                    
+      //  NavigationView{
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 0) {
+                    HeaderView()
+                    info()
+                    // SampleCardsView()
+                        .zIndex(1000)
+                }
+                .background {
+                    ScrollDetector { offset in
+                        print(offset)
+                        
+                    } onDraggingEnd: { offset, velocity in
+                        
+                    }
                 }
             }
-        }
-        ZStack{
-            
-            Button {
-                print("Edit")
+            ZStack{
+     
+//                Button {
+//                    print("UserProfile()")
+//
+//                } label: {
+//                    Image("Pen")
+//                }
+//
+//
+//                Button(action: UserProfile) {
+//                    Image("Pen")
+//                        .padding()
+//                }
+        
                 
-            } label: {
-                Image("Pen")
+                Button(
+                    action:
+                        {
+                            UserProfile()
+                        }
+                    , label: {
+                        Image("Pen")
+                    }
+                )
+                .frame(width: 700,height: 150)
             }
-            
-            .frame(width: 700,height: 150)
-        }
+     //   }
     }
     @ViewBuilder
     func HeaderView( ) -> some View {
@@ -83,7 +94,7 @@ struct Home: View {
                 .padding (.bottom)
             }
             .frame (height: headerHeight)
-            // .offset(y: -offsetY)
+//             .offset(y: -offsetY)
             
         }
         .frame (height: headerHeight)

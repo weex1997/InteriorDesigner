@@ -128,6 +128,15 @@ struct UserProfile: View {
                                 )
                             .padding(.top, 470)
                         }
+                    
+                    
+                    Text("Delet Account")
+                                       .foregroundColor(Color("Re"))
+                                       .bold()
+                                   
+                                       .frame(width: 330, height: 48.58)
+                                   
+                                       .padding(.top, 600)
                         
                   
                    

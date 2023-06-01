@@ -5,6 +5,70 @@
 ////  Created by AtheerAlshehri on 21/05/2023.
 ////
 //
+
+
+
+
+
+
+
+import SwiftUI
+
+struct DesignerInfo: View {
+    var body: some View {
+        NavigationView{
+            ScrollView{
+                
+                VStack{
+                    info()
+                }
+                
+                .navigationTitle("Profile Designer")
+               // .center()
+                
+                
+                
+                .navigationBarItems(
+                    trailing: NavigationLink(destination:UserProfile()) {
+                        Image("Pen")
+                        
+                    })
+                
+                .toolbarColorScheme(.dark, for: .navigationBar)
+                .toolbarBackground( Color("Pr"), for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
+                
+                .navigationBarItems(leading:
+                                        
+                    Image("b")
+                    .resizable()
+                    .foregroundColor(.white)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100, height: 100, alignment: .leading)
+                    .padding(.top)
+                )
+            }
+        }
+    }
+}
+    
+    
+    struct DesignerInfo_Previews: PreviewProvider {
+        static var previews: some View {
+            DesignerInfo()
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 //import SwiftUI
 //
 //struct DesignerInfo: View {

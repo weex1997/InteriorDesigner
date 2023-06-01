@@ -1,10 +1,3 @@
-//
-//  info.swift
-//  InteriorDesigner
-//
-//  Created by AtheerAlshehri on 24/05/2023.
-//
-
 import SwiftUI
 
 struct info: View {
@@ -54,6 +47,7 @@ struct info: View {
                             .fill(Color("Pr"))
                             .frame(width: 80, height: 28)
                         Text("Home")
+                            .foregroundColor(.white)
                             
                     } .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(5)
@@ -63,6 +57,8 @@ struct info: View {
                             .fill(Color("Pr"))
                             .frame(width: 80, height: 28)
                         Text("Coffee")
+                            .foregroundColor(.white)
+
                          
                     } .padding(.leading,-260)
                 }

@@ -56,16 +56,18 @@ struct CreateAccount: View {
                         
                     }
                     
-                    Button(action: { }) {
-                        Text("Next")
-                            .bold()
-                            .foregroundColor(.white)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 8)
-                            .fill(Color("Pr"))
-                            .frame(width: 330, height: 48.58)
+                    NavigationLink(
+                        destination: ContentView().navigationBarHidden(true),
+                        label: {
+                            
+                            Text("Next")
+                                .bold()
+                                .foregroundColor(.white)
+                                .background(RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color("Pr"))
+                                    .frame(width: 330, height: 48.58)
                                 )
-                            .padding(.top, 70)
+                        })
                         
                         
                   
