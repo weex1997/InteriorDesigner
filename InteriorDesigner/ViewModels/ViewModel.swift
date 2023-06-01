@@ -32,13 +32,12 @@ class ViewModel: ObservableObject {
         db.collection("Users").document(users.id).setData([
                                                      "name":UsersUpdate.name ?? "",
                                                      "phoneNumber":UsersUpdate.phoneNumber ?? "",
-//                                                   "favorite":UsersUpdate.favorite!,
+                                                     "favorite":UsersUpdate.favorite ?? "",
                                                      "desinger":UsersUpdate.desinger ?? "",
                                                      "brief":UsersUpdate.brief ?? "",
                                                      "field":UsersUpdate.field ?? "",
                                                      "experiance":UsersUpdate.experiance ?? "",
-                                                     "rate_number":UsersUpdate.rate_number ?? "",
-                                                     "rate_value":UsersUpdate.rate_value ?? ""], merge: true) { error in
+                                                     "rate":UsersUpdate.rate ?? ""], merge: true) { error in
             
             // Check for errors
             if error == nil {
@@ -133,13 +132,12 @@ class ViewModel: ObservableObject {
                                          name: d["name"] as? String ?? "",
                                          email: d["email"] as? String ?? "",
                                          phoneNumber: d["phoneNumber"] as? String ?? "",
-//                                         favorite: d["favorite"] as? [String] ?? [""],
+                                         favorite: d["favorite"] as? [String] ?? [""],
                                          desinger: d["desinger"] as? Bool ?? false,
                                          brief: d["brief"] as? String ?? "",
                                          field: d["field"] as? String ?? "",
                                          experiance: d["experiance"] as? String ?? "",
-                                         rate_number: d["rate_number"] as? Int32 ?? 0,
-                                         rate_value: d["rate_value"] as? Int32 ?? 0)
+                                         rate: d["rate"] as? [String : Int32] ?? ["" : 0])
                         }
                     }
                     
@@ -151,6 +149,8 @@ class ViewModel: ObservableObject {
             }
         }
     }
+    
+    //----------------------------------
     
     func signOut() {
         do{
@@ -176,4 +176,66 @@ class ViewModel: ObservableObject {
         
     }
     
+    //----------------------------------
+
+    func addFavoriteArray(otherUserID : String) {
+        let db = Firestore.firestore()
+        let washingtonRef = db.collection("Users").document(users.id)
+
+        // Atomically add a new region to the "regions" array field.
+        washingtonRef.updateData([
+            "favorite": FieldValue.arrayUnion([otherUserID])
+        ])
+
+      }
+    
+    //----------------------------------
+
+    func removeFavoriteArray(otherUserID : String) {
+        let db = Firestore.firestore()
+        let washingtonRef = db.collection("Users").document(users.id)
+
+        // Atomically remove a region from the "regions" array field.
+        washingtonRef.updateData([
+            "favorite": FieldValue.arrayRemove([otherUserID])
+        ])
+      }
+//    func Rate(otherUserID : String, rateingValue : Int32) {
+//
+//        //        var count = 0
+//        //        var rating = 0
+//        //
+//        //        for (key, value) in users.rate! {
+//        //            count += 1
+//        //            rating += value
+//        //        }
+//        //
+//        //        rating /= count
+//        //
+//        //        let user = User(name: "john doe", rating: rating)
+//
+//        //        let db = Firestore.firestore()
+//        //        let washingtonRef = db.collection("Users").document(otherUserID)
+//        //
+//        //        // Atomically add a new region to the "regions" array field.
+//        //        washingtonRef.updateData([
+//        //            "rate": FieldValue.arrayUnion([otherUserID,rateingValue])
+//        //        ])
+//
+//
+//
+//        let db = Firestore.firestore()
+//        let washingtonRef = db.collection("Users").document(users.id)
+////
+////        let ref = self.washingtonRef.child("uid_0").child("playlist")
+////        let songArray = ["Us and Them", "Get Back", "Children of the Sun"]
+////        ref.setValue(songArray)
+//
+//        // Atomically add a new region to the "regions" array field.
+//        washingtonRef.updateData([
+//            "favorite": FieldValue.arrayUnion([otherUserID])
+//        ])
+//
+//
+//    }
 }
