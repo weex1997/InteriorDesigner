@@ -156,7 +156,7 @@ struct SignInButton: View {
                 viewModel.removeFavoriteArray(otherUserID: users.id)
             }
             Button("favorate user") {
-                viewModel.Rate(otherUserID: users.id, rateingValue: 4)
+//                viewModel.Rate(otherUserID: users.id, rateingValue: 4)
             }
         }
     }
