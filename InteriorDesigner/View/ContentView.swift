@@ -13,7 +13,8 @@ struct ContentView: View {
             let size = $0.size
             let safeArea = $0.safeAreaInsets
             
-            designerProfile(size: size, safeArea: safeArea)
+//            designerProfile(size: size, safeArea: safeArea)
+            home()
                 .ignoresSafeArea(.all, edges: .top)
         }
     }
