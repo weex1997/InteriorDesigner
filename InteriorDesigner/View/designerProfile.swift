@@ -11,37 +11,42 @@ struct designerProfile: View {
     
     var size: CGSize
     var safeArea: EdgeInsets
-    
+
     var body: some View {
-        // NavigationView{
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 0) {
-                HeaderView()
-                info()
-                // SampleCardsView()
-                    .zIndex(1000)
-            }
-            .background {
-                ScrollDetector { offset in
-                    print(offset)
-                    
-                } onDraggingEnd: { offset, velocity in
-                    
+    
+            // NavigationView{
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 0) {
+                    HeaderView()
+                    info()
+                    // SampleCardsView()
+                        .zIndex(1000)
+                }
+                .background {
+                    ScrollDetector { offset in
+                        print(offset)
+                        
+                    } onDraggingEnd: { offset, velocity in
+                        
+                    }
                 }
             }
-        }
-        ZStack{
-            
-            Button {
-                print("Edit")
+            ZStack{
                 
-            } label: {
-                Image("Pen")
+                Button {
+                    print("Edit")
+                    
+                } label: {
+                    Image("Pen")
+                }
+                
+                .frame(width: 700,height: 150)
             }
-            
-            .frame(width: 700,height: 150)
+            .ignoresSafeArea(.all, edges: .top)
         }
-    }
+        
+
+        
     @ViewBuilder
     func HeaderView( ) -> some View {
         let headerHeight = (size.height * 0.3) + safeArea .top
