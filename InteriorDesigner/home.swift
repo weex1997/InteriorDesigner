@@ -10,6 +10,10 @@ import SwiftUI
 var designerCheck = false
 struct home: View {
     
+    @State var signinButton = SignInButton()
+    @State var showSheet = false
+    @State var showChat = false
+    @State var showProfile = false
     
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [
@@ -21,7 +25,7 @@ struct home: View {
         GeometryReader{
             let size = $0.size
             let safeArea = $0.safeAreaInsets
-                                    NavigationView {
+            NavigationView {
                 
                 ZStack {
                     
@@ -58,15 +62,49 @@ struct home: View {
                 .navigationTitle("Let's Find Your Designer.")
                 
                 .navigationBarItems(
-                    leading: NavigationLink(destination: designerProfile(size: size, safeArea: safeArea)) {
-                        Image(systemName: "person")
-                            .foregroundColor(.white)
-                    })
+                    leading:
+                        Button {
+                            showSheet = true
+                            showChat = true
+                        } label: {
+                            if (signinButton.isSignIn) {
+                                NavigationLink(destination:designerProfile(size: size, safeArea: safeArea),isActive: $showChat){}
+                                Image(systemName: "person")
+                                    .foregroundColor(.white)
+                            }
+                            else{
+                                Image(systemName: "person")
+                                    .foregroundColor(.white)
+                                    .sheet(isPresented: $showSheet){
+                                        signinButton
+                                            .presentationDetents([.height(200), .medium, .large])
+                                            .presentationDragIndicator(.automatic)
+                                    }
+                            }
+                            
+                        })
                 
                 .navigationBarItems(
-                    trailing: NavigationLink(destination:allchat()) {
-                        Image(systemName: "message")
-                            .foregroundColor(.white)
+                    
+                    trailing:  Button {
+                        showSheet = true
+                        showProfile = true
+                    } label: {
+                        if (signinButton.isSignIn) {
+                            NavigationLink(destination:allchat(),isActive: $showProfile){}
+                            Image(systemName: "message")
+                                .foregroundColor(.white)
+                        }
+                        else{
+                            Image(systemName: "message")
+                                .foregroundColor(.white)
+                                .sheet(isPresented: $showSheet){
+                                    signinButton
+                                        .presentationDetents([.height(200), .medium, .large])
+                                        .presentationDragIndicator(.automatic)
+                                }
+                        }
+                        
                     })
             }
         }

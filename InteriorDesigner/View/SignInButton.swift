@@ -14,6 +14,7 @@ import _AuthenticationServices_SwiftUI
 struct SignInButton: View {
     @StateObject var viewModel = ViewModel()
     
+    @State var isSignIn = false
     
     @State var users : Users
     
@@ -72,6 +73,7 @@ struct SignInButton: View {
     }
     
     var body: some View {
+        
         VStack{
             HStack{
                 
@@ -111,7 +113,6 @@ struct SignInButton: View {
                                     print("signed in")
                                     
                                     let db = Firestore.firestore()
-
                                     let docRef = db.collection("Users").document(users.id)
 
                                     docRef.getDocument { (document, error) in
@@ -131,6 +132,7 @@ struct SignInButton: View {
                                         }
                                     }
                                     
+                                    isSignIn = true
                                    
                                 }
                                 print("\(String(describing: Auth.auth().currentUser?.uid))")
