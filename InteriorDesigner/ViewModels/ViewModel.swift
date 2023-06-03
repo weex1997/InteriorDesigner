@@ -9,11 +9,12 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 import CryptoKit
+let db = Firestore.firestore()
 
 class ViewModel: ObservableObject {
     
     @Published var list = [Users]()
-    
+    @Published var designers = [Users]()
     @State var users : Users
     
     init(){
@@ -126,7 +127,8 @@ class ViewModel: ObservableObject {
                         self.list = snapshot.documents.map { d in
                             
                             // Create a Todo item for each document returned
-                            return Users(id: d.documentID,
+                            return Users(id:d["id"] as? String ?? "",
+//                                         userId:d["userId"] as? String ?? "",
                                          name: d["name"] as? String ?? "",
                                          email: d["email"] as? String ?? "",
                                          phoneNumber: d["phoneNumber"] as? String ?? "",
@@ -190,7 +192,6 @@ class ViewModel: ObservableObject {
     //----------------------------------
 
     func removeFavoriteArray(otherUserID : String) {
-        let db = Firestore.firestore()
         let washingtonRef = db.collection("Users").document(users.id)
 
         // Atomically remove a region from the "regions" array field.
@@ -236,4 +237,42 @@ class ViewModel: ObservableObject {
 //
 //
 //    }
+    
+    
+    func fetchData() {
+        db.collection("users").whereField("showProfile", isEqualTo: true).getDocuments { doucments, error in
+
+            if let error = error {
+                print("error!:\(error.localizedDescription)")
+            } else {
+                guard let documents = doucments?.documents else {
+                    print("No documents")
+                    return
+                }
+                for document in documents {
+                
+                    let id =  document.data()["id"] as? String
+//                    let userId =  document.data()["userId"] as? UUID
+                    let name = document.data()["name"] as? String
+                    let email = document.data()["email"] as? String
+                    let phoneNumber = document.data()["name"] as? String
+                    let favorite = document.data()["phoneNumber"] as? String
+                    let desinger = document.data()["desinger"] as? Bool
+                    let brief = document.data()["brief"] as? String
+                    let field = document.data()["field"] as? String
+                    let styles = document.data()["styles"] as? String
+//                    let rate = document.data()["rate"] as? String
+                    
+                    let user = Users(id: id ?? "", name: name ?? "",email: email ?? "" ,phoneNumber: phoneNumber ?? "",desinger: desinger ?? false , brief: brief ?? "",field: field ?? "" ,styles: styles ?? "" )
+                    self.designers.append(user)
+                    print("SSSS:\(self.designers.description)")
+                    print("Hello")
+
+                
+                }
+                
+            }
+            
+        }
+}
 }

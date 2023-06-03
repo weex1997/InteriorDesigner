@@ -8,17 +8,18 @@
 import SwiftUI
 
 var designerCheck = false
+
 struct home: View {
-    
     @State var signinButton = SignInButton()
     @State var showSheet = false
     @State var showChat = false
     @State var showProfile = false
-    
+
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
+        
     }
     
     var body: some View {
@@ -122,16 +123,17 @@ struct PopularDestinationsView: View {
         .init(name: "Nasser", country: "Modern, classic, new classic", imageName: "dr", rate:"5.00"),
         .init(name: "Nasser", country: "Modern, classic, new classic", imageName: "in" , rate:"5.00"),
     ]
+    @StateObject var viewModel = ViewModel()
     
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
                 VStack {
-                    ForEach(destinations, id: \.self) { destination in
+                    ForEach(viewModel.designers, id: \.id) { designer in
                         NavigationLink(destination: profil().navigationBarBackButtonHidden(false)){
                             VStack(alignment: .leading, spacing: 0) {
                                 
-                                Image(destination.imageName)
+                                Image("lm")
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 327, height: 154)
@@ -139,14 +141,14 @@ struct PopularDestinationsView: View {
                                     .padding(.horizontal, 6)
                                     .padding(.vertical, 6)
                                 
-                                Text(destination.name)
+                                Text(designer.name!)
                                     .font(.system(size: 12, weight: .semibold))
                                 
                                     .padding(.horizontal, 12)
                                     .padding(.bottom, 8)
                                 
                                 HStack{
-                                    Text(destination.country)
+                                    Text(designer.field!)
                                         .font(.system(size: 12, weight: .semibold))
                                         .foregroundColor(.gray)
                                     Spacer()
@@ -160,7 +162,7 @@ struct PopularDestinationsView: View {
                                 
                                 
                                 HStack{
-                                    Text(destination.rate)
+                                    Text(designer.styles!)
                                         .font(.system(size: 12, weight: .semibold))
                                         .foregroundColor(.gray)
                                     Image(systemName: "star.fill")
@@ -180,7 +182,11 @@ struct PopularDestinationsView: View {
             }
         }
     }
+    init() {
+        viewModel.fetchData()
+    }
 }
+
 
 
 

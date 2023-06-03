@@ -11,6 +11,7 @@ import FirebaseFirestoreSwift
 struct Users: Identifiable {
     
     var id : String
+//    var userId = UUID()
     var name: String?
     var email: String?
     var phoneNumber: String?
