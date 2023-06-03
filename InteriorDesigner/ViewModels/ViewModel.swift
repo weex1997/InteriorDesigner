@@ -30,14 +30,12 @@ class ViewModel: ObservableObject {
 
         // Set the data to update
         db.collection("Users").document(users.id).setData([
-                                                     "name":UsersUpdate.name ?? "",
-                                                     "phoneNumber":UsersUpdate.phoneNumber ?? "",
-                                                     "favorite":UsersUpdate.favorite ?? "",
-                                                     "desinger":UsersUpdate.desinger ?? "",
-                                                     "brief":UsersUpdate.brief ?? "",
-                                                     "field":UsersUpdate.field ?? "",
-                                                     "styles":UsersUpdate.styles ?? "",
-                                                     "rate":UsersUpdate.rate ?? ""], merge: true) { error in
+            "name":UsersUpdate.name ?? users.name,
+                                                     "phoneNumber":UsersUpdate.phoneNumber ?? users.phoneNumber,
+                                                     "desinger":UsersUpdate.desinger ?? users.desinger,
+                                                     "brief":UsersUpdate.brief ?? users.brief,
+                                                     "field":UsersUpdate.field ?? users.field,
+                                                     "styles":UsersUpdate.styles ?? users.styles], merge: true) { error in
             
             // Check for errors
             if error == nil {
