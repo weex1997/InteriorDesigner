@@ -89,7 +89,7 @@ struct UserProfile: View {
                                 )
                                 .padding(2)
                             
-                            TextField("Interests", text: $users.experiance.defaultValue(""))
+                            TextField("Interests", text: $users.styles.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)

@@ -7,11 +7,17 @@
 
 import SwiftUI
 import PhotosUI
-
+import FirebaseAuth
 
 struct info: View {
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
+    
+    @State var users : Users
+    init(){
+        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
+        self._users = .init(initialValue: user)
+    }
     
     var body: some View {
         //Spacer()
@@ -26,26 +32,26 @@ struct info: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(5)
                 
-                Text("an ambitious interior designer with 10 years of experience, interested in both classical and modern designs. I specialize in designing homes, cafes, and commercial spaces.")
+                Text(users.brief ?? "")
                 
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(5)
                 Spacer()
             }
             VStack{
-                Text("Intereste")
+                Text("Styles")
                     .font(.title)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(Color("Primary"))
                     .bold()
                     .padding(5)
-                Text("classic, modern, new classic")
+                Text(users.field ?? "")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(5)
             }
             
             VStack{
-                Text("field")
+                Text("Field")
                     .font(.title)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(Color("Primary"))

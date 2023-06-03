@@ -36,7 +36,7 @@ class ViewModel: ObservableObject {
                                                      "desinger":UsersUpdate.desinger ?? "",
                                                      "brief":UsersUpdate.brief ?? "",
                                                      "field":UsersUpdate.field ?? "",
-                                                     "experiance":UsersUpdate.experiance ?? "",
+                                                     "styles":UsersUpdate.styles ?? "",
                                                      "rate":UsersUpdate.rate ?? ""], merge: true) { error in
             
             // Check for errors
@@ -136,7 +136,7 @@ class ViewModel: ObservableObject {
                                          desinger: d["desinger"] as? Bool ?? false,
                                          brief: d["brief"] as? String ?? "",
                                          field: d["field"] as? String ?? "",
-                                         experiance: d["experiance"] as? String ?? "",
+                                         styles: d["styles"] as? String ?? "",
                                          rate: d["rate"] as? [String : Int32] ?? ["" : 0])
                         }
                     }

@@ -18,7 +18,7 @@ struct Users: Identifiable {
     var desinger : Bool?
     var brief : String?
     var field : String?
-    var experiance : String?
+    var styles : String?
     var rate : [String : Int32]?
 
 }
