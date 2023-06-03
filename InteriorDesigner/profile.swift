@@ -6,19 +6,20 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct profil: View {
     // struct LoginView: View {
     
     @State var isLoginMode = false
-    @State var email = ""
-    @State var Number = ""
     
-    @State private var name: String = ""
-    @State private var phone: String = ""
-    @State private var field: String = ""
-    @State private var intersts: String = ""
-    @State private var about: String = ""
+    @StateObject var viewModel = ViewModel()
+    @State var users : Users
+    init(){
+        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
+        self._users = .init(initialValue: user)
+    }
+
     var body: some View {
         NavigationView {
            // Group{
@@ -61,7 +62,7 @@ struct profil: View {
 //                            Text("Name")
                             
                             
-                            TextField("Name", text: $name)
+                            TextField("Name", text: $users.name.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -71,7 +72,7 @@ struct profil: View {
                                 )
                                 .padding(2)
                             
-                            TextField("Phone Number", text: $phone)
+                            TextField("Phone Number", text: $users.phoneNumber.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -91,8 +92,10 @@ struct profil: View {
                         
             NavigationLink(
         destination: ContentView().navigationBarHidden(true), label: {
-            Text("Delet Account")
-                                
+            
+            Button("Delet Account") {
+                viewModel.deleteData(UsersDelete: users)
+            }
                             .padding()
                                
                             })
