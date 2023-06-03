@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct UserProfile: View {
-    @State private var name: String = ""
-    @State private var phone: String = ""
-    @State private var field: String = ""
-    @State private var intersts: String = ""
-    @State private var about: String = ""
+    
+    @StateObject var viewModel = ViewModel()
+    @State var users : Users
+    init(){
+        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
+        self._users = .init(initialValue: user)
+    }
+    
     var body: some View {
         NavigationView {
            // Group{
@@ -55,7 +59,7 @@ struct UserProfile: View {
 //                            Text("Name")
                             
                             
-                            TextField("Name", text: $name)
+                            TextField("Name", text: $users.name.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -65,7 +69,7 @@ struct UserProfile: View {
                                 )
                                 .padding(2)
                             
-                            TextField("Phone Number", text: $phone)
+                            TextField("Phone Number", text: $users.phoneNumber.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -75,7 +79,7 @@ struct UserProfile: View {
                                 )
                                 .padding(2)
                             
-                            TextField("Feild", text: $field)
+                            TextField("Feild", text: $users.field.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -85,7 +89,7 @@ struct UserProfile: View {
                                 )
                                 .padding(2)
                             
-                            TextField("Interests", text: $intersts)
+                            TextField("Interests", text: $users.experiance.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -94,7 +98,7 @@ struct UserProfile: View {
                                         .stroke(Color("line"), lineWidth: 2)
                                 )
                                 .padding(2)
-                            TextField("About", text: $about)
+                            TextField("About", text: $users.brief.defaultValue(""))
                             //  .padding([.trailing, .bottom])
                                 .padding()
                                 .font(.body)
@@ -113,8 +117,9 @@ struct UserProfile: View {
                         
             NavigationLink(
         destination: ContentView().navigationBarHidden(true), label: {
-            Text("Update")
-                                
+            Button("Update") {
+                viewModel.updateData(UsersUpdate: users)
+            }
                             .padding()
                                
                             })

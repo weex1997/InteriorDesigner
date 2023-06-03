@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct CreateAccount: View {
     
-    @State private var name: String = ""
-    @State private var phone: String = ""
-    @State var Designer = false
+    @StateObject var viewModel = ViewModel()
+    @State var users : Users
+    init(){
+        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
+        self._users = .init(initialValue: user)
+    }
     var body: some View {
         NavigationView {
          
@@ -21,7 +25,7 @@ struct CreateAccount: View {
                         
                         VStack{
                             
-                            TextField("Name", text: $name)
+                            TextField("Name", text: $users.name.defaultValue(""))
                              //   .foregroundColor(Color("line"))
                                 .font(.body)
                                 .padding(11)
@@ -32,7 +36,7 @@ struct CreateAccount: View {
                                 )
                                 .padding(2)
                             
-                            TextField("Phone Number", text: $phone)
+                            TextField("Phone Number", text: $users.phoneNumber.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -42,7 +46,7 @@ struct CreateAccount: View {
                                 )
                                 .padding(2)
                             
-                            Toggle(isOn: $Designer) {
+                            Toggle(isOn: $users.desinger.defaultValue(false)) {
                                 
                                     Text("Are you Designer ?")
                                     .foregroundColor(Color("Primary"))
@@ -56,11 +60,10 @@ struct CreateAccount: View {
                         
                     }
                     
-                    Button(action: { }) {
-                        Text("Next")
-                            .bold()
-                            .foregroundColor(.white)
-                    }
+                    Button("Next") {
+                        viewModel.updateData(UsersUpdate: users)}
+                    .bold()
+                    .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 8)
                             .fill(Color("Primary"))
                             .frame(width: 330, height: 48.58)
