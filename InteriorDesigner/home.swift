@@ -134,60 +134,54 @@ struct PopularDestinationsView: View {
     
     var body: some View {
         VStack {
-            //            HStack {
-            //
-            //                Spacer()
-            //                Text("See all")
-            //                    .font(.system(size: 12, weight: .semibold))
-            //            }.padding(.horizontal)
-            //            .padding(.top)
-            //
             ScrollView(.horizontal) {
                 VStack {
                     ForEach(destinations, id: \.self) { destination in
-                        VStack(alignment: .leading, spacing: 0) {
-                            
-                            Image(destination.imageName)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 327, height: 154)
-                                .cornerRadius(4)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 6)
-                            
-                            Text(destination.name)
-                                .font(.system(size: 12, weight: .semibold))
-                            
+                        NavigationLink(destination: profil().navigationBarBackButtonHidden(false)){
+                            VStack(alignment: .leading, spacing: 0) {
+                                
+                                Image(destination.imageName)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 327, height: 154)
+                                    .cornerRadius(4)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 6)
+                                
+                                Text(destination.name)
+                                    .font(.system(size: 12, weight: .semibold))
+                                
+                                    .padding(.horizontal, 12)
+                                    .padding(.bottom, 8)
+                                
+                                HStack{
+                                    Text(destination.country)
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundColor(.gray)
+                                    Spacer()
+                                    Image(systemName: "heart")
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundColor(.primary)
+                                    
+                                }
                                 .padding(.horizontal, 12)
                                 .padding(.bottom, 8)
-                            
-                            HStack{
-                                Text(destination.country)
-                                    .font(.system(size: 12, weight: .semibold))
-                                    .foregroundColor(.gray)
-                                Spacer()
-                                Image(systemName: "heart")
-                                    .font(.system(size: 12, weight: .semibold))
-                                    .foregroundColor(.primary)
                                 
+                                
+                                HStack{
+                                    Text(destination.rate)
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundColor(.gray)
+                                    Image(systemName: "star.fill")
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundColor(.yellow)
+                                }.padding(.horizontal, 12)
+                                    .padding(.bottom, 8)
                             }
-                            .padding(.horizontal, 12)
-                            .padding(.bottom, 8)
-                            
-                            
-                            HStack{
-                                Text(destination.rate)
-                                    .font(.system(size: 12, weight: .semibold))
-                                    .foregroundColor(.gray)
-                                Image(systemName: "star.fill")
-                                    .font(.system(size: 12, weight: .semibold))
-                                    .foregroundColor(.yellow)
-                            }.padding(.horizontal, 12)
-                                .padding(.bottom, 8)
+                            .background(Color.white)
+                            .cornerRadius(5)
+                            .shadow(color: .init(.sRGB, white: 0.8, opacity: 1), radius: 4, x: 0.0, y: 2)
                         }
-                        .background(Color.white)
-                        .cornerRadius(5)
-                        .shadow(color: .init(.sRGB, white: 0.8, opacity: 1), radius: 4, x: 0.0, y: 2)
                     }
                     .padding()
                 }
