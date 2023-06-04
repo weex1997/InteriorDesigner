@@ -13,8 +13,8 @@ import _AuthenticationServices_SwiftUI
 
 struct SignInButton: View {
     @StateObject var viewModel = ViewModel()
-    
-    @State var isSignIn = false
+    @State var GoToCreate = false
+    @Environment(\.dismiss) var dismiss
     
     @State var users : Users
     
@@ -73,81 +73,86 @@ struct SignInButton: View {
     }
     
     var body: some View {
-        
-        VStack{
-            HStack{
-                
-                SignInWithAppleButton(
-                    onRequest: { request in
-                        let nonce = randomNonceString()
-                        currentNonce = nonce
-                        request.requestedScopes = [.fullName, .email]
-                        request.nonce = sha256(nonce)
-                    },
-                    onCompletion: { result in
-                        switch result {
-                        case .success(let authResults):
-                            switch authResults.credential {
-                            case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                                
-                                guard let nonce = currentNonce else {
-                                    fatalError("Invalid state: A login callback was received, but no login request was sent.")
-                                }
-                                guard let appleIDToken = appleIDCredential.identityToken else {
-                                    fatalError("Invalid state: A login callback was received, but no login request was sent.")
-                                }
-                                guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                                    print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
-                                    return
-                                }
-                                
-                                let credential = OAuthProvider.credential(withProviderID: "apple.com",idToken: idTokenString,rawNonce: nonce)
-                                Auth.auth().signIn(with: credential) { (authResult, error) in
-                                    if (error != nil) {
-                                        // Error. If error.code == .MissingOrInvalidNonce, make sure
-                                        // you're sending the SHA256-hashed nonce as a hex string with
-                                        // your request to Apple.
-                                        print(error?.localizedDescription as Any)
+        NavigationView(){
+            VStack{
+                HStack{
+                    
+                    SignInWithAppleButton(
+                        onRequest: { request in
+                            let nonce = randomNonceString()
+                            currentNonce = nonce
+                            request.requestedScopes = [.fullName, .email]
+                            request.nonce = sha256(nonce)
+                        },
+                        onCompletion: { result in
+                            switch result {
+                            case .success(let authResults):
+                                switch authResults.credential {
+                                case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                                    
+                                    guard let nonce = currentNonce else {
+                                        fatalError("Invalid state: A login callback was received, but no login request was sent.")
+                                    }
+                                    guard let appleIDToken = appleIDCredential.identityToken else {
+                                        fatalError("Invalid state: A login callback was received, but no login request was sent.")
+                                    }
+                                    guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                                        print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
                                         return
                                     }
-                                    print("signed in")
                                     
-                                    let db = Firestore.firestore()
-                                    let docRef = db.collection("Users").document(users.id)
-
-                                    docRef.getDocument { (document, error) in
-                                        if let document = document, document.exists {
-                                            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                                            print("Document data: \(dataDescription)")
-                                            viewModel.getData()
-                                        } else {
-                                            print("Document does not exist")
-                                            
-                                            guard let user = authResult?.user else { return }
-                                            let email = user.email ?? ""
-                                            let displayName = user.displayName ?? ""
-                                            guard let uid = Auth.auth().currentUser?.uid else { return }
-                                            
-                                            viewModel.addData(id: uid, email: email, name: displayName)
+                                    let credential = OAuthProvider.credential(withProviderID: "apple.com",idToken: idTokenString,rawNonce: nonce)
+                                    Auth.auth().signIn(with: credential) { (authResult, error) in
+                                        if (error != nil) {
+                                            // Error. If error.code == .MissingOrInvalidNonce, make sure
+                                            // you're sending the SHA256-hashed nonce as a hex string with
+                                            // your request to Apple.
+                                            print(error?.localizedDescription as Any)
+                                            return
                                         }
+                                        print("signed in")
+                                        
+                                        let db = Firestore.firestore()
+                                        let docRef = db.collection("Users").document(users.id)
+                                        
+                                        docRef.getDocument { (document, error) in
+                                            if let document = document, document.exists {
+                                                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                                                print("Document data: \(dataDescription)")
+                                                viewModel.getData()
+                                                dismiss()
+                                                
+                                            } else {
+                                                print("Document does not exist")
+                                                
+                                                guard let user = authResult?.user else { return }
+                                                let email = user.email ?? ""
+                                                let displayName = user.displayName ?? ""
+                                                guard let uid = Auth.auth().currentUser?.uid else { return }
+                                                
+                                                viewModel.addData(id: uid, email: email, name: displayName)
+                                                GoToCreate = true
+                                            }
+                                        }
+                                        
+                                        
                                     }
+                                    print("\(String(describing: Auth.auth().currentUser?.uid))")
+                                default:
+                                    break
                                     
-                                    isSignIn = true
-                                   
                                 }
-                                print("\(String(describing: Auth.auth().currentUser?.uid))")
                             default:
                                 break
-                                
                             }
-                        default:
-                            break
                         }
-                    }
-                ).frame(width: 280, height: 45, alignment: .center)
-                
+                    ).frame(width: 280, height: 45, alignment: .center)
+                    
+                }
             }
         }
+        .fullScreenCover(isPresented: $GoToCreate, content: {
+            CreateAccount()})
         
 //        VStack{
 //            Text("name")

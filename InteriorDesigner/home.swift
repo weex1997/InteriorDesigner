@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 var designerCheck = false
 
 struct home: View {
-    @State var signinButton = SignInButton()
+    let user = Auth.auth().currentUser;
     @State var showSheet = false
     @State var showChat = false
     @State var showProfile = false
@@ -63,51 +64,52 @@ struct home: View {
                 .navigationTitle("Let's Find Your Designer.")
                 
                 .navigationBarItems(
-                    leading:
-                        Button {
-                            showSheet = true
-                            showChat = true
-                        } label: {
-                            if (signinButton.isSignIn) {
-                                NavigationLink(destination:designerProfile(size: size, safeArea: safeArea),isActive: $showChat){}
-                                Image(systemName: "person")
-                                    .foregroundColor(.white)
-                            }
-                            else{
-                                Image(systemName: "person")
-                                    .foregroundColor(.white)
-                                    .sheet(isPresented: $showSheet){
-                                        signinButton
-                                            .presentationDetents([.height(200), .medium, .large])
-                                            .presentationDragIndicator(.automatic)
-                                    }
-                            }
-                            
-                        })
-                
-                .navigationBarItems(
-                    
-                    trailing:  Button {
-                        showSheet = true
-                        showProfile = true
-                    } label: {
-                        if (signinButton.isSignIn) {
-                            NavigationLink(destination:allchat(),isActive: $showProfile){}
-                            Image(systemName: "message")
-                                .foregroundColor(.white)
-                        }
-                        else{
-                            Image(systemName: "message")
-                                .foregroundColor(.white)
-                                .sheet(isPresented: $showSheet){
-                                    signinButton
-                                        .presentationDetents([.height(200), .medium, .large])
-                                        .presentationDragIndicator(.automatic)
-                                }
-                        }
-                        
-                    })
-            }
+                                   leading:
+                                       Button {
+                                           showSheet = true
+                                           showChat = true
+                                       } label: {
+                                           if ((user) != nil) {
+                                               NavigationLink(destination:designerProfile(size: size, safeArea: safeArea),isActive: $showChat){}
+                                               Image(systemName: "person")
+                                                   .foregroundColor(.white)
+                                           }
+                                           else{
+                                               Image(systemName: "person")
+                                                   .foregroundColor(.white)
+                                                   .sheet(isPresented: $showSheet){
+                                                       SignInButton()
+                                                           .presentationDetents([.height(200), .medium, .large])
+                                                           .presentationDragIndicator(.automatic)
+                                                   }
+                                           }
+                                           
+                                       })
+                               
+                               .navigationBarItems(
+                                   
+                                   trailing:  Button {
+                                       showSheet = true
+                                       showProfile = true
+                                   } label: {
+                                       if ((user) != nil) {
+                                           NavigationLink(destination:allchat(),isActive: $showProfile){}
+                                           Image(systemName: "message")
+                                               .foregroundColor(.white)
+                                       }
+                                       else{
+                                           Image(systemName: "message")
+                                               .foregroundColor(.white)
+                                               .sheet(isPresented: $showSheet){
+                                                   SignInButton()
+                                                       .presentationDetents([.height(200), .medium, .large])
+                                                       .presentationDragIndicator(.automatic)
+                                               }
+                                       }
+                                       
+                                   })
+                           }
+
         }
         
     }

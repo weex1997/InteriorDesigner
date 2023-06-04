@@ -139,6 +139,7 @@ class ViewModel: ObservableObject {
                                          styles: d["styles"] as? String ?? "",
                                          rate: d["rate"] as? String ?? "")
                         }
+                        print("GetData")
                     }
                     
                     
