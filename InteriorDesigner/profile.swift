@@ -62,7 +62,7 @@ struct profil: View {
 //                            Text("Name")
                             
                             
-                            TextField("Name", text: $users.name.defaultValue(""))
+                            TextField(users.name ?? "", text: $users.name.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -72,7 +72,7 @@ struct profil: View {
                                 )
                                 .padding(2)
                             
-                            TextField("Phone Number", text: $users.phoneNumber.defaultValue(""))
+                            TextField(users.phoneNumber ?? "", text: $users.phoneNumber.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -93,8 +93,8 @@ struct profil: View {
             NavigationLink(
         destination: ContentView().navigationBarHidden(true), label: {
             
-            Button("Delet Account") {
-                viewModel.deleteData(UsersDelete: users)
+            Button("Log Out") {
+                viewModel.signOut()
             }
                             .padding()
                                

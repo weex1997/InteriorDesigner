@@ -12,6 +12,7 @@ struct CreateAccount: View {
     
     @StateObject var viewModel = ViewModel()
     @State var users : Users
+    @State var Next = false
     init(){
         let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
         self._users = .init(initialValue: user)
@@ -20,7 +21,7 @@ struct CreateAccount: View {
         NavigationView {
          
                 ZStack{
-                    
+                    NavigationLink(destination: CreateAccountD().navigationBarBackButtonHidden(false), isActive: $Next){}
                     List {
                         
                         VStack{

@@ -113,29 +113,46 @@ struct SignInButton: View {
                                         print("signed in")
                                         
                                         let db = Firestore.firestore()
-                                        let docRef = db.collection("Users").document(users.id)
+//                                        let docRef = db.collection("Users").document(users.id)
+//
+//                                        docRef.getDocument { (document, error) in
+//                                            if let document = document, document.exists {
+//                                                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+//                                                print("Document data: \(dataDescription)")
+//                                                viewModel.getData()
+//                                                dismiss()
+//
+//                                            } else {
+//                                                print("Document does not exist")
+//
+//                                                guard let user = authResult?.user else { return }
+//                                                let email = user.email ?? ""
+//                                                let displayName = user.displayName ?? ""
+//                                                guard let uid = Auth.auth().currentUser?.uid else { return }
+//
+//                                                viewModel.addData(id: uid, email: email, name: displayName)
+//                                                GoToCreate = true
+//                                            }
+//                                        }
                                         
-                                        docRef.getDocument { (document, error) in
-                                            if let document = document, document.exists {
-                                                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                                                print("Document data: \(dataDescription)")
-                                                viewModel.getData()
-                                                dismiss()
-                                                
-                                            } else {
-                                                print("Document does not exist")
-                                                
-                                                guard let user = authResult?.user else { return }
-                                                let email = user.email ?? ""
-                                                let displayName = user.displayName ?? ""
-                                                guard let uid = Auth.auth().currentUser?.uid else { return }
-                                                
-                                                viewModel.addData(id: uid, email: email, name: displayName)
-                                                GoToCreate = true
-                                            }
-                                        }
-                                        
-                                        
+                                        let ref = db.collection("Users").document(users.id)
+                                                ref.getDocument { (document, error) in
+                                                    if let document = document, document.exists {
+                                                        print("User Exists")
+                                                        viewModel.getData()
+                                                        dismiss()
+                                                    } else {
+                                                        print("User does not exist in firestore")
+                                                        
+                                                        guard let user = authResult?.user else { return }
+                                                        let email = user.email ?? ""
+                                                        let displayName = user.displayName ?? ""
+                                                        guard let uid = Auth.auth().currentUser?.uid else { return }
+                                                       
+                                                                                                       viewModel.addData(id: uid, email: email, name: displayName)
+                                                                                                       GoToCreate = true
+                                                    }
+                                                }
                                     }
                                     print("\(String(describing: Auth.auth().currentUser?.uid))")
                                 default:

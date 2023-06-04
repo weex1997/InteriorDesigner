@@ -15,13 +15,21 @@ struct home: View {
     @State var showSheet = false
     @State var showChat = false
     @State var showProfile = false
+    
+    @State var users : Users
+    
+   
 
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
         
+        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
+        self._users = .init(initialValue: user)
     }
+    
+   
     
     var body: some View {
         GeometryReader{
@@ -65,35 +73,12 @@ struct home: View {
                 
                 .navigationBarItems(
                                    leading:
-                                       Button {
-                                           showSheet = true
-                                           showChat = true
-                                       } label: {
-                                           if ((user) != nil) {
-                                               NavigationLink(destination:designerProfile(size: size, safeArea: safeArea),isActive: $showChat){}
-                                               Image(systemName: "person")
-                                                   .foregroundColor(.white)
-                                           }
-                                           else{
-                                               Image(systemName: "person")
-                                                   .foregroundColor(.white)
-                                                   .sheet(isPresented: $showSheet){
-                                                       SignInButton()
-                                                           .presentationDetents([.height(200), .medium, .large])
-                                                           .presentationDragIndicator(.automatic)
-                                                   }
-                                           }
-                                           
-                                       })
-                               
-                               .navigationBarItems(
-                                   
-                                   trailing:  Button {
+                                    Button {
                                        showSheet = true
-                                       showProfile = true
+                                       showChat = true
                                    } label: {
                                        if ((user) != nil) {
-                                           NavigationLink(destination:allchat(),isActive: $showProfile){}
+                                           NavigationLink(destination:allchat(),isActive: $showChat){}
                                            Image(systemName: "message")
                                                .foregroundColor(.white)
                                        }
@@ -108,7 +93,37 @@ struct home: View {
                                        }
                                        
                                    })
+                               
+                               .navigationBarItems(
+                                   
+                                   trailing:
+                                    
+                                    Button {
+                                        showSheet = true
+                                        showProfile = true
+                                    } label: {
+                                        if ((user) != nil) {
+                                            if(users.desinger == false){
+                                                NavigationLink(destination:designerProfile(size: size, safeArea: safeArea),isActive: $showProfile){}}
+                                            else{
+                                                NavigationLink(destination:profil(),isActive: $showProfile){}}
+                                            Image(systemName: "person")
+                                                .foregroundColor(.white)
+                                        }
+                                        else{
+                                            Image(systemName: "person")
+                                                .foregroundColor(.white)
+                                                .sheet(isPresented: $showSheet){
+                                                    SignInButton()
+                                                        .presentationDetents([.height(200), .medium, .large])
+                                                        .presentationDragIndicator(.automatic)
+                                                }
+                                        }
+                                        
+                                    })
                            }
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
 
         }
         
