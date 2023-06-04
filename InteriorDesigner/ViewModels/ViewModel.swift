@@ -9,14 +9,14 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 import CryptoKit
-let db = Firestore.firestore()
 
 class ViewModel: ObservableObject {
     
     @Published var list = [Users]()
     @Published var designers = [Users]()
     @State var users : Users
-    
+    private var db = Firestore.firestore()
+
     init(){
         let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
         self._users = .init(initialValue: user)
@@ -137,7 +137,7 @@ class ViewModel: ObservableObject {
                                          brief: d["brief"] as? String ?? "",
                                          field: d["field"] as? String ?? "",
                                          styles: d["styles"] as? String ?? "",
-                                         rate: d["rate"] as? [String : Int32] ?? ["" : 0])
+                                         rate: d["rate"] as? String ?? "")
                         }
                     }
                     
@@ -240,7 +240,7 @@ class ViewModel: ObservableObject {
     
     
     func fetchData() {
-        db.collection("users").whereField("showProfile", isEqualTo: true).getDocuments { doucments, error in
+        db.collection("Users").getDocuments { doucments, error in
 
             if let error = error {
                 print("error!:\(error.localizedDescription)")
@@ -261,11 +261,13 @@ class ViewModel: ObservableObject {
                     let brief = document.data()["brief"] as? String
                     let field = document.data()["field"] as? String
                     let styles = document.data()["styles"] as? String
-//                    let rate = document.data()["rate"] as? String
+                    let rate = document.data()["rate"] as? String
+
                     
-                    let user = Users(id: id ?? "", name: name ?? "",email: email ?? "" ,phoneNumber: phoneNumber ?? "",desinger: desinger ?? false , brief: brief ?? "",field: field ?? "" ,styles: styles ?? "" )
+                    let user = Users(id: id ?? "", name: name ?? "",email: email ?? "" ,phoneNumber: phoneNumber ?? "",desinger: desinger ?? false , brief: brief ?? "",field: field ?? "" ,styles: styles ?? "", rate: rate ?? "" )
                     self.designers.append(user)
-                    print("SSSS:\(self.designers.description)")
+                    print("SSSS:\(self.designers.count)")
+                    print("MMM:\(self.designers[0].name)")
                     print("Hello")
 
                 

@@ -20,6 +20,6 @@ struct Users: Identifiable {
     var brief : String?
     var field : String?
     var styles : String?
-    var rate : [String : Int32]?
+    var rate : String?
 
 }

@@ -124,16 +124,16 @@ struct PopularDestinationsView: View {
         .init(name: "Nasser", country: "Modern, classic, new classic", imageName: "in" , rate:"5.00"),
     ]
     @StateObject var viewModel = ViewModel()
-    
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
                 VStack {
-                    ForEach(viewModel.designers, id: \.id) { designer in
-                        NavigationLink(destination: profil().navigationBarBackButtonHidden(false)){
+                        ForEach(viewModel.designers, id: \.id) { designer in
+
+                        NavigationLink(destination: profil()){
                             VStack(alignment: .leading, spacing: 0) {
                                 
-                                Image("lm")
+                                Image("mo")
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 327, height: 154)
@@ -162,7 +162,7 @@ struct PopularDestinationsView: View {
                                 
                                 
                                 HStack{
-                                    Text(designer.styles!)
+                                    Text(designer.rate!+(".00"))
                                         .font(.system(size: 12, weight: .semibold))
                                         .foregroundColor(.gray)
                                     Image(systemName: "star.fill")
@@ -180,10 +180,9 @@ struct PopularDestinationsView: View {
                 }
                 .padding()
             }
+        }.onAppear(){
+            self.viewModel.fetchData()
         }
-    }
-    init() {
-        viewModel.fetchData()
     }
 }
 
