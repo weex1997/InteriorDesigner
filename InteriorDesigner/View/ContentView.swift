@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var viewModel = ViewModel()
+
     var body: some View {
         GeometryReader {
             let size = $0.size

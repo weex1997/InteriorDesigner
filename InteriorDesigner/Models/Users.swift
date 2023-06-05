@@ -23,3 +23,19 @@ struct Users: Identifiable {
     var rate : String?
 
 }
+
+struct User: Identifiable {
+    
+    var id : String
+//    var userId = UUID()
+    var name: String?
+    var email: String?
+    var phoneNumber: String?
+    var favorite: [String]?
+    var desinger : Bool?
+    var brief : String?
+    var field : String?
+    var styles : String?
+    var rate : String?
+
+}

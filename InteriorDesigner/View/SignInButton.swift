@@ -14,6 +14,7 @@ import _AuthenticationServices_SwiftUI
 struct SignInButton: View {
     @StateObject var viewModel = ViewModel()
     @State var GoToCreate = false
+
     @Environment(\.dismiss) var dismiss
     
     @State var users : Users
@@ -134,12 +135,12 @@ struct SignInButton: View {
 //                                                GoToCreate = true
 //                                            }
 //                                        }
-                                        
-                                        let ref = db.collection("Users").document(users.id)
+                                        guard let uid = Auth.auth().currentUser?.uid else { return }
+                                        let ref = db.collection("Users").document(uid)
                                                 ref.getDocument { (document, error) in
                                                     if let document = document, document.exists {
                                                         print("User Exists")
-                                                        viewModel.getData()
+                                                        viewModel.getData(id: uid)
                                                         dismiss()
                                                     } else {
                                                         print("User does not exist in firestore")
@@ -147,10 +148,10 @@ struct SignInButton: View {
                                                         guard let user = authResult?.user else { return }
                                                         let email = user.email ?? ""
                                                         let displayName = user.displayName ?? ""
-                                                        guard let uid = Auth.auth().currentUser?.uid else { return }
                                                        
-                                                                                                       viewModel.addData(id: uid, email: email, name: displayName)
-                                                                                                       GoToCreate = true
+                                                       
+                                                                                                       viewModel.addData(id:uid, email: email, name: displayName)
+                                                                                                    GoToCreate = true
                                                     }
                                                 }
                                     }
@@ -169,7 +170,10 @@ struct SignInButton: View {
             }
         }
         .fullScreenCover(isPresented: $GoToCreate, content: {
-            CreateAccount()})
+            CreateAccount()
+                .interactiveDismissDisabled()
+        })
+
         
 //        VStack{
 //            Text("name")

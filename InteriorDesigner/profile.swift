@@ -14,11 +14,9 @@ struct profil: View {
     @State var isLoginMode = false
     
     @StateObject var viewModel = ViewModel()
-    @State var users : Users
-    init(){
-        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
-        self._users = .init(initialValue: user)
-    }
+    let name = UserDefaults.standard.string(forKey: "name") ?? nil
+    let phoneNumber = UserDefaults.standard.string(forKey: "phoneNumber") ?? nil
+
 
     var body: some View {
         NavigationView {
@@ -61,8 +59,7 @@ struct profil: View {
 //                            }
 //                            Text("Name")
                             
-                            
-                            TextField(users.name ?? "", text: $users.name.defaultValue(""))
+                            TextField(name ?? "name", text: $viewModel.user.name.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -72,7 +69,7 @@ struct profil: View {
                                 )
                                 .padding(2)
                             
-                            TextField(users.phoneNumber ?? "", text: $users.phoneNumber.defaultValue(""))
+                            TextField(phoneNumber ?? "phoneNumber", text: $viewModel.user.phoneNumber.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -95,6 +92,12 @@ struct profil: View {
             
             Button("Log Out") {
                 viewModel.signOut()
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                  UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+                    exit(0)
+
+                              }
+                
             }
                             .padding()
                                
@@ -117,7 +120,7 @@ struct profil: View {
             .navigationBarTitleDisplayMode(.inline)
             .foregroundColor(.red)
             
-        }
+        }.onAppear()
         
     }
 }

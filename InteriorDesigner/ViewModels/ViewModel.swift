@@ -11,17 +11,12 @@ import FirebaseFirestore
 import CryptoKit
 
 class ViewModel: ObservableObject {
-    
-    @Published var list = [Users]()
+    @State var userIDE = Auth.auth().currentUser?.uid
+    @Published var user = User(id: (Auth.auth().currentUser?.uid.description) ?? "")
     @Published var designers = [Users]()
-    @State var users : Users
     private var db = Firestore.firestore()
 
-    init(){
-        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
-        self._users = .init(initialValue: user)
-        
-    }
+   
     //----------------------------------
     
     func updateData(UsersUpdate: Users) {
@@ -30,18 +25,18 @@ class ViewModel: ObservableObject {
         let db = Firestore.firestore()
 
         // Set the data to update
-        db.collection("Users").document(users.id).setData([
-            "name":UsersUpdate.name ?? users.name,
-                                                     "phoneNumber":UsersUpdate.phoneNumber ?? users.phoneNumber,
-                                                     "desinger":UsersUpdate.desinger ?? users.desinger,
-                                                     "brief":UsersUpdate.brief ?? users.brief,
-                                                     "field":UsersUpdate.field ?? users.field,
-                                                     "styles":UsersUpdate.styles ?? users.styles], merge: true) { error in
+        db.collection("Users").document(user.id).setData([
+            "name":UsersUpdate.name ?? user.name ?? "",
+                                                     "phoneNumber":UsersUpdate.phoneNumber ?? user.phoneNumber ?? "",
+                                                     "desinger":UsersUpdate.desinger ?? user.desinger ?? "",
+                                                     "brief":UsersUpdate.brief ?? user.brief ?? "",
+                                                     "field":UsersUpdate.field ?? user.field ?? "",
+                                                     "styles":UsersUpdate.styles ?? user.styles ?? ""], merge: true) { error in
             
             // Check for errors
             if error == nil {
                 // Get the new data
-                self.getData()
+                self.getData(id: self.user.id)
             }
         }
     }
@@ -54,7 +49,7 @@ class ViewModel: ObservableObject {
         let db = Firestore.firestore()
         
         // Specify the document to delete
-        db.collection("Users").document(users.id).delete { error in
+        db.collection("Users").document(user.id).delete { error in
             
             // Check for errors
             if error == nil {
@@ -64,11 +59,11 @@ class ViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     
                     // Remove the todo that was just deleted
-                    self.list.removeAll { Users in
-                        
-                        // Check for the todo to remove
-                        return Users.id == UsersDelete.id
-                    }
+//                    self.Users.removeAll { Users in
+//
+//                        // Check for the todo to remove
+//                        return Users.id == UsersDelete.id
+//                    }
                 }
                 
                 
@@ -87,7 +82,7 @@ class ViewModel: ObservableObject {
         let db = Firestore.firestore()
         
         // Add a document to a collection
-        db.collection("Users").document(users.id).setData([ "id": users.id,
+        db.collection("Users").document(id).setData([ "id": id,
                                                                   "email": email ?? "",
                                                                   "name":name ?? ""]) { error in
             
@@ -96,7 +91,7 @@ class ViewModel: ObservableObject {
                 // No errors
                 
                 // Call get data to retrieve latest data
-                self.getData()
+                self.getData(id: id)
             }
             else {
                 // Handle the error
@@ -106,49 +101,43 @@ class ViewModel: ObservableObject {
     
     //----------------------------------
     
-    func getData() {
-        
-        // Get a reference to the database
-        let db = Firestore.firestore()
-        
-        // Read the documents at a specific path
-        db.collection("Users").getDocuments { snapshot, error in
-            
-            // Check for errors
-            if error == nil {
-                // No errors
-                
-                if let snapshot = snapshot {
-                    
-                    // Update the list property in the main thread
-                    DispatchQueue.main.async {
-                        
-                        // Get all the documents and create Todos
-                        self.list = snapshot.documents.map { d in
-                            
-                            // Create a Todo item for each document returned
-                            return Users(id:d["id"] as? String ?? "",
-//                                         userId:d["userId"] as? String ?? "",
-                                         name: d["name"] as? String ?? "",
-                                         email: d["email"] as? String ?? "",
-                                         phoneNumber: d["phoneNumber"] as? String ?? "",
-                                         favorite: d["favorite"] as? [String] ?? [""],
-                                         desinger: d["desinger"] as? Bool ?? false,
-                                         brief: d["brief"] as? String ?? "",
-                                         field: d["field"] as? String ?? "",
-                                         styles: d["styles"] as? String ?? "",
-                                         rate: d["rate"] as? String ?? "")
-                        }
-                        print("GetData")
-                    }
-                    
-                    
-                }
-            }
+    func getData(id : String) {
+        let docRef = db.collection("Users").document(id)
+
+          docRef.getDocument { document, error in
+              if let error = error {
+                  print("error!:\(error.localizedDescription)")
+              }
             else {
-                // Handle the error
+              if let document = document {
+                  let id =  document.documentID
+                  let data = document.data()
+                  let name = data?["name"] as? String ?? ""
+                  let email = data?["email"] as? String ?? ""
+                  let phoneNumber = data?["phoneNumber"] as? String ?? ""
+                  let favorite = data?["favorite"] as? String ?? ""
+                  let desinger = data?["desinger"] as? Bool ?? false
+                  let brief = data?["brief"] as? String ?? ""
+                  let field = data?["field"] as? String ?? ""
+                  let styles = data?["styles"] as? String ?? ""
+                  let rate = data?["rate"] as? String ?? ""
+                  
+                  
+                  UserDefaults.standard.set(name, forKey: "name")
+                  UserDefaults.standard.set(email, forKey: "email")
+                  UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
+                  UserDefaults.standard.set(favorite, forKey: "favorite")
+                  UserDefaults.standard.set(desinger, forKey: "desinger")
+                  UserDefaults.standard.set(brief, forKey: "brief")
+                  UserDefaults.standard.set(field, forKey: "field")
+                  UserDefaults.standard.set(rate, forKey: "rate")
+                 
+                  
+                  self.user = User(id: id, name: name ,email: email ,phoneNumber: phoneNumber ,desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )
+                  print(self.user.name ?? "" )
+              }
             }
-        }
+          }
     }
     
     //----------------------------------
@@ -167,7 +156,6 @@ class ViewModel: ObservableObject {
             print("User is signed in.")
         } else {
             // No user is signed in.
-            print("\(String(describing: Auth.auth().currentUser?.uid))")
             print("No user is signed in.")
             let domain = Bundle.main.bundleIdentifier!
             UserDefaults.standard.removePersistentDomain(forName: domain)
@@ -181,7 +169,7 @@ class ViewModel: ObservableObject {
 
     func addFavoriteArray(otherUserID : String) {
         let db = Firestore.firestore()
-        let washingtonRef = db.collection("Users").document(users.id)
+        let washingtonRef = db.collection("Users").document(user.id)
 
         // Atomically add a new region to the "regions" array field.
         washingtonRef.updateData([
@@ -193,7 +181,7 @@ class ViewModel: ObservableObject {
     //----------------------------------
 
     func removeFavoriteArray(otherUserID : String) {
-        let washingtonRef = db.collection("Users").document(users.id)
+        let washingtonRef = db.collection("Users").document(user.id)
 
         // Atomically remove a region from the "regions" array field.
         washingtonRef.updateData([

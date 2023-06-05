@@ -11,12 +11,13 @@ import FirebaseAuth
 var designerCheck = false
 
 struct home: View {
-    let user = Auth.auth().currentUser;
+    @State var userIDE = Auth.auth().currentUser?.uid
+    @StateObject var viewModel = ViewModel()
     @State var showSheet = false
     @State var showChat = false
     @State var showProfile = false
+
     
-    @State var users : Users
     
    
 
@@ -25,8 +26,7 @@ struct home: View {
             .foregroundColor: UIColor.white
         ]
         
-        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
-        self._users = .init(initialValue: user)
+       
     }
     
    
@@ -77,7 +77,7 @@ struct home: View {
                                        showSheet = true
                                        showChat = true
                                    } label: {
-                                       if ((user) != nil) {
+                                       if ((userIDE) != nil) {
                                            NavigationLink(destination:allchat(),isActive: $showChat){}
                                            Image(systemName: "message")
                                                .foregroundColor(.white)
@@ -85,7 +85,10 @@ struct home: View {
                                        else{
                                            Image(systemName: "message")
                                                .foregroundColor(.white)
-                                               .sheet(isPresented: $showSheet){
+                                               .sheet(isPresented: $showSheet,onDismiss: {
+                                                   userIDE = Auth.auth().currentUser?.uid
+
+                                               }){
                                                    SignInButton()
                                                        .presentationDetents([.height(200), .medium, .large])
                                                        .presentationDragIndicator(.automatic)
@@ -101,9 +104,10 @@ struct home: View {
                                     Button {
                                         showSheet = true
                                         showProfile = true
+                                        print(viewModel.user.phoneNumber)
                                     } label: {
-                                        if ((user) != nil) {
-                                            if(users.desinger == false){
+                                        if ((userIDE) != nil) {
+                                            if(viewModel.user.desinger == true){
                                                 NavigationLink(destination:designerProfile(size: size, safeArea: safeArea),isActive: $showProfile){}}
                                             else{
                                                 NavigationLink(destination:profil(),isActive: $showProfile){}}
@@ -113,7 +117,10 @@ struct home: View {
                                         else{
                                             Image(systemName: "person")
                                                 .foregroundColor(.white)
-                                                .sheet(isPresented: $showSheet){
+                                                .sheet(isPresented: $showSheet,onDismiss: {
+                                                    userIDE = Auth.auth().currentUser?.uid
+
+                                                }){
                                                     SignInButton()
                                                         .presentationDetents([.height(200), .medium, .large])
                                                         .presentationDragIndicator(.automatic)
@@ -124,6 +131,7 @@ struct home: View {
                            }
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
+            .onAppear{ viewModel.getData(id: Auth.auth().currentUser?.uid ?? "")}
 
         }
         
