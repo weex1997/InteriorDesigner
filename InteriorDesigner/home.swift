@@ -17,10 +17,6 @@ struct home: View {
     @State var showChat = false
     @State var showProfile = false
 
-    
-    
-   
-
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [
             .foregroundColor: UIColor.white
@@ -104,10 +100,10 @@ struct home: View {
                                     Button {
                                         showSheet = true
                                         showProfile = true
-                                        print(viewModel.user.phoneNumber)
+                                        print(self.viewModel.user.desinger)
                                     } label: {
                                         if ((userIDE) != nil) {
-                                            if(viewModel.user.desinger == true){
+                                            if(self.viewModel.user.desinger == true){
                                                 NavigationLink(destination:designerProfile(size: size, safeArea: safeArea),isActive: $showProfile){}}
                                             else{
                                                 NavigationLink(destination:profil(),isActive: $showProfile){}}
@@ -128,11 +124,12 @@ struct home: View {
                                         }
                                         
                                     })
+                           }.onAppear(){
+                               self.viewModel.getData(id: userIDE ?? "123")
                            }
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
-            .onAppear{ viewModel.getData(id: Auth.auth().currentUser?.uid ?? "")}
-
+           
         }
         
     }

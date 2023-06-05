@@ -19,26 +19,24 @@ class ViewModel: ObservableObject {
    
     //----------------------------------
     
-    func updateData(UsersUpdate: Users) {
+    func updateData(id: String) {
         
-        // Get a reference to the database
         let db = Firestore.firestore()
-
-        // Set the data to update
-        db.collection("Users").document(user.id).setData([
-            "name":UsersUpdate.name ?? user.name ?? "",
-                                                     "phoneNumber":UsersUpdate.phoneNumber ?? user.phoneNumber ?? "",
-                                                     "desinger":UsersUpdate.desinger ?? user.desinger ?? "",
-                                                     "brief":UsersUpdate.brief ?? user.brief ?? "",
-                                                     "field":UsersUpdate.field ?? user.field ?? "",
-                                                     "styles":UsersUpdate.styles ?? user.styles ?? ""], merge: true) { error in
-            
-            // Check for errors
-            if error == nil {
-                // Get the new data
-                self.getData(id: self.user.id)
+            db.collection("Users").whereField("id", isEqualTo: id).getDocuments { (result, error) in
+                if error == nil{
+                    for document in result!.documents{
+                        //document.setValue("1", forKey: "isolationDate")
+                        db.collection("Users").document(document.documentID).setData([
+                            "name": self.user.name ?? "",
+                            "phoneNumber": self.user.phoneNumber ?? "",
+                            "desinger": self.user.desinger ?? false,
+                            "brief": self.user.brief ?? "",
+                            "field": self.user.field ?? "",
+                            "styles": self.user.styles ?? "",
+                            "rate": self.user.rate ?? 0], merge: true)
+                    }
+                }
             }
-        }
     }
     
     //----------------------------------
@@ -123,14 +121,14 @@ class ViewModel: ObservableObject {
                   let rate = data?["rate"] as? String ?? ""
                   
                   
-                  UserDefaults.standard.set(name, forKey: "name")
-                  UserDefaults.standard.set(email, forKey: "email")
-                  UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
-                  UserDefaults.standard.set(favorite, forKey: "favorite")
-                  UserDefaults.standard.set(desinger, forKey: "desinger")
-                  UserDefaults.standard.set(brief, forKey: "brief")
-                  UserDefaults.standard.set(field, forKey: "field")
-                  UserDefaults.standard.set(rate, forKey: "rate")
+//                  UserDefaults.standard.set(name, forKey: "name")
+//                  UserDefaults.standard.set(email, forKey: "email")
+//                  UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
+//                  UserDefaults.standard.set(favorite, forKey: "favorite")
+//                  UserDefaults.standard.set(desinger, forKey: "desinger")
+//                  UserDefaults.standard.set(brief, forKey: "brief")
+//                  UserDefaults.standard.set(field, forKey: "field")
+//                  UserDefaults.standard.set(rate, forKey: "rate")
                  
                   
                   self.user = User(id: id, name: name ,email: email ,phoneNumber: phoneNumber ,desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )

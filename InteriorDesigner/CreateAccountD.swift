@@ -9,13 +9,14 @@ import SwiftUI
 import FirebaseAuth
 
 struct CreateAccountD: View {
-    
+    @State var userIDE = Auth.auth().currentUser?.uid ?? ""
+
     @StateObject var viewModel = ViewModel()
-    @State var users : Users
-    init(){
-        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
-        self._users = .init(initialValue: user)
-    }
+//    @State var user : User
+//    init(){
+//        let user = User(id: (Auth.auth().currentUser?.uid.description) ?? "")
+//        self._user = .init(initialValue: user)
+//    }
     
 //    init() {
 //
@@ -33,7 +34,7 @@ struct CreateAccountD: View {
                     
                     VStack{
                         
-                        TextField("Name", text: $users.name.defaultValue(""))
+                        TextField("Name", text: $viewModel.user.name.defaultValue(""))
                         //   .foregroundColor(Color("line"))
                             .font(.body)
                             .padding(11)
@@ -44,7 +45,7 @@ struct CreateAccountD: View {
                             )
                             .padding(2)
                         
-                        TextField("Phone Number", text: $users.phoneNumber.defaultValue(""))
+                        TextField("Phone Number", text: $viewModel.user.phoneNumber.defaultValue(""))
                             .font(.body)
                             .padding(11)
                             .font(.body)
@@ -53,7 +54,7 @@ struct CreateAccountD: View {
                                     .stroke(Color("line"), lineWidth: 2)
                             )
                             .padding(2)
-                        TextField("About", text: $users.brief.defaultValue(""))
+                        TextField("About", text: $viewModel.user.brief.defaultValue(""))
                         //  .padding([.trailing, .bottom])
                             .padding()
                             .font(.body)
@@ -76,8 +77,7 @@ struct CreateAccountD: View {
                         destination: ContentView().navigationBarHidden(true),
                         label: {
                             Button("Next") {
-                                viewModel.updateData(UsersUpdate: users)
-                            }
+                                viewModel.updateData(id: userIDE)}
                                 .bold()
                                 .foregroundColor(.white)
                                 .background(RoundedRectangle(cornerRadius: 8)

@@ -17,13 +17,13 @@ struct SignInButton: View {
 
     @Environment(\.dismiss) var dismiss
     
-    @State var users : Users
-    
-    init(){
-        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
-        self._users = .init(initialValue: user)
-        
-    }
+//    @State var users : Users
+//    
+//    init(){
+//        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
+//        self._users = .init(initialValue: user)
+//        
+//    }
 
     
     @State var currentNonce:String?

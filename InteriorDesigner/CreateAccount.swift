@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAuth
 
 struct CreateAccount: View {
-    
+    @State var userIDE = Auth.auth().currentUser?.uid ?? ""
     @StateObject var viewModel = ViewModel()
     @State var users : Users
     @State var Next = false
@@ -62,7 +62,7 @@ struct CreateAccount: View {
                     }
                     
                     Button("Next") {
-                        viewModel.updateData(UsersUpdate: users)}
+                        viewModel.updateData(id: userIDE)}
                     .bold()
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 8)
