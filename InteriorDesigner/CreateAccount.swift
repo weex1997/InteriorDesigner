@@ -76,7 +76,7 @@ struct CreateAccount: View {
             
             .navigationTitle("Create Account")
             .navigationBarTitleDisplayMode(.inline)
-            .foregroundColor(.red)
+            .foregroundColor(Color("Pr"))
             
         }
     }
