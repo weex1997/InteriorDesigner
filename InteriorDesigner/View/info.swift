@@ -60,7 +60,7 @@ struct info: View {
                         Capsule()
                             .fill(Color("Primary"))
                             .frame(width: 80, height: 28)
-                        Text(self.viewModel.user.field ?? "")
+//                        Text(self.viewModel.user.field ?? [""])
                             
                     } .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(5)
@@ -69,7 +69,7 @@ struct info: View {
                         Capsule()
                             .fill(Color("Primary"))
                             .frame(width: 80, height: 28)
-                        Text(self.viewModel.user.field ?? "hoo")
+//                        Text(self.viewModel.user.field ?? ["hoo"])
                          
                     } .padding(.leading,-260)
                 }

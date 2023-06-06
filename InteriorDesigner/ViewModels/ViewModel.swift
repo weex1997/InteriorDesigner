@@ -29,9 +29,10 @@ class ViewModel: ObservableObject {
                         db.collection("Users").document(document.documentID).setData([
                             "name": self.user.name ?? "",
                             "phoneNumber": self.user.phoneNumber ?? "",
+                            "gender": self.user.gender ?? "",
                             "desinger": self.user.desinger ?? false,
                             "brief": self.user.brief ?? "",
-                            "field": self.user.field ?? "",
+                            "field": self.user.field ?? [],
                             "styles": self.user.styles ?? "",
                             "rate": self.user.rate ?? 0], merge: true)
                     }
@@ -113,10 +114,11 @@ class ViewModel: ObservableObject {
                   let name = data?["name"] as? String ?? ""
                   let email = data?["email"] as? String ?? ""
                   let phoneNumber = data?["phoneNumber"] as? String ?? ""
-                  let favorite = data?["favorite"] as? String ?? ""
+                  let gender = data?["gender"] as? String ?? ""
+                  let favorite = data?["favorite"] as? [String] ?? []
                   let desinger = data?["desinger"] as? Bool ?? false
                   let brief = data?["brief"] as? String ?? ""
-                  let field = data?["field"] as? String ?? ""
+                  let field = data?["field"] as? [String] ?? []
                   let styles = data?["styles"] as? String ?? ""
                   let rate = data?["rate"] as? String ?? ""
                   
@@ -176,6 +178,17 @@ class ViewModel: ObservableObject {
 
       }
     
+    func addFieldArray(Feilds : String) {
+        let db = Firestore.firestore()
+        let washingtonRef = db.collection("Users").document(user.id)
+
+        // Atomically add a new region to the "regions" array field.
+        washingtonRef.updateData([
+            "field": FieldValue.arrayUnion([Feilds])
+        ])
+
+      }
+    
     //----------------------------------
 
     func removeFavoriteArray(otherUserID : String) {
@@ -184,6 +197,16 @@ class ViewModel: ObservableObject {
         // Atomically remove a region from the "regions" array field.
         washingtonRef.updateData([
             "favorite": FieldValue.arrayRemove([otherUserID])
+        ])
+      }
+    
+    
+    func removeFieldArray(Feilds : String) {
+        let washingtonRef = db.collection("Users").document(user.id)
+
+        // Atomically remove a region from the "regions" array field.
+        washingtonRef.updateData([
+            "field": FieldValue.arrayRemove([Feilds])
         ])
       }
 //    func Rate(otherUserID : String, rateingValue : Int32) {

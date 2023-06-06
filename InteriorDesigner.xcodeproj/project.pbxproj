@@ -19,6 +19,7 @@
 		4E0FF4722A2AA1B000250475 /* chatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FF4712A2AA1B000250475 /* chatView.swift */; };
 		4E0FF4742A2AA1B800250475 /* home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FF4732A2AA1B800250475 /* home.swift */; };
 		4E0FF4762A2AA1C200250475 /* allchat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FF4752A2AA1C200250475 /* allchat.swift */; };
+		FC6F7EEB2A2F1858000003A5 /* GridPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6F7EEA2A2F1858000003A5 /* GridPicker.swift */; };
 		FCF59BB72A10DB0A00543D51 /* InteriorDesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */; };
 		FCF59BB92A10DB0A00543D51 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF59BB82A10DB0A00543D51 /* ContentView.swift */; };
 		FCF59BBB2A10DB0B00543D51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCF59BBA2A10DB0B00543D51 /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 		4E0FF4712A2AA1B000250475 /* chatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = chatView.swift; sourceTree = "<group>"; };
 		4E0FF4732A2AA1B800250475 /* home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = home.swift; sourceTree = "<group>"; };
 		4E0FF4752A2AA1C200250475 /* allchat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = allchat.swift; sourceTree = "<group>"; };
+		FC6F7EEA2A2F1858000003A5 /* GridPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPicker.swift; sourceTree = "<group>"; };
 		FC81D6C42A2BF46F00004BC0 /* InteriorDesigner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InteriorDesigner.entitlements; sourceTree = "<group>"; };
 		FCF59BB32A10DB0A00543D51 /* InteriorDesigner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteriorDesigner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteriorDesignerApp.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				26DD7C5D2A1A0FD10030A521 /* CreateAccount.swift */,
 				26DD7C612A1A15900030A521 /* CreateAccountD.swift */,
 				26DD7C5B2A19FA7A0030A521 /* photopicer.swift */,
+				FC6F7EEA2A2F1858000003A5 /* GridPicker.swift */,
 				26DD7C632A1CBF780030A521 /* View */,
 				FCFB0B732A2A51D10093BEF0 /* ViewModels */,
 				FCFB0B6C2A2A51B30093BEF0 /* Models */,
@@ -242,6 +245,7 @@
 			files = (
 				26DD7C622A1A15900030A521 /* CreateAccountD.swift in Sources */,
 				26DD7C5C2A19FA7A0030A521 /* photopicer.swift in Sources */,
+				FC6F7EEB2A2F1858000003A5 /* GridPicker.swift in Sources */,
 				26DD7C682A1DEC980030A521 /* ScrollDetector.swift in Sources */,
 				FCFB0B772A2A51F90093BEF0 /* SignInButton.swift in Sources */,
 				FCF59BB92A10DB0A00543D51 /* ContentView.swift in Sources */,

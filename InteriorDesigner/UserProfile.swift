@@ -79,7 +79,7 @@ struct UserProfile: View {
                                 )
                                 .padding(2)
                             
-                            TextField("Feild", text: $viewModel.user.field.defaultValue(""))
+//                            TextField("Feild", text: $viewModel.user.field.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)

@@ -19,75 +19,99 @@ struct CreateAccount: View {
     var body: some View {
         NavigationView {
          
-                ZStack{
+            ZStack(alignment: .top){
+                Color("BC")
+                               .ignoresSafeArea()
                   
                     NavigationLink(destination: CreateAccountD().navigationBarBackButtonHidden(false), isActive: $Next){}
                     NavigationLink(destination: home().navigationBarBackButtonHidden(false), isActive: $Done){}
-                    List {
-                        
-                        VStack{
-                            
-                            TextField("Name", text: $viewModel.user.name.defaultValue(""))
-                            //   .foregroundColor(Color("line"))
-                                .font(.body)
-                                .padding(11)
-                                .font(.body)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 9)
-                                        .stroke(Color("line"), lineWidth: 2)
-                                )
-                                .padding(2)
-                            
-                            TextField("Phone Number", text: $viewModel.user.phoneNumber.defaultValue(""))
-                                .font(.body)
-                                .padding(11)
-                                .font(.body)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 9)
-                                        .stroke(Color("line"), lineWidth: 2)
-                                )
-                                .padding(2)
-                            
-                            Toggle(isOn: $isDesigner) {
-                                
-                                Text("Are you Designer ?")
+                VStack{
+                    Spacer()
+                    TextField("Name", text: $viewModel.user.name.defaultValue(""))
+                       .foregroundColor(Color("Primary"))
+                        .multilineTextAlignment(.leading)
+                        .padding(11)
+                        .font(.body)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 9)
+                                .stroke(Color("line"), lineWidth: 2)
+                        )
+                        .padding(2)
+                    
+                    TextField("Phone Number", text: $viewModel.user.phoneNumber.defaultValue(""))
+                        .foregroundColor(Color("Primary"))
+                         .multilineTextAlignment(.leading)
+                        .font(.body)
+                        .padding(11)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 9)
+                                .stroke(Color("line"), lineWidth: 2)
+                        )
+                        .padding(2)
+                 
+                        VStack(){
+                            HStack{
+                                Text("Gender")
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 12)
                                     .foregroundColor(Color("Primary"))
                                 
-                            }
-                            .onChange(of: isDesigner, perform: { value in
-                                //Once the toggle is interacted with, set showText to true
-                                self.viewModel.user.desinger = isDesigner
+                                Spacer()
+                                
+                                Picker("Gender", selection: $viewModel.user.gender.defaultValue("")) {
+                                    Text("Male").tag("0")
+                                    Text("Female").tag("1")
+                                }.accentColor(Color("Primary"))
+                                .font(.system(size: 16))
+                            }   .overlay(
+                                RoundedRectangle(cornerRadius: 9)
+                                    .stroke(Color("line"), lineWidth: 2))      .frame(width: 318,height: 45)
 
-
-                            })
-                            .tint(Color("Primary"))
-                            .padding()
-                            
-                        }
-                        
                     }
                     
-                    Button() {
-                        viewModel.updateData(id: viewModel.user.id)
-                        if(isDesigner){
-                            Next = true
-                        }else{
-                            Done = true
-                        }
-                    }label: {
-                        Text( isDesigner ? "Next" : "Done" )
+                    Toggle(isOn: $isDesigner) {
+                        
+                        Text("Are you Designer ?")
+                            .foregroundColor(Color("Primary"))
+                        
                     }
-                    .bold()
-                    .foregroundColor(.white)
-                    .background(RoundedRectangle(cornerRadius: 8)
+                    .onChange(of: isDesigner, perform: { value in
+                        //Once the toggle is interacted with, set showText to true
+                        self.viewModel.user.desinger = isDesigner
+                        
+                        
+                    })
+                    .tint(Color("Primary"))
+                    .padding()
+                    
+                    
+                    
+                    Spacer()
+
+                    VStack{
+                        Button() {
+                            viewModel.updateData(id: viewModel.user.id)
+                            if(isDesigner){
+                                Next = true
+                            }else{
+                                Done = true
+                            }
+                        }label: {
+                            Text( isDesigner ? "Next" : "Done" )
+                        }
+                        .bold()
+                        .foregroundColor(.white)
+                        .background(RoundedRectangle(cornerRadius: 8)
                             .fill(Color("Primary"))
-                            .frame(width: 330, height: 48.58)
-                                )
-                            .padding(.top, 70)
-                        
-                        
+                            .frame(width: 320, height: 48.58)
+                        )
+                    }.padding()
+                }.frame(width: 320, height: 320)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(8)
                   
-                }
+            }
                 
             
             .navigationTitle("Create Account")

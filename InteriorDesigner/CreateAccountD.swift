@@ -13,28 +13,31 @@ struct CreateAccountD: View {
     @StateObject var viewModel = ViewModel()
     @State var userIDE = Auth.auth().currentUser?.uid
     @State var GoHome = false
+    @State var gridPicher = GridPicker()
     
     
     
     //    init() {
     //
     //        UINavigationBar.appearance().largeTitleTextAttributes=[.foregroundColor:UIColor.init(Color("Pr"))]
-    //        
+    //
     //    }
     
     var body: some View {
         
         
         
-        ZStack{
+        ZStack(alignment: .top){
+            Color("BC")
+                .ignoresSafeArea()
             
-            NavigationLink(destination: CreateAccountD().navigationBarBackButtonHidden(false), isActive: $GoHome){}
+            NavigationLink(destination: home().navigationBarBackButtonHidden(false), isActive: $GoHome){}
             
-            List {
-                
+            VStack {
+                Spacer()
                 VStack{
                     
-                    TextField("Name", text: $viewModel.user.name.defaultValue(""))
+                    TextField("Styles, Ex: Modern, classic, new classic", text: $viewModel.user.styles.defaultValue(""))
                     //   .foregroundColor(Color("line"))
                         .font(.body)
                         .padding(11)
@@ -45,48 +48,59 @@ struct CreateAccountD: View {
                         )
                         .padding(2)
                     
-                    TextField("Phone Number", text: $viewModel.user.phoneNumber.defaultValue(""))
+                    Text("Field")
                         .font(.body)
-                        .padding(11)
-                        .font(.body)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 9)
-                                .stroke(Color("line"), lineWidth: 2)
-                        )
-                        .padding(2)
-                    TextField("About", text: $viewModel.user.brief.defaultValue(""))
-                    //  .padding([.trailing, .bottom])
+                        .foregroundColor(Color("Primary"))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.system(size: 17))
+                        .padding(.bottom, -30.0)
                         .padding()
-                        .font(.body)
-                        .padding( .bottom, 66.0)
-                        .font(.body)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 9)
-                                .stroke(Color("line"), lineWidth: 2)
-                        )
-                        .padding(2)
-                    
+                        .padding(.leading, -10.0)
                     
                 }
+                VStack{
+                    GridPicker()
+                }.padding()
+                    .frame(width: 330, height: 60)
+                VStack{
+                    TextField("About, Here are space to write some information about you..",text: self.$viewModel.user.brief.defaultValue(""), axis: .vertical)
+                    
+                        .padding(14)
+                        .lineLimit(2, reservesSpace: true)
+                        .font(.body)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 9)
+                                .stroke(Color("line"), lineWidth: 2)
+                        )
+                        .padding(2)
+                }
                 
-            }
+                
+                
+                VStack{
+                    
+                    
+                    Button("Done") {
+                        viewModel.updateData(id: viewModel.user.id)
+                        GoHome = true                            }
+                    .bold()
+                    .foregroundColor(.white)
+                    .background(RoundedRectangle(cornerRadius: 8)
+                        .fill(Color("Primary"))
+                        .frame(width: 320, height: 48.58)
+                    )
+                    
+                    
+                    
+                }.padding()
+                    .padding(.top, 20)
+
+            }.frame(width: 320, height: 330)
+                .padding()
+                .background(Color.white)
+                .cornerRadius(8)
             
-            HStack{
-                
-                
-                Button("Done") {
-                    viewModel.updateData(id: viewModel.user.id)
-                    GoHome = true                            }
-                .bold()
-                .foregroundColor(.white)
-                .background(RoundedRectangle(cornerRadius: 8)
-                    .fill(Color("Primary"))
-                    .frame(width: 330, height: 48.58)
-                )
-                
-                
-                
-            }
+            
             
         }
         
@@ -103,7 +117,7 @@ struct CreateAccountD: View {
             self.viewModel.getData(id: userIDE ?? "123")
         }
         
-    }               
+    }
     
     
     
