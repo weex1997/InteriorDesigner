@@ -106,7 +106,7 @@ struct home: View {
                                 if(self.viewModel.user.desinger == true){
                                     NavigationLink(destination:designerProfile(size: size, safeArea: safeArea),isActive: $showProfile){}}
                                 else{
-                                    NavigationLink(destination:profil(),isActive: $showProfile){}}
+                                    NavigationLink(destination:UserP2(),isActive: $showProfile){}}
                                 Image(systemName: "person")
                                     .foregroundColor(.white)
                             }
@@ -127,6 +127,7 @@ struct home: View {
             }.onAppear(){
                 self.viewModel.getData(id: userIDE ?? "123")
             }
+            
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(false)
             

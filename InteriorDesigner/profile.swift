@@ -11,60 +11,38 @@ import FirebaseAuth
 struct profil: View {
     // struct LoginView: View {
     
-    @State var isLoginMode = false
+    @State var GotoHome = false
     @State var userIDE = Auth.auth().currentUser?.uid
-
     @StateObject var viewModel = ViewModel()
-//    @State var userIDE = Auth.auth().currentUser?.uid ?? ""
-//    let name = UserDefaults.standard.string(forKey: "name") ?? nil
-//    let phoneNumber = UserDefaults.standard.string(forKey: "phoneNumber") ?? nil
-    
-    
+    @State var isDesigner = false
+
     var body: some View {
-        NavigationView {
-            // Group{
-            ZStack{
+        // Group{
+        ZStack(alignment: .top){
+            
+            NavigationLink(destination: home().navigationBarBackButtonHidden(false), isActive: $GotoHome){}
+            
+            Color("BC")
+                .ignoresSafeArea()
+            VStack{
                 
-                List {
-                    
-                    VStack{
-                        ZStack{
-                            Image("Circle")
-                                .resizable()
-                                .frame(width: 120 , height: 120)
-                                .padding(.trailing,200)
-                            
-                            photopicer()
-                                .padding()
-                                .padding(.top ,70)
-                                .padding(.trailing,130)
-                            GeometryReader {
-                                let rect = $0.frame (in: .global)
-                                Image ("b")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame (width: rect.width, height: rect.height)
-                                    .clipShape (Circle ())
-                            }
-                            .padding(.trailing,200)
-                            
-                            
-                            
-                        }
-                        //                            HStack{
-                        //                                Button(action: { }) {
-                        //
-                        //                                    Image(systemName: ("pencil"))
-                        //                                        .frame(width: 25 , height: 25)
-                        //
-                        //                                }
-                        //                            }
-                        //                            Text("Name")
+                VStack{
+                    ZStack{
                         
+                        Circle()
+                            .foregroundColor(Color("line"))
+                        Image ("b").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
+                        
+                    }.frame(width: 110 , height: 110)
+                        .padding(.leading)
+                        .offset(x: -100 , y: -60)
+                        .padding(.top,100)
+                    VStack{
                         TextField(self.viewModel.user.name ?? "name", text: $viewModel.user.name.defaultValue(""))
+                            .foregroundColor(Color("Primary"))
+                            .multilineTextAlignment(.leading)
                             .font(.body)
                             .padding(11)
-                            .font(.body)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 9)
                                     .stroke(Color("line"), lineWidth: 2)
@@ -72,72 +50,76 @@ struct profil: View {
                             .padding(2)
                         
                         TextField(self.viewModel.user.phoneNumber ?? "phoneNumber", text: $viewModel.user.phoneNumber.defaultValue(""))
+                            .foregroundColor(Color("Primary"))
+                            .multilineTextAlignment(.leading)
                             .font(.body)
                             .padding(11)
-                            .font(.body)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 9)
                                     .stroke(Color("line"), lineWidth: 2)
                             )
                             .padding(2)
-                        Spacer()
-                        
-                        
-                    }
+                    }.padding()
+                        .padding(.top, -50.0)
                     
-                }
+                    VStack{
+          
+                        Toggle(isOn: $isDesigner) {
+                            
+                            Text("Switch to designer account?")
+                                .foregroundColor(Color("Primary"))
+                                .frame(width: 220)
+
+                        }
+                        .onChange(of: isDesigner, perform: { value in
+                            //Once the toggle is interacted with, set showText to true
+                            self.viewModel.user.desinger = isDesigner
+                            
+                            
+                        })
+                        .tint(Color("Primary"))
+                    }
+                    .padding([.leading, .bottom, .trailing])
+
+                    
+                }.frame(width: 320, height: 340)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .shadow(color: Color.gray.opacity(0.2), radius: 5, x: 0, y: 0)
+                
+                
+                
                 
                 VStack{
                     
                     Button("Update") {
-                        viewModel.updateData(id: self.viewModel.user.id)}
+                        viewModel.updateData(id: self.viewModel.user.id)
+                        GotoHome = true
+                    }
                     .bold()
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 8)
                         .fill(Color("Primary"))
-                        .frame(width: 330, height: 48.58)
+                        .frame(width: 342, height: 48.58)
                     )
                     .padding()
                     
-                    
-                    Button("Log Out") {
-                        viewModel.signOut()
-                        DispatchQueue.main.asyncAfter(deadline: .now()) {
-                            UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
-                            exit(0)
-                            
-                        }
-                        
-                        
-                    }
-                    .padding()
-                    
-                    Button("Delete Account") {
-                        viewModel.signOut()
-                        DispatchQueue.main.asyncAfter(deadline: .now()) {
-                            UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
-                            exit(0)
-                            
-                        }
-                        
-                        
-                    }
                 }
-                .padding(.top, 150.0)
+                .padding(.top,20)
             }
-            
-            
-            
-            
-        }.onAppear(){
+        }
+        
+        
+        
+        .onAppear(){
             self.viewModel.getData(id: Auth.auth().currentUser?.uid ?? "1234")
         }
         
         //   }
         
-            .navigationTitle("My Profile")
-            .navigationBarTitleDisplayMode(.inline)
-            .foregroundColor(.red)
+        .navigationTitle("My Profile")
+        .navigationBarTitleDisplayMode(.inline)
         
     }
 }

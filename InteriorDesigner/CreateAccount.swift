@@ -15,7 +15,7 @@ struct CreateAccount: View {
     @State var Done = false
 
     @State var isDesigner = false
-
+    
     var body: some View {
         NavigationView {
          
@@ -26,29 +26,30 @@ struct CreateAccount: View {
                     NavigationLink(destination: CreateAccountD().navigationBarBackButtonHidden(false), isActive: $Next){}
                     NavigationLink(destination: home().navigationBarBackButtonHidden(false), isActive: $Done){}
                 VStack{
-                    Spacer()
-                    TextField("Name", text: $viewModel.user.name.defaultValue(""))
-                       .foregroundColor(Color("Primary"))
-                        .multilineTextAlignment(.leading)
-                        .padding(11)
-                        .font(.body)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 9)
-                                .stroke(Color("line"), lineWidth: 2)
-                        )
-                        .padding(2)
-                    
-                    TextField("Phone Number", text: $viewModel.user.phoneNumber.defaultValue(""))
-                        .foregroundColor(Color("Primary"))
-                         .multilineTextAlignment(.leading)
-                        .font(.body)
-                        .padding(11)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 9)
-                                .stroke(Color("line"), lineWidth: 2)
-                        )
-                        .padding(2)
-                 
+                    VStack{
+                        Spacer()
+                        TextField("Name", text: $viewModel.user.name.defaultValue(""))
+                            .foregroundColor(Color("Primary"))
+                            .multilineTextAlignment(.leading)
+                            .padding(11)
+                            .font(.body)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 9)
+                                    .stroke(Color("line"), lineWidth: 2)
+                            )
+                            .padding(2)
+                        
+                        TextField("Phone Number", text: $viewModel.user.phoneNumber.defaultValue(""))
+                            .foregroundColor(Color("Primary"))
+                            .multilineTextAlignment(.leading)
+                            .font(.body)
+                            .padding(11)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 9)
+                                    .stroke(Color("line"), lineWidth: 2)
+                            )
+                            .padding(2)
+                        
                         VStack(){
                             HStack{
                                 Text("Gender")
@@ -62,32 +63,37 @@ struct CreateAccount: View {
                                     Text("Male").tag("0")
                                     Text("Female").tag("1")
                                 }.accentColor(Color("Primary"))
-                                .font(.system(size: 16))
+                                    .font(.system(size: 16))
                             }   .overlay(
                                 RoundedRectangle(cornerRadius: 9)
                                     .stroke(Color("line"), lineWidth: 2))      .frame(width: 318,height: 45)
-
-                    }
-                    
-                    Toggle(isOn: $isDesigner) {
+                            
+                        }
                         
-                        Text("Are you Designer ?")
-                            .foregroundColor(Color("Primary"))
+                        Toggle(isOn: $isDesigner) {
+                            
+                            Text("Are you Designer ?")
+                                .foregroundColor(Color("Primary"))
+                            
+                        }
+                        .onChange(of: isDesigner, perform: { value in
+                            //Once the toggle is interacted with, set showText to true
+                            self.viewModel.user.desinger = isDesigner
+                            
+                            
+                        })
+                        .tint(Color("Primary"))
+                        .padding()
                         
-                    }
-                    .onChange(of: isDesigner, perform: { value in
-                        //Once the toggle is interacted with, set showText to true
-                        self.viewModel.user.desinger = isDesigner
                         
                         
-                    })
-                    .tint(Color("Primary"))
-                    .padding()
-                    
-                    
-                    
-                    Spacer()
-
+                        Spacer()
+                        
+                        
+                    }.frame(width: 320, height: 250)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(8)                    .shadow(color: Color.gray.opacity(0.2), radius: 5, x: 0, y: 0)
                     VStack{
                         Button() {
                             viewModel.updateData(id: viewModel.user.id)
@@ -103,27 +109,21 @@ struct CreateAccount: View {
                         .foregroundColor(.white)
                         .background(RoundedRectangle(cornerRadius: 8)
                             .fill(Color("Primary"))
-                            .frame(width: 320, height: 48.58)
+                            .frame(width: 330, height: 48.58)
                         )
-                    }.padding()
-                }.frame(width: 320, height: 320)
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(8)
-                  
+                    }.padding(.top,30)
+                }
             }
                 
-            
-            .navigationTitle("Create Account")
-            .navigationBarTitleDisplayMode(.inline)
-            .foregroundColor(.red)
             .navigationBarBackButtonHidden(false)
         }.onAppear(){
             self.viewModel.getData(id: userIDE ?? "123")
         }
+        .accentColor(Color("Primary"))
     }
 }
 
+ 
 struct CreateAccount_Previews: PreviewProvider {
     static var previews: some View {
         CreateAccount()
