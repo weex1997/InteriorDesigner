@@ -38,8 +38,54 @@ struct allchat: View {
         var body: some View {
             NavigationView {
                 
+                
                 VStack {
-                    customNavBar
+//                    customNavBar
+                    Text("Chats")
+                        .bold()
+                    VStack {
+                        HStack(spacing: 30) {
+                            Image("assistant")
+                                .resizable()
+                                .scaledToFit()
+                                .font(.system(size: 5))
+                            
+                                .padding(8)
+                            // .overlay(RoundedRectangle(cornerRadius: 44)
+                            //  .stroke(Color(.label), //lineWidth: 1)
+                            //    )
+                            
+                            
+                            VStack(alignment: .leading) {
+                                Text("ChatGPT")
+                                    .font(.system(size: 16, weight: .bold))
+                                Text("-")
+                                    .font(.system(size: 14))
+                                    .foregroundColor(Color(.lightGray))
+                            }
+                            Spacer()
+                            VStack{
+                                Text("Beta")
+                                    .frame(width: 60,height: 30)
+                                    .background(Color("Primary"))
+                                    .foregroundColor(.white)
+                                    .cornerRadius(5)
+                                    .padding(.bottom)
+                                Image(systemName: "pin.fill")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(Color("Primary"))
+                                //  .resizable()
+                                    .scaledToFill()
+                                
+                                    .clipped()
+                                    .cornerRadius(5)
+                                
+                            }
+                            
+                        }
+                        Divider()
+                            .padding(.vertical, 1)
+                    }.padding(.horizontal)
                     messagesView
                 }
                 .overlay(
