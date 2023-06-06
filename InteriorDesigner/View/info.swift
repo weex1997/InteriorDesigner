@@ -10,15 +10,11 @@ import PhotosUI
 import FirebaseAuth
 
 struct info: View {
+    @State var userIDE = Auth.auth().currentUser?.uid
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
-    
-    @State var users : Users
-    init(){
-        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
-        self._users = .init(initialValue: user)
-    }
-    
+    @StateObject var viewModel = ViewModel()
+
     var body: some View {
         //Spacer()
         
@@ -32,7 +28,7 @@ struct info: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(5)
                 
-                Text(users.brief ?? "")
+                Text(self.viewModel.user.brief ?? "uyyyuuuyyyuyuuy")
                 
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(5)
@@ -45,7 +41,7 @@ struct info: View {
                     .foregroundColor(Color("Primary"))
                     .bold()
                     .padding(5)
-                Text(users.field ?? "")
+                Text(self.viewModel.user.styles ?? "")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(5)
             }
@@ -64,7 +60,7 @@ struct info: View {
                         Capsule()
                             .fill(Color("Primary"))
                             .frame(width: 80, height: 28)
-                        Text("Home")
+                        Text(self.viewModel.user.field ?? "")
                             
                     } .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(5)
@@ -73,7 +69,7 @@ struct info: View {
                         Capsule()
                             .fill(Color("Primary"))
                             .frame(width: 80, height: 28)
-                        Text("Coffee")
+                        Text(self.viewModel.user.field ?? "hoo")
                          
                     } .padding(.leading,-260)
                 }
@@ -121,11 +117,12 @@ struct info: View {
                     selection: $selectedItem,
                     matching: .images,
                     photoLibrary: .shared()) {
-                        Button(action: { }) {
+                        Button(action: {viewModel.updateData(id: self.viewModel.user.id) }) {
                             Text("Upload")
                                 .bold()
                                 .foregroundColor(.white)
                                 .frame(width: 150,height: 50)
+                            
                         }
                         .background(RoundedRectangle(cornerRadius: 8)
                             .fill(Color("Primary"))
@@ -191,6 +188,10 @@ struct info: View {
             Spacer()
             
         } .padding(20)
+            .onAppear(){
+                self.viewModel.getData(id: userIDE ?? "123")
+            }
+            
     }
 }
     struct info_Previews: PreviewProvider {

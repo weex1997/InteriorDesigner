@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct designerProfile: View {
-    
     var size: CGSize
     var safeArea: EdgeInsets
+    @StateObject var viewModel = ViewModel()
+    @State var userIDE = Auth.auth().currentUser?.uid
 
     var body: some View {
     
@@ -70,16 +72,16 @@ struct designerProfile: View {
                             .clipShape (Circle ())
                     }
                     .frame (width: headerHeight * 0.5, height: headerHeight * 0.5)
-                    Text ("Best Designer")
+                    Text (self.viewModel.user.name ?? "Best Designer")
                         .font (.title)
                         .fontWeight (.bold)
                         .foregroundColor (.white)
-                    Text("Modern , Classic")
+                    Text(self.viewModel.user.styles ?? "Modern , Classic")
                         .foregroundColor (.white)
                     HStack{
                         Image(systemName: "star.fill")
                             .foregroundColor(.yellow)
-                        Text("4.5")
+                        Text(self.viewModel.user.rate ?? "4.5")
                             .foregroundColor(.white)
                     }
                     
@@ -92,6 +94,9 @@ struct designerProfile: View {
             
         }
         .frame (height: headerHeight)
+        .onAppear(){
+            self.viewModel.getData(id: userIDE ?? "123")
+        }
     }
     @ViewBuilder
     func SampleCardsView() -> some View {

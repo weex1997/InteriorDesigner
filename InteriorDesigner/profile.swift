@@ -12,7 +12,8 @@ struct profil: View {
     // struct LoginView: View {
     
     @State var isLoginMode = false
-    
+    @State var userIDE = Auth.auth().currentUser?.uid
+
     @StateObject var viewModel = ViewModel()
 //    @State var userIDE = Auth.auth().currentUser?.uid ?? ""
 //    let name = UserDefaults.standard.string(forKey: "name") ?? nil

@@ -9,25 +9,26 @@ import SwiftUI
 import FirebaseAuth
 
 struct CreateAccount: View {
-    @State var userIDE = Auth.auth().currentUser?.uid ?? ""
+    @State var userIDE = Auth.auth().currentUser?.uid
     @StateObject var viewModel = ViewModel()
-    @State var users : Users
     @State var Next = false
-    init(){
-        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
-        self._users = .init(initialValue: user)
-    }
+    @State var Done = false
+
+    @State var isDesigner = false
+
     var body: some View {
         NavigationView {
          
                 ZStack{
+                  
                     NavigationLink(destination: CreateAccountD().navigationBarBackButtonHidden(false), isActive: $Next){}
+                    NavigationLink(destination: home().navigationBarBackButtonHidden(false), isActive: $Done){}
                     List {
                         
                         VStack{
                             
-                            TextField("Name", text: $users.name.defaultValue(""))
-                             //   .foregroundColor(Color("line"))
+                            TextField("Name", text: $viewModel.user.name.defaultValue(""))
+                            //   .foregroundColor(Color("line"))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -37,7 +38,7 @@ struct CreateAccount: View {
                                 )
                                 .padding(2)
                             
-                            TextField("Phone Number", text: $users.phoneNumber.defaultValue(""))
+                            TextField("Phone Number", text: $viewModel.user.phoneNumber.defaultValue(""))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -47,22 +48,35 @@ struct CreateAccount: View {
                                 )
                                 .padding(2)
                             
-                            Toggle(isOn: $users.desinger.defaultValue(false)) {
+                            Toggle(isOn: $isDesigner) {
                                 
-                                    Text("Are you Designer ?")
+                                Text("Are you Designer ?")
                                     .foregroundColor(Color("Primary"))
                                 
                             }
+                            .onChange(of: isDesigner, perform: { value in
+                                //Once the toggle is interacted with, set showText to true
+                                self.viewModel.user.desinger = isDesigner
+
+
+                            })
                             .tint(Color("Primary"))
                             .padding()
                             
-                           
                         }
                         
                     }
                     
-                    Button("Next") {
-                        viewModel.updateData(id: userIDE)}
+                    Button() {
+                        viewModel.updateData(id: viewModel.user.id)
+                        if(isDesigner){
+                            Next = true
+                        }else{
+                            Done = true
+                        }
+                    }label: {
+                        Text( isDesigner ? "Next" : "Done" )
+                    }
                     .bold()
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 8)
@@ -79,7 +93,9 @@ struct CreateAccount: View {
             .navigationTitle("Create Account")
             .navigationBarTitleDisplayMode(.inline)
             .foregroundColor(.red)
-            
+            .navigationBarBackButtonHidden(false)
+        }.onAppear(){
+            self.viewModel.getData(id: userIDE ?? "123")
         }
     }
 }
