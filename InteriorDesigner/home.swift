@@ -16,16 +16,16 @@ struct home: View {
     @State var showSheet = false
     @State var showChat = false
     @State var showProfile = false
-
+    
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
         
-       
+        
     }
     
-   
+    
     
     var body: some View {
         GeometryReader{
@@ -68,68 +68,68 @@ struct home: View {
                 .navigationTitle("Let's Find Your Designer.")
                 
                 .navigationBarItems(
-                                   leading:
-                                    Button {
-                                       showSheet = true
-                                       showChat = true
-                                   } label: {
-                                       if ((userIDE) != nil) {
-                                           NavigationLink(destination:allchat(),isActive: $showChat){}
-                                           Image(systemName: "message")
-                                               .foregroundColor(.white)
-                                       }
-                                       else{
-                                           Image(systemName: "message")
-                                               .foregroundColor(.white)
-                                               .sheet(isPresented: $showSheet,onDismiss: {
-                                                   userIDE = Auth.auth().currentUser?.uid
-
-                                               }){
-                                                   SignInButton()
-                                                       .presentationDetents([.height(200), .medium, .large])
-                                                       .presentationDragIndicator(.automatic)
-                                               }
-                                       }
-                                       
-                                   })
-                               
-                               .navigationBarItems(
-                                   
-                                   trailing:
-                                    
-                                    Button {
-                                        showSheet = true
-                                        showProfile = true
-                                        print(self.viewModel.user.desinger)
-                                    } label: {
-                                        if ((userIDE) != nil) {
-                                            if(self.viewModel.user.desinger == true){
-                                                NavigationLink(destination:designerProfile(size: size, safeArea: safeArea),isActive: $showProfile){}}
-                                            else{
-                                                NavigationLink(destination:profil(),isActive: $showProfile){}}
-                                            Image(systemName: "person")
-                                                .foregroundColor(.white)
-                                        }
-                                        else{
-                                            Image(systemName: "person")
-                                                .foregroundColor(.white)
-                                                .sheet(isPresented: $showSheet,onDismiss: {
-                                                    userIDE = Auth.auth().currentUser?.uid
-
-                                                }){
-                                                    SignInButton()
-                                                        .presentationDetents([.height(200), .medium, .large])
-                                                        .presentationDragIndicator(.automatic)
-                                                }
-                                        }
+                    leading:
+                        Button {
+                            showSheet = true
+                            showChat = true
+                        } label: {
+                            if ((userIDE) != nil) {
+                                NavigationLink(destination:allchat(),isActive: $showChat){}
+                                Image(systemName: "message")
+                                    .foregroundColor(.white)
+                            }
+                            else{
+                                Image(systemName: "message")
+                                    .foregroundColor(.white)
+                                    .sheet(isPresented: $showSheet,onDismiss: {
+                                        userIDE = Auth.auth().currentUser?.uid
                                         
-                                    })
-                           }.onAppear(){
-                               self.viewModel.getData(id: userIDE ?? "123")
-                           }
+                                    }){
+                                        SignInButton()
+                                            .presentationDetents([.height(200), .medium, .large])
+                                            .presentationDragIndicator(.automatic)
+                                    }
+                            }
+                            
+                        })
+                
+                .navigationBarItems(
+                    
+                    trailing:
+                        
+                        Button {
+                            showSheet = true
+                            showProfile = true
+                            print(self.viewModel.user.desinger)
+                        } label: {
+                            if ((userIDE) != nil) {
+                                if(self.viewModel.user.desinger == true){
+                                    NavigationLink(destination:designerProfile(size: size, safeArea: safeArea),isActive: $showProfile){}}
+                                else{
+                                    NavigationLink(destination:profil(),isActive: $showProfile){}}
+                                Image(systemName: "person")
+                                    .foregroundColor(.white)
+                            }
+                            else{
+                                Image(systemName: "person")
+                                    .foregroundColor(.white)
+                                    .sheet(isPresented: $showSheet,onDismiss: {
+                                        userIDE = Auth.auth().currentUser?.uid
+                                        
+                                    }){
+                                        SignInButton()
+                                            .presentationDetents([.height(200), .medium, .large])
+                                            .presentationDragIndicator(.automatic)
+                                    }
+                            }
+                            
+                        })
+            }.onAppear(){
+                self.viewModel.getData(id: userIDE ?? "123")
+            }
             .navigationBarHidden(true)
-            .navigationBarBackButtonHidden(true)
-           
+            .navigationBarBackButtonHidden(false)
+            
         }
         
     }
@@ -150,8 +150,8 @@ struct PopularDestinationsView: View {
         VStack {
             ScrollView(.horizontal) {
                 VStack {
-                        ForEach(viewModel.designers, id: \.id) { designer in
-
+                    ForEach(viewModel.designers, id: \.id) { designer in
+                        
                         NavigationLink(destination: profil()){
                             VStack(alignment: .leading, spacing: 0) {
                                 
