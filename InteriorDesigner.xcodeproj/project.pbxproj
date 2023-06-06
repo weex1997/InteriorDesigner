@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2657C6A02A2F3BFA0092050E /* UserP2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657C69F2A2F3BFA0092050E /* UserP2.swift */; };
+		2657C6A22A2F3CDE0092050E /* InterFace1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657C6A12A2F3CDE0092050E /* InterFace1.swift */; };
+		2657C6A42A2F3CF90092050E /* InterFace2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657C6A32A2F3CF90092050E /* InterFace2.swift */; };
+		2657C6A62A2F3D160092050E /* InterFace3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657C6A52A2F3D160092050E /* InterFace3.swift */; };
 		26DD7C5A2A19F06F0030A521 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DD7C592A19F06F0030A521 /* UserProfile.swift */; };
 		26DD7C5C2A19FA7A0030A521 /* photopicer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DD7C5B2A19FA7A0030A521 /* photopicer.swift */; };
 		26DD7C5E2A1A0FD10030A521 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DD7C5D2A1A0FD10030A521 /* CreateAccount.swift */; };
@@ -35,6 +39,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2657C69F2A2F3BFA0092050E /* UserP2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserP2.swift; sourceTree = "<group>"; };
+		2657C6A12A2F3CDE0092050E /* InterFace1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterFace1.swift; sourceTree = "<group>"; };
+		2657C6A32A2F3CF90092050E /* InterFace2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterFace2.swift; sourceTree = "<group>"; };
+		2657C6A52A2F3D160092050E /* InterFace3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterFace3.swift; sourceTree = "<group>"; };
 		26DD7C592A19F06F0030A521 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		26DD7C5B2A19FA7A0030A521 /* photopicer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photopicer.swift; sourceTree = "<group>"; };
 		26DD7C5D2A1A0FD10030A521 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
@@ -118,10 +126,14 @@
 				26DD7C5F2A1A10D60030A521 /* DesignerInfo.swift */,
 				FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */,
 				26DD7C592A19F06F0030A521 /* UserProfile.swift */,
+				2657C69F2A2F3BFA0092050E /* UserP2.swift */,
 				4E0FF4712A2AA1B000250475 /* chatView.swift */,
 				4E0FF4732A2AA1B800250475 /* home.swift */,
 				4E0FF46F2A2AA1A800250475 /* profile.swift */,
 				4E0FF4752A2AA1C200250475 /* allchat.swift */,
+				2657C6A12A2F3CDE0092050E /* InterFace1.swift */,
+				2657C6A32A2F3CF90092050E /* InterFace2.swift */,
+				2657C6A52A2F3D160092050E /* InterFace3.swift */,
 				26DD7C5D2A1A0FD10030A521 /* CreateAccount.swift */,
 				26DD7C612A1A15900030A521 /* CreateAccountD.swift */,
 				26DD7C5B2A19FA7A0030A521 /* photopicer.swift */,
@@ -244,6 +256,7 @@
 				26DD7C5C2A19FA7A0030A521 /* photopicer.swift in Sources */,
 				26DD7C682A1DEC980030A521 /* ScrollDetector.swift in Sources */,
 				FCFB0B772A2A51F90093BEF0 /* SignInButton.swift in Sources */,
+				2657C6A22A2F3CDE0092050E /* InterFace1.swift in Sources */,
 				FCF59BB92A10DB0A00543D51 /* ContentView.swift in Sources */,
 				26DD7C602A1A10D60030A521 /* DesignerInfo.swift in Sources */,
 				26DD7C6A2A1DF6B80030A521 /* info.swift in Sources */,
@@ -252,11 +265,14 @@
 				4E0FF4762A2AA1C200250475 /* allchat.swift in Sources */,
 				26DD7C652A1CBFBD0030A521 /* designerProfile.swift in Sources */,
 				26DD7C5A2A19F06F0030A521 /* UserProfile.swift in Sources */,
+				2657C6A02A2F3BFA0092050E /* UserP2.swift in Sources */,
 				4E0FF4702A2AA1A800250475 /* profile.swift in Sources */,
 				4E0FF4722A2AA1B000250475 /* chatView.swift in Sources */,
 				FCFB0B752A2A51D10093BEF0 /* ViewModel.swift in Sources */,
 				4E0FF4742A2AA1B800250475 /* home.swift in Sources */,
+				2657C6A42A2F3CF90092050E /* InterFace2.swift in Sources */,
 				FCFB0B702A2A51B30093BEF0 /* Users.swift in Sources */,
+				2657C6A62A2F3D160092050E /* InterFace3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
