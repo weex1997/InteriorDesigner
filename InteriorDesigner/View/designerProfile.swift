@@ -6,49 +6,42 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 
 struct designerProfile: View {
+    
     var size: CGSize
     var safeArea: EdgeInsets
-    @StateObject var viewModel = ViewModel()
-    @State var userIDE = Auth.auth().currentUser?.uid
-
-    var body: some View {
     
-            // NavigationView{
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 0) {
-                    HeaderView()
-                    info()
-                    // SampleCardsView()
-                        .zIndex(1000)
-                }
-                .background {
-                    ScrollDetector { offset in
-                        print(offset)
-                        
-                    } onDraggingEnd: { offset, velocity in
-                        
-                    }
-                }
+    var body: some View {
+        // NavigationView{
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 0) {
+                HeaderView()
+                info()
+                // SampleCardsView()
+                    .zIndex(1000)
             }
-            ZStack{
-                
-                Button {
-                    print("Edit")
+            .background {
+                ScrollDetector { offset in
+                    print(offset)
                     
-                } label: {
-                    Image("Pen")
+                } onDraggingEnd: { offset, velocity in
+                    
                 }
-                
-                .frame(width: 700,height: 150)
             }
-            .ignoresSafeArea(.all, edges: .top)
         }
-        
-
-        
+        ZStack{
+            
+            Button {
+                print("Edit")
+                
+            } label: {
+                Image("Pen")
+            }
+            
+            .frame(width: 700,height: 150)
+        }
+    }
     @ViewBuilder
     func HeaderView( ) -> some View {
         let headerHeight = (size.height * 0.3) + safeArea .top
@@ -72,16 +65,16 @@ struct designerProfile: View {
                             .clipShape (Circle ())
                     }
                     .frame (width: headerHeight * 0.5, height: headerHeight * 0.5)
-                    Text (self.viewModel.user.name ?? "Best Designer")
+                    Text ("Prifile Designer")
                         .font (.title)
                         .fontWeight (.bold)
                         .foregroundColor (.white)
-                    Text(self.viewModel.user.styles ?? "Modern , Classic")
+                    Text("Modren , Classic")
                         .foregroundColor (.white)
                     HStack{
                         Image(systemName: "star.fill")
                             .foregroundColor(.yellow)
-                        Text(self.viewModel.user.rate ?? "4.5")
+                        Text("4.5")
                             .foregroundColor(.white)
                     }
                     
@@ -94,9 +87,6 @@ struct designerProfile: View {
             
         }
         .frame (height: headerHeight)
-        .onAppear(){
-            self.viewModel.getData(id: userIDE ?? "123")
-        }
     }
     @ViewBuilder
     func SampleCardsView() -> some View {
@@ -114,9 +104,9 @@ struct designerProfile: View {
     
     
 }
-
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//
+//struct designerProfile_Previews: PreviewProvider {
+//    static var previews: some View {
+//        designerProfile(size: <#CGSize#>, safeArea: <#EdgeInsets#>)
+//    }
+//}

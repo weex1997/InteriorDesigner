@@ -104,7 +104,7 @@ struct home: View {
                         } label: {
                             if ((userIDE) != nil) {
                                 if(self.viewModel.user.desinger == true){
-                                    NavigationLink(destination:designerProfile(size: size, safeArea: safeArea),isActive: $showProfile){}}
+                                    NavigationLink(destination:ContentView(),isActive: $showProfile){}}
                                 else{
                                     NavigationLink(destination:UserP2(),isActive: $showProfile){}}
                                 Image(systemName: "person")
