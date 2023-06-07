@@ -22,6 +22,7 @@
 		4E0FF4702A2AA1A800250475 /* profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FF46F2A2AA1A800250475 /* profile.swift */; };
 		4E0FF4722A2AA1B000250475 /* chatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FF4712A2AA1B000250475 /* chatView.swift */; };
 		4E0FF4742A2AA1B800250475 /* home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FF4732A2AA1B800250475 /* home.swift */; };
+		4EC534EE2A306BB10007EE69 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC534ED2A306BB10007EE69 /* ChatViewModel.swift */; };
 		4ECA51D32A30023400EEAF63 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4ECA51D22A30023400EEAF63 /* Alamofire */; };
 		4ECA52312A3064E000EEAF63 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECA52302A3064E000EEAF63 /* Constants.swift */; };
 		4ECA52472A30650C00EEAF63 /* EventSourceSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECA52442A30650C00EEAF63 /* EventSourceSerializer.swift */; };
@@ -30,9 +31,9 @@
 		4ECA524A2A30650C00EEAF63 /* EventSourceMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECA52432A30650C00EEAF63 /* EventSourceMessage.swift */; };
 		4ECA524B2A30650C00EEAF63 /* DecodableEventSourceMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECA52452A30650C00EEAF63 /* DecodableEventSourceMessage.swift */; };
 		4ECA524D2A30652000EEAF63 /* allchat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECA524C2A30652000EEAF63 /* allchat.swift */; };
-		4ECA524F2A30655800EEAF63 /* OpenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECA524E2A30655800EEAF63 /* OpenAIService.swift */; };
 		4ECA52532A306A4200EEAF63 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECA52522A306A4200EEAF63 /* ChatViewModel.swift */; };
 		4ECA52552A306A6700EEAF63 /* ChatGPT3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECA52542A306A6700EEAF63 /* ChatGPT3View.swift */; };
+		4ECA52592A306B0000EEAF63 /* OpenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECA52582A306B0000EEAF63 /* OpenAIService.swift */; };
 		FC6F7EEB2A2F1858000003A5 /* GridPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6F7EEA2A2F1858000003A5 /* GridPicker.swift */; };
 		FCF59BB72A10DB0A00543D51 /* InteriorDesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */; };
 		FCF59BB92A10DB0A00543D51 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF59BB82A10DB0A00543D51 /* ContentView.swift */; };
@@ -65,6 +66,7 @@
 		4E0FF46F2A2AA1A800250475 /* profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profile.swift; sourceTree = "<group>"; };
 		4E0FF4712A2AA1B000250475 /* chatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = chatView.swift; sourceTree = "<group>"; };
 		4E0FF4732A2AA1B800250475 /* home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = home.swift; sourceTree = "<group>"; };
+		4EC534ED2A306BB10007EE69 /* ChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		4ECA52302A3064E000EEAF63 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../../../../Desktop/Constants.swift; sourceTree = "<group>"; };
 		4ECA52422A30650C00EEAF63 /* DecodableEventSourceSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableEventSourceSerializer.swift; sourceTree = "<group>"; };
 		4ECA52432A30650C00EEAF63 /* EventSourceMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSourceMessage.swift; sourceTree = "<group>"; };
@@ -72,9 +74,9 @@
 		4ECA52452A30650C00EEAF63 /* DecodableEventSourceMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableEventSourceMessage.swift; sourceTree = "<group>"; };
 		4ECA52462A30650C00EEAF63 /* Alamofire+EventSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+EventSource.swift"; sourceTree = "<group>"; };
 		4ECA524C2A30652000EEAF63 /* allchat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = allchat.swift; path = ../../../../Desktop/allchat.swift; sourceTree = "<group>"; };
-		4ECA524E2A30655800EEAF63 /* OpenAIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenAIService.swift; path = "../../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/OpenAIService.swift"; sourceTree = "<group>"; };
 		4ECA52522A306A4200EEAF63 /* ChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		4ECA52542A306A6700EEAF63 /* ChatGPT3View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGPT3View.swift; sourceTree = "<group>"; };
+		4ECA52582A306B0000EEAF63 /* OpenAIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAIService.swift; sourceTree = "<group>"; };
 		FC6F7EEA2A2F1858000003A5 /* GridPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPicker.swift; sourceTree = "<group>"; };
 		FC81D6C42A2BF46F00004BC0 /* InteriorDesigner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InteriorDesigner.entitlements; sourceTree = "<group>"; };
 		FCF59BB32A10DB0A00543D51 /* InteriorDesigner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteriorDesigner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,11 +167,12 @@
 				4E0FF4712A2AA1B000250475 /* chatView.swift */,
 				4E0FF4732A2AA1B800250475 /* home.swift */,
 				4E0FF46F2A2AA1A800250475 /* profile.swift */,
-				4ECA524E2A30655800EEAF63 /* OpenAIService.swift */,
+				4ECA52582A306B0000EEAF63 /* OpenAIService.swift */,
 				4ECA524C2A30652000EEAF63 /* allchat.swift */,
 				4ECA52302A3064E000EEAF63 /* Constants.swift */,
 				4ECA52542A306A6700EEAF63 /* ChatGPT3View.swift */,
 				4ECA52522A306A4200EEAF63 /* ChatViewModel.swift */,
+				4EC534ED2A306BB10007EE69 /* ChatViewModel.swift */,
 				2657C6A12A2F3CDE0092050E /* InterFace1.swift */,
 				2657C6A32A2F3CF90092050E /* InterFace2.swift */,
 				2657C6A52A2F3D160092050E /* InterFace3.swift */,
@@ -302,7 +305,6 @@
 				26DD7C682A1DEC980030A521 /* ScrollDetector.swift in Sources */,
 				4ECA52552A306A6700EEAF63 /* ChatGPT3View.swift in Sources */,
 				FCFB0B772A2A51F90093BEF0 /* SignInButton.swift in Sources */,
-				4ECA524F2A30655800EEAF63 /* OpenAIService.swift in Sources */,
 				2657C6A22A2F3CDE0092050E /* InterFace1.swift in Sources */,
 				4ECA52312A3064E000EEAF63 /* Constants.swift in Sources */,
 				FCF59BB92A10DB0A00543D51 /* ContentView.swift in Sources */,
@@ -311,6 +313,7 @@
 				4ECA524B2A30650C00EEAF63 /* DecodableEventSourceMessage.swift in Sources */,
 				4ECA524A2A30650C00EEAF63 /* EventSourceMessage.swift in Sources */,
 				4ECA524D2A30652000EEAF63 /* allchat.swift in Sources */,
+				4ECA52592A306B0000EEAF63 /* OpenAIService.swift in Sources */,
 				26DD7C5E2A1A0FD10030A521 /* CreateAccount.swift in Sources */,
 				FCF59BB72A10DB0A00543D51 /* InteriorDesignerApp.swift in Sources */,
 				26DD7C652A1CBFBD0030A521 /* designerProfile.swift in Sources */,
@@ -320,6 +323,7 @@
 				4E0FF4722A2AA1B000250475 /* chatView.swift in Sources */,
 				FCFB0B752A2A51D10093BEF0 /* ViewModel.swift in Sources */,
 				4ECA52492A30650C00EEAF63 /* DecodableEventSourceSerializer.swift in Sources */,
+				4EC534EE2A306BB10007EE69 /* ChatViewModel.swift in Sources */,
 				4ECA52532A306A4200EEAF63 /* ChatViewModel.swift in Sources */,
 				4E0FF4742A2AA1B800250475 /* home.swift in Sources */,
 				2657C6A42A2F3CF90092050E /* InterFace2.swift in Sources */,
