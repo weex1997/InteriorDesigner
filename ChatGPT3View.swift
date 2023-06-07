@@ -18,7 +18,8 @@ struct ChatGPT3View: View {
                 }
             }
             HStack {
-                TextField("Ask Ai interior design...", text: $gptViewModel.currentInput)
+                TextField("Enter a message...", text: $gptViewModel.currentInput)
+
                     
                 Button {
                     gptViewModel.sendMessage()
@@ -37,16 +38,15 @@ struct ChatGPT3View: View {
             if message.role == .user { Spacer()}
             Text(message.content)
                 .padding()
-                .background(message.role == .user ?  Color.purple : Color.purple.opacity(0.2))
-                .foregroundColor(message.role == .user ?  .white : .primary)
+                .background(message.role == .user ? Color.purple : Color.purple.opacity(0.2))
+                .foregroundColor(message.role == .user ? .white : .primary)
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-
             if message.role == .assistant { Spacer()}
         }
     }
 }
 
-struct ContentGPTView_Previews: PreviewProvider {
+struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ChatGPT3View()
     }
