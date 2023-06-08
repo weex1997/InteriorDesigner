@@ -19,7 +19,7 @@ class ViewModel: ObservableObject {
     @Published var designers = [Users]()
     private var db = Firestore.firestore()
     let storage = Storage.storage()
-
+    @State var SR = Storage.storage().reference()
    
     //----------------------------------
     
@@ -107,7 +107,6 @@ class ViewModel: ObservableObject {
     //----------------------------------
     
     func getData(id : String) {
-        listAllFiles()
 
         let docRef = db.collection("Users").document(id)
 
@@ -124,7 +123,6 @@ class ViewModel: ObservableObject {
                   let phoneNumber = data?["phoneNumber"] as? String ?? ""
                   let gender = data?["gender"] as? String ?? ""
                   let favorite = data?["favorite"] as? [String] ?? []
-                  let image = data?["image"] as? [String] ?? []
                   let desinger = data?["desinger"] as? Bool ?? false
                   let brief = data?["brief"] as? String ?? ""
                   let field = data?["field"] as? [String] ?? []
@@ -185,6 +183,7 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "favorite": FieldValue.arrayUnion([otherUserID])
         ])
+        self.getData(id: userIDE ?? "123")
 
       }
     
@@ -196,6 +195,7 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "field": FieldValue.arrayUnion([Feilds])
         ])
+        self.getData(id: userIDE ?? "123")
 
       }
     
@@ -205,8 +205,9 @@ class ViewModel: ObservableObject {
 
         // Atomically add a new region to the "regions" array field.
         washingtonRef.updateData([
-            "image": FieldValue.arrayUnion([imageURL])
+            "images": FieldValue.arrayUnion([imageURL])
         ])
+        self.getData(id: userIDE ?? "123")
 
       }
     
@@ -219,6 +220,8 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "favorite": FieldValue.arrayRemove([otherUserID])
         ])
+        self.getData(id: userIDE ?? "123")
+
       }
     
     
@@ -229,6 +232,19 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "field": FieldValue.arrayRemove([Feilds])
         ])
+        self.getData(id: userIDE ?? "123")
+
+      }
+    
+    func removeImageArray(ImageURL : String) {
+        let washingtonRef = db.collection("Users").document(user.id)
+
+        // Atomically remove a region from the "regions" array field.
+        washingtonRef.updateData([
+            "images": FieldValue.arrayRemove([ImageURL])
+        ])
+        self.getData(id: userIDE ?? "123")
+
       }
 //    func Rate(otherUserID : String, rateingValue : Int32) {
 //
@@ -289,8 +305,8 @@ class ViewModel: ObservableObject {
         // Create a storage reference
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let filename = UUID().uuidString + ".jpg"
-        let storageRef = storage.reference().child(uid).child(filename)
-        
+        let storageRef = storage.reference().child("\(uid)/\(filename)")
+        self.SR = storageRef
         // Resize the image to 200px with a custom extension
         //        let resizedImage = image.aspectFittedToHeight(200)
         
@@ -301,6 +317,7 @@ class ViewModel: ObservableObject {
         let metadata = StorageMetadata()
 //        metadata.contentType = filename + ".jpg"
         
+
         // Upload the image
         if let data = data {
             storageRef.putData(data, metadata: metadata) { (metadata, error) in
@@ -310,15 +327,31 @@ class ViewModel: ObservableObject {
                 
                 if let metadata = metadata {
                     print("Metadata: ", metadata)
+                    // Fetch the download URL
+                    storageRef.downloadURL { url, error in
+                        if error != nil {
+                          print("fkuuuuuuuuuu")
+                      } else {
+                          //Do something with url
+                          print(url?.absoluteString ?? "")
+                          self.addImageArray(imageURL: url?.absoluteString ?? "")
+                      }
+                    }
+
                 }
             }
+          
         }
-
-
-        listAllFiles()
-
+        
+        
+      
+        
+        
+       
         
     }
+    
+    
     func listAllFiles() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
             // Create a reference

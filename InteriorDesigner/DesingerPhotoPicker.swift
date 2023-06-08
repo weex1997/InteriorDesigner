@@ -1,5 +1,6 @@
 import SwiftUI
 import PhotosUI
+import FirebaseAuth
 
 struct DesingerPhotoPicker: View {
     
@@ -29,11 +30,17 @@ struct DesingerPhotoPicker: View {
                 LazyHStack {
                     HStack {
                         ForEach(viewModel.user.images, id: \.self) { item in
+                            Button {
+                                self.viewModel.removeImageArray(ImageURL: item)
+                            }label: {
+                                Image(systemName: "minus.circle.fill")
+                                    .foregroundColor(Color("Re"))
+                                    
+                            }
                             AsyncImage(url: URL(string: "\(item)"))
                             { image in
                                 image
                                     .resizable()
-                                //                                        .aspectRatio(contentMode: .fill)
                                 
                             } placeholder: {
                                 Color.gray
@@ -60,6 +67,7 @@ struct DesingerPhotoPicker: View {
                     }
                     .sheet(isPresented: $showSheet,onDismiss: {
                         viewModel.upload(image: image)
+                        viewModel.getData(id: Auth.auth().currentUser?.uid ?? "123")
 //                        images.append(image)
                     }) {
                         // Pick an image from the photo library:
@@ -68,7 +76,9 @@ struct DesingerPhotoPicker: View {
                         // ImagePicker(sourceType: .camera, selectedImage: self.$image)
                     }
            
-        }
+        }.onAppear(){
+            self.viewModel.getData(id: Auth.auth().currentUser?.uid ?? "123")}
+        
            
     }
 }

@@ -125,7 +125,7 @@ struct home: View {
                             
                         })
             }.onAppear(){
-                self.viewModel.getData(id: userIDE ?? "123")
+                self.viewModel.getData(id: Auth.auth().currentUser?.uid ?? "123")
             }
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(false)
