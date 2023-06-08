@@ -33,6 +33,7 @@ struct User: Identifiable {
     var phoneNumber: String?
     var gender: String?
     var favorite: [String]?
+    var images: [String] = []
     var desinger : Bool?
     var brief : String?
     var field : [String]?

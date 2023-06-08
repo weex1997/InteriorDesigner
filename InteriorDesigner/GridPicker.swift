@@ -22,10 +22,7 @@ struct GridPicker: View {
     @State var ff = [""]
     
     var body: some View {
-        NavigationView {
-            ZStack{
-                Color.white
-                    .ignoresSafeArea()
+          
                 ScrollView(.horizontal) {
                     
                     LazyHGrid(rows: rows) {
@@ -38,10 +35,7 @@ struct GridPicker: View {
                     }
                     
                 }
-            }
         }
-           .navigationViewStyle(StackNavigationViewStyle())
-    }
 }
 
 struct GridPicker_Previews: PreviewProvider {

@@ -9,12 +9,16 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 import CryptoKit
+import Firebase
+import FirebaseStorage
+import FirebaseFirestoreSwift
 
 class ViewModel: ObservableObject {
     @State var userIDE = Auth.auth().currentUser?.uid
     @Published var user = User(id: (Auth.auth().currentUser?.uid.description) ?? "")
     @Published var designers = [Users]()
     private var db = Firestore.firestore()
+    let storage = Storage.storage()
 
    
     //----------------------------------
@@ -33,9 +37,11 @@ class ViewModel: ObservableObject {
                             "desinger": self.user.desinger ?? false,
                             "brief": self.user.brief ?? "",
                             "field": self.user.field ?? [],
+                            "image": self.user.field as Any,
                             "styles": self.user.styles ?? "",
                             "rate": self.user.rate ?? 0], merge: true)
                     }
+                    
                 }
             }
     }
@@ -101,6 +107,8 @@ class ViewModel: ObservableObject {
     //----------------------------------
     
     func getData(id : String) {
+        listAllFiles()
+
         let docRef = db.collection("Users").document(id)
 
           docRef.getDocument { document, error in
@@ -116,9 +124,11 @@ class ViewModel: ObservableObject {
                   let phoneNumber = data?["phoneNumber"] as? String ?? ""
                   let gender = data?["gender"] as? String ?? ""
                   let favorite = data?["favorite"] as? [String] ?? []
+                  let image = data?["image"] as? [String] ?? []
                   let desinger = data?["desinger"] as? Bool ?? false
                   let brief = data?["brief"] as? String ?? ""
                   let field = data?["field"] as? [String] ?? []
+                  let images = data?["images"] as? [String] ?? []
                   let styles = data?["styles"] as? String ?? ""
                   let rate = data?["rate"] as? String ?? ""
                   
@@ -133,7 +143,7 @@ class ViewModel: ObservableObject {
 //                  UserDefaults.standard.set(rate, forKey: "rate")
                  
                   
-                  self.user = User(id: id, name: name ,email: email ,phoneNumber: phoneNumber ,desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )
+                  self.user = User(id: id, name: name ,email: email ,phoneNumber: phoneNumber ,images: images, desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )
                   print(self.user.name ?? "" )
               }
             }
@@ -185,6 +195,17 @@ class ViewModel: ObservableObject {
         // Atomically add a new region to the "regions" array field.
         washingtonRef.updateData([
             "field": FieldValue.arrayUnion([Feilds])
+        ])
+
+      }
+    
+    func addImageArray(imageURL : String) {
+        let db = Firestore.firestore()
+        let washingtonRef = db.collection("Users").document(user.id)
+
+        // Atomically add a new region to the "regions" array field.
+        washingtonRef.updateData([
+            "image": FieldValue.arrayUnion([imageURL])
         ])
 
       }
@@ -248,7 +269,96 @@ class ViewModel: ObservableObject {
 //
 //    }
     
+//    func uploadSavedData() {
+//        guard let data = myData else { return } // Checks whether there is actual data to upload.
+//
+//        let storageRef = Storage.storage().reference()
+//        let fileRef = storageRef.child("userUID/files/documentName.png")
+//
+//        let uploadTask = fileRef.putData(data, metadata: nil) { (metadata, error) in
+//            guard let metadata = metadata else { return } // Cancels task if there is any error
+//            
+//            fileRef.downloadURL { (url, error) in {
+//                guard let downloadURL = url else { return }
+//                print(downloadURL) // Prints the URL to the newly uploaded data.
+//            }
+//        }
+//    }
     
+    func upload(image: UIImage) {
+        // Create a storage reference
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let filename = UUID().uuidString + ".jpg"
+        let storageRef = storage.reference().child(uid).child(filename)
+        
+        // Resize the image to 200px with a custom extension
+        //        let resizedImage = image.aspectFittedToHeight(200)
+        
+        // Convert the image into JPEG and compress the quality to reduce its size
+        let data = image.jpegData(compressionQuality: 0.2)
+        
+        // Change the content type to jpg. If you don't, it'll be saved as application/octet-stream type
+        let metadata = StorageMetadata()
+//        metadata.contentType = filename + ".jpg"
+        
+        // Upload the image
+        if let data = data {
+            storageRef.putData(data, metadata: metadata) { (metadata, error) in
+                if let error = error {
+                    print("Error while uploading file: ", error)
+                }
+                
+                if let metadata = metadata {
+                    print("Metadata: ", metadata)
+                }
+            }
+        }
+
+
+        listAllFiles()
+
+        
+    }
+    func listAllFiles() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+            // Create a reference
+            let storageRef = storage.reference().child(uid)
+
+            // List all items in the images folder
+            storageRef.listAll { (result, error) in
+              if let error = error {
+                print("Error while listing all files: ", error)
+              }
+
+                for item in result!.items {
+                print("Item in images folder: ", item)
+//                    user.image.append(item)
+                    item.downloadURL(completion: { (url, error) in
+                        if error != nil {
+                            print("Failed to download url:", error!)
+                            return
+                        } else {
+                            //Do something with url
+                            print(url?.absoluteString ?? "")
+                            self.user.images.append(url?.absoluteString ?? "")
+                            print("hioooooooooooooooooooooooooooooo\(self.user.images)" )
+                            self.addImageArray(imageURL: url?.absoluteString ?? "")
+                        }
+
+                    })
+              }
+                
+             
+            }
+        }
+    
+    func deleteItem(item: StorageReference) {
+           item.delete { error in
+               if let error = error {
+                   print("Error deleting item", error)
+               }
+           }
+       }
     func fetchData() {
         db.collection("Users").getDocuments { doucments, error in
 

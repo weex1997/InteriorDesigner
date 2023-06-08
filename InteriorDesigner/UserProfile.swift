@@ -18,48 +18,55 @@ struct UserProfile: View {
 //    }
     
     var body: some View {
-        NavigationView {
-           // Group{
-                ZStack{
-                    
-                    List {
+        // Group{
+        ZStack(alignment: .top){
+            
+//            NavigationLink(destination: home().navigationBarBackButtonHidden(false), isActive: $GotoHome){}
+            
+            Color("BC")
+                .ignoresSafeArea()
+            ScrollView(.vertical, showsIndicators: false) {
+                
+                VStack{
+                    VStack{
                         
                         VStack{
                             ZStack{
-                                Image("Circle")
-                                    .resizable()
-                                    .frame(width: 120 , height: 120)
-                                    .padding(.trailing,200)
                                 
-                                photopicer()
-                                    .padding()
-                                    .padding(.top ,70)
-                                    .padding(.trailing,130)
-                                GeometryReader {
-                                    let rect = $0.frame (in: .global)
-                                    Image ("b")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame (width: rect.width, height: rect.height)
-                                        .clipShape (Circle ())
-                                }
-                                .padding(.trailing,200)
-                             
-
+                                Circle()
+                                    .foregroundColor(Color("line"))
+                                Image ("b").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
                                 
+                            }.frame(width: 110 , height: 110)
+                                .padding(.leading)
+                                .offset(x: -100 , y: 1)
+                                .padding()
+                            VStack{
+                                TextField(self.viewModel.user.name ?? "name", text: $viewModel.user.name.defaultValue(""))
+                                    .font(.body)
+                                    .padding(11)
+                                    .font(.body)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 9)
+                                            .stroke(Color("line"), lineWidth: 2)
+                                    )
+                                    .padding(2)
+                                
+                                TextField(self.viewModel.user.phoneNumber ?? "phoneNumber", text: $viewModel.user.phoneNumber.defaultValue(""))
+                                    .foregroundColor(Color("Primary"))
+                                    .multilineTextAlignment(.leading)
+                                    .font(.body)
+                                    .padding(11)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 9)
+                                            .stroke(Color("line"), lineWidth: 2)
+                                    )
+                                    .padding(2)
                             }
-//                            HStack{
-//                                Button(action: { }) {
-//
-//                                    Image(systemName: ("pencil"))
-//                                        .frame(width: 25 , height: 25)
-//
-//                                }
-//                            }
-//                            Text("Name")
+                            .padding(.top, -10.0)
                             
-                            
-                            TextField("Name", text: $viewModel.user.name.defaultValue(""))
+                            TextField("Styles, Ex: Modern, classic, new classic", text: $viewModel.user.styles.defaultValue(""))
+                            //   .foregroundColor(Color("line"))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -68,82 +75,81 @@ struct UserProfile: View {
                                         .stroke(Color("line"), lineWidth: 2)
                                 )
                                 .padding(2)
-                            
-                            TextField("Phone Number", text: $viewModel.user.phoneNumber.defaultValue(""))
-                                .font(.body)
-                                .padding(11)
-                                .font(.body)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 9)
-                                        .stroke(Color("line"), lineWidth: 2)
-                                )
-                                .padding(2)
-                            
-//                            TextField("Feild", text: $viewModel.user.field.defaultValue(""))
-                                .font(.body)
-                                .padding(11)
-                                .font(.body)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 9)
-                                        .stroke(Color("line"), lineWidth: 2)
-                                )
-                                .padding(2)
-                            
-                            TextField("Interests", text: $viewModel.user.styles.defaultValue(""))
-                                .font(.body)
-                                .padding(11)
-                                .font(.body)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 9)
-                                        .stroke(Color("line"), lineWidth: 2)
-                                )
-                                .padding(2)
-                            TextField("About", text: $viewModel.user.brief.defaultValue(""))
-                            //  .padding([.trailing, .bottom])
+                            VStack{
+                                Text("Field")
+                                    .font(.body)
+                                    .foregroundColor(Color("Primary"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .font(.system(size: 17))
+                                    .padding(.bottom, -30.0)
+                                    .padding()
+                                    .padding(.leading, -10.0)
+                            }
+                        }
+                        VStack{
+                            GridPicker()
+                        }.padding()
+                            .frame(width: 330, height: 60)
+                        VStack{
+                            TextField("About, Here are space to write some information about you..",text: self.$viewModel.user.brief.defaultValue(""), axis: .vertical)
+                                .lineLimit(3, reservesSpace: true)
                                 .padding()
                                 .font(.body)
-                                .padding( .bottom, 66.0)
-                                .font(.body)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 9)
                                         .stroke(Color("line"), lineWidth: 2)
                                 )
-                                .padding(2)
                         }
+                        VStack{
+                            DesingerPhotoPicker()
+                        }.padding(.vertical)
+                        
+                        
+                    }.frame(width: 320, height: 630)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .shadow(color: Color.gray.opacity(0.2), radius: 5, x: 0, y: 0)
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    VStack{
+                        
+                        Button("Update") {
+                            viewModel.updateData(id: self.viewModel.user.id)
+                            //                        GotoHome = true
+                        }
+                        .bold()
+                        .foregroundColor(.white)
+                        .background(RoundedRectangle(cornerRadius: 8)
+                            .fill(Color("Primary"))
+                            .frame(width: 342, height: 48.58)
+                        )
+                        .padding()
                         
                     }
                     
-                    HStack{
-                        
-            NavigationLink(
-        destination: ContentView().navigationBarHidden(true), label: {
-            Button("Update")  {
-                viewModel.updateData(id: userIDE)}
-                            .padding()
-                               
-                            })
-                        .navigationBarHidden(true)
-                      
-                            .bold()
-                            .foregroundColor(.white)
-                            .background(RoundedRectangle(cornerRadius: 8)
-                            .fill(Color("Primary"))
-                            .frame(width: 330, height: 48.58)
-                                )
-                            .padding(.top, 470)
-                        }
-                        
-                  
-                   
                 }
-                
-         //   }
-            
-            .navigationTitle("My Profile")
-            .navigationBarTitleDisplayMode(.inline)
-            .foregroundColor(.red)
-            
+            }
+            }
+        
+        
+        
+        .onAppear(){
+            self.viewModel.getData(id: Auth.auth().currentUser?.uid ?? "1234")
         }
+        
+        //   }
+        
+        .navigationTitle("My Profile")
+        .navigationBarTitleDisplayMode(.inline)
         
     }
 }

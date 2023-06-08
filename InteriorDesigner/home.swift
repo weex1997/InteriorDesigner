@@ -127,7 +127,6 @@ struct home: View {
             }.onAppear(){
                 self.viewModel.getData(id: userIDE ?? "123")
             }
-            
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(false)
             
