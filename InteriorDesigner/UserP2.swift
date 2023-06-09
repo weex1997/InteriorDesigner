@@ -71,7 +71,7 @@ struct UserP2: View {
                         //                            .padding(.trailing,200)
                         
                         VStack(alignment: .leading, spacing: 6){
-                            Text(self.viewModel.user.name ?? "Coustomer")
+                            Text(self.viewModel.user.name ?? "Beautiful Name")
                                 .font(.title2)
                                 .foregroundColor(Color("Primary"))
                                 
@@ -148,7 +148,7 @@ struct UserP2: View {
                     
                     
                     Button("Delete Account") {
-                        viewModel.signOut()
+                        viewModel.deleteData()
                         DispatchQueue.main.asyncAfter(deadline: .now()) {
                             UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
                             exit(0)

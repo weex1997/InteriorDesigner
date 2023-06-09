@@ -29,7 +29,7 @@ struct CreateAccount: View {
                     VStack{
                         Spacer()
                         TextField("Name", text: $viewModel.user.name.defaultValue(""))
-                            .foregroundColor(Color("Primary"))
+                            .foregroundColor(Color("TextC"))
                             .multilineTextAlignment(.leading)
                             .padding(11)
                             .font(.body)
@@ -40,7 +40,7 @@ struct CreateAccount: View {
                             .padding(2)
                         
                         TextField("Phone Number", text: $viewModel.user.phoneNumber.defaultValue(""))
-                            .foregroundColor(Color("Primary"))
+                            .foregroundColor(Color("TextC"))
                             .multilineTextAlignment(.leading)
                             .font(.body)
                             .padding(11)

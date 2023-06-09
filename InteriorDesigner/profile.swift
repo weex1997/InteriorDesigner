@@ -39,7 +39,7 @@ struct profil: View {
                         .padding(.top,100)
                     VStack{
                         TextField(self.viewModel.user.name ?? "name", text: $viewModel.user.name.defaultValue(""))
-                            .foregroundColor(Color("Primary"))
+                            .foregroundColor(Color("TextC"))
                             .multilineTextAlignment(.leading)
                             .font(.body)
                             .padding(11)
@@ -50,7 +50,7 @@ struct profil: View {
                             .padding(2)
                         
                         TextField(self.viewModel.user.phoneNumber ?? "phoneNumber", text: $viewModel.user.phoneNumber.defaultValue(""))
-                            .foregroundColor(Color("Primary"))
+                            .foregroundColor(Color("TextC"))
                             .multilineTextAlignment(.leading)
                             .font(.body)
                             .padding(11)

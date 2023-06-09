@@ -38,7 +38,7 @@ struct CreateAccountD: View {
                 VStack{
                     
                     TextField("Styles, Ex: Modern, classic, new classic", text: $viewModel.user.styles.defaultValue(""))
-                    //   .foregroundColor(Color("line"))
+                        .foregroundColor(Color("TextC"))
                         .font(.body)
                         .padding(11)
                         .font(.body)
@@ -64,6 +64,7 @@ struct CreateAccountD: View {
                     .frame(width: 330, height: 60)
                 VStack{
                     TextField("About, Here are space to write some information about you..",text: self.$viewModel.user.brief.defaultValue(""), axis: .vertical)
+                        .foregroundColor(Color("TextC"))
                         .lineLimit(3, reservesSpace: true)
                         .padding()
                         .font(.body)

@@ -48,7 +48,7 @@ class ViewModel: ObservableObject {
     
     //----------------------------------
     
-    func deleteData(UsersDelete: Users) {
+    func deleteData() {
         
         // Get a reference to the database
         let db = Firestore.firestore()
@@ -69,12 +69,13 @@ class ViewModel: ObservableObject {
 //                        // Check for the todo to remove
 //                        return Users.id == UsersDelete.id
 //                    }
+                    
                 }
                 
                 
             }
         }
-        
+        signOut()
     }
     
     //----------------------------------
@@ -165,10 +166,10 @@ class ViewModel: ObservableObject {
         } else {
             // No user is signed in.
             print("No user is signed in.")
-            let domain = Bundle.main.bundleIdentifier!
-            UserDefaults.standard.removePersistentDomain(forName: domain)
-            UserDefaults.standard.synchronize()
-            print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
+//            let domain = Bundle.main.bundleIdentifier!
+//            UserDefaults.standard.removePersistentDomain(forName: domain)
+//            UserDefaults.standard.synchronize()
+//            print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
         }
         
     }
@@ -342,16 +343,12 @@ class ViewModel: ObservableObject {
             }
           
         }
-        
-        
-      
-        
-        
-       
-        
     }
-    
-    
+    func delete() {
+      
+
+    }
+       
     func listAllFiles() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
             // Create a reference

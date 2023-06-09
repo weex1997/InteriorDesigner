@@ -43,6 +43,7 @@ struct UserProfile: View {
                                 .padding()
                             VStack{
                                 TextField(self.viewModel.user.name ?? "name", text: $viewModel.user.name.defaultValue(""))
+                                    .foregroundColor(Color("TextC"))
                                     .font(.body)
                                     .padding(11)
                                     .font(.body)
@@ -53,7 +54,7 @@ struct UserProfile: View {
                                     .padding(2)
                                 
                                 TextField(self.viewModel.user.phoneNumber ?? "phoneNumber", text: $viewModel.user.phoneNumber.defaultValue(""))
-                                    .foregroundColor(Color("Primary"))
+                                    .foregroundColor(Color("TextC"))
                                     .multilineTextAlignment(.leading)
                                     .font(.body)
                                     .padding(11)
@@ -65,8 +66,8 @@ struct UserProfile: View {
                             }
                             .padding(.top, -10.0)
                             
-                            TextField("Styles, Ex: Modern, classic, new classic", text: $viewModel.user.styles.defaultValue(""))
-                            //   .foregroundColor(Color("line"))
+                            TextField(self.viewModel.user.styles ?? "Styles, Ex: Modern, classic, new classic", text: $viewModel.user.styles.defaultValue(""))
+                                .foregroundColor(Color("TextC"))
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -91,7 +92,8 @@ struct UserProfile: View {
                         }.padding()
                             .frame(width: 330, height: 60)
                         VStack{
-                            TextField("About, Here are space to write some information about you..",text: self.$viewModel.user.brief.defaultValue(""), axis: .vertical)
+                            TextField(self.viewModel.user.brief ?? "About, Here are space to write some information about you..",text: self.$viewModel.user.brief.defaultValue(""), axis: .vertical)
+                                .foregroundColor(Color("TextC"))
                                 .lineLimit(3, reservesSpace: true)
                                 .padding()
                                 .font(.body)
@@ -133,8 +135,42 @@ struct UserProfile: View {
                             .frame(width: 342, height: 48.58)
                         )
                         .padding()
+                 
+                        Button("Log Out") {
+                            viewModel.signOut()
+                            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+                                exit(0)
+                            }
+                        }
+                        .bold()
+                        .foregroundColor(.white)
+                        .background(RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.gray)
+                            .frame(width: 342, height: 48.58)
+                        )
+                        .padding()
                         
+                        
+                        Button("Delete Account") {
+                            viewModel.deleteData()
+                           
+                            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+                                exit(0)
+                            }
+                            
+                        }
+                        
+                        .bold()
+                        .foregroundColor(.white)
+                        .background(RoundedRectangle(cornerRadius: 8)
+                            .fill(Color("Re"))
+                            .frame(width: 342, height: 48.58)
+                        )
+                        .padding()
                     }
+                    .padding()
                     
                 }
             }
