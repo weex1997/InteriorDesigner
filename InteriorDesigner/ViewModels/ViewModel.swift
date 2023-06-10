@@ -132,6 +132,7 @@ class ViewModel: ObservableObject {
                   let id =  document.documentID
                   let data = document.data()
                   let name = data?["name"] as? String ?? ""
+                  let uid = data?["id"] as? String ?? ""
                   let email = data?["email"] as? String ?? ""
                   let phoneNumber = data?["phoneNumber"] as? String ?? ""
                   let gender = data?["gender"] as? String ?? ""
@@ -154,7 +155,12 @@ class ViewModel: ObservableObject {
 //                  UserDefaults.standard.set(rate, forKey: "rate")
                  
                   
-                  self.user = User(id: id, name: name ,email: email ,phoneNumber: phoneNumber ,images: images, desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )
+
+                  self.user = User(id: id, name: name , uid: uid, email: email ,phoneNumber: phoneNumber ,desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )
+
+//                  self.user = User(id: id, name: name ,email: email ,phoneNumber: phoneNumber ,images: images, desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )
+
+                  
                   print(self.user.name ?? "" )
               }
             }

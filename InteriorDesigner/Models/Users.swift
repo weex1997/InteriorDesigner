@@ -31,6 +31,7 @@ struct User: Identifiable {
     var id : String
 //    var userId = UUID()
     var name: String?
+    var uid: String?
     var email: String?
     var phoneNumber: String?
     var gender: String?
