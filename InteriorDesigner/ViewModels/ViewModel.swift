@@ -9,40 +9,50 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 import CryptoKit
+import Firebase
+import FirebaseStorage
+import FirebaseFirestoreSwift
 
 class ViewModel: ObservableObject {
-    @State var userIDE = Auth.auth().currentUser?.uid
+    @State var userIDE = Auth.auth().currentUser?.uid ?? "123"
     @Published var user = User(id: (Auth.auth().currentUser?.uid.description) ?? "")
     @Published var designers = [Users]()
     private var db = Firestore.firestore()
-
+    let storage = Storage.storage()
+    @State var SR = Storage.storage().reference()
    
     //----------------------------------
     
-    func updateData(id: String) {
-        
+    func updateData() {
         let db = Firestore.firestore()
-            db.collection("Users").whereField("id", isEqualTo: id).getDocuments { (result, error) in
-                if error == nil{
-                    for document in result!.documents{
-                        //document.setValue("1", forKey: "isolationDate")
-                        db.collection("Users").document(document.documentID).setData([
-                            "name": self.user.name ?? "",
+
+        let washingtonRef = db.collection("Users").document(userIDE)
+
+        // Set the "capital" field of the city 'DC'
+        washingtonRef.updateData([
+            
+            "name": self.user.name ?? "",
                             "phoneNumber": self.user.phoneNumber ?? "",
                             "gender": self.user.gender ?? "",
                             "desinger": self.user.desinger ?? false,
                             "brief": self.user.brief ?? "",
-                            "field": self.user.field ?? [],
+            //                            "field": self.user.field ?? [],
+            //                            "images": self.user.field as Any,
                             "styles": self.user.styles ?? "",
-                            "rate": self.user.rate ?? 0], merge: true)
-                    }
-                }
+                            "rate": self.user.rate ?? 0
+            
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
             }
-    }
+        }
+            }
     
     //----------------------------------
     
-    func deleteData(UsersDelete: Users) {
+    func deleteData() {
         
         // Get a reference to the database
         let db = Firestore.firestore()
@@ -63,12 +73,21 @@ class ViewModel: ObservableObject {
 //                        // Check for the todo to remove
 //                        return Users.id == UsersDelete.id
 //                    }
+                    
                 }
                 
-                
+//                "name": self.user.name ?? "",
+//                "phoneNumber": self.user.phoneNumber ?? "",
+//                "gender": self.user.gender ?? "",
+//                "desinger": self.user.desinger ?? false,
+//                "brief": self.user.brief ?? "",
+////                            "field": self.user.field ?? [],
+////                            "images": self.user.field as Any,
+//                "styles": self.user.styles ?? "",
+//                "rate": self.user.rate ?? 0], merge: true)
             }
         }
-        
+        signOut()
     }
     
     //----------------------------------
@@ -90,7 +109,7 @@ class ViewModel: ObservableObject {
                 // No errors
                 
                 // Call get data to retrieve latest data
-                self.getData(id: id)
+                self.getData()
             }
             else {
                 // Handle the error
@@ -100,8 +119,9 @@ class ViewModel: ObservableObject {
     
     //----------------------------------
     
-    func getData(id : String) {
-        let docRef = db.collection("Users").document(id)
+    func getData() {
+
+        let docRef = db.collection("Users").document(userIDE)
 
           docRef.getDocument { document, error in
               if let error = error {
@@ -120,6 +140,7 @@ class ViewModel: ObservableObject {
                   let desinger = data?["desinger"] as? Bool ?? false
                   let brief = data?["brief"] as? String ?? ""
                   let field = data?["field"] as? [String] ?? []
+                  let images = data?["images"] as? [String] ?? []
                   let styles = data?["styles"] as? String ?? ""
                   let rate = data?["rate"] as? String ?? ""
                   
@@ -134,7 +155,12 @@ class ViewModel: ObservableObject {
 //                  UserDefaults.standard.set(rate, forKey: "rate")
                  
                   
+
                   self.user = User(id: id, name: name , uid: uid, email: email ,phoneNumber: phoneNumber ,desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )
+
+//                  self.user = User(id: id, name: name ,email: email ,phoneNumber: phoneNumber ,images: images, desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )
+
+                  
                   print(self.user.name ?? "" )
               }
             }
@@ -158,10 +184,10 @@ class ViewModel: ObservableObject {
         } else {
             // No user is signed in.
             print("No user is signed in.")
-            let domain = Bundle.main.bundleIdentifier!
-            UserDefaults.standard.removePersistentDomain(forName: domain)
-            UserDefaults.standard.synchronize()
-            print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
+//            let domain = Bundle.main.bundleIdentifier!
+//            UserDefaults.standard.removePersistentDomain(forName: domain)
+//            UserDefaults.standard.synchronize()
+//            print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
         }
         
     }
@@ -176,6 +202,7 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "favorite": FieldValue.arrayUnion([otherUserID])
         ])
+        self.getData()
 
       }
     
@@ -187,6 +214,19 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "field": FieldValue.arrayUnion([Feilds])
         ])
+        self.getData()
+
+      }
+    
+    func addImageArray(imageURL : String) {
+        let db = Firestore.firestore()
+        let washingtonRef = db.collection("Users").document(user.id)
+
+        // Atomically add a new region to the "regions" array field.
+        washingtonRef.updateData([
+            "images": FieldValue.arrayUnion([imageURL])
+        ])
+        self.getData()
 
       }
     
@@ -199,6 +239,8 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "favorite": FieldValue.arrayRemove([otherUserID])
         ])
+        self.getData()
+
       }
     
     
@@ -209,6 +251,19 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "field": FieldValue.arrayRemove([Feilds])
         ])
+        self.getData()
+
+      }
+    
+    func removeImageArray(ImageURL : String) {
+        let washingtonRef = db.collection("Users").document(user.id)
+
+        // Atomically remove a region from the "regions" array field.
+        washingtonRef.updateData([
+            "images": FieldValue.arrayRemove([ImageURL])
+        ])
+        self.getData()
+
       }
 //    func Rate(otherUserID : String, rateingValue : Int32) {
 //
@@ -249,7 +304,105 @@ class ViewModel: ObservableObject {
 //
 //    }
     
+//    func uploadSavedData() {
+//        guard let data = myData else { return } // Checks whether there is actual data to upload.
+//
+//        let storageRef = Storage.storage().reference()
+//        let fileRef = storageRef.child("userUID/files/documentName.png")
+//
+//        let uploadTask = fileRef.putData(data, metadata: nil) { (metadata, error) in
+//            guard let metadata = metadata else { return } // Cancels task if there is any error
+//            
+//            fileRef.downloadURL { (url, error) in {
+//                guard let downloadURL = url else { return }
+//                print(downloadURL) // Prints the URL to the newly uploaded data.
+//            }
+//        }
+//    }
     
+    func upload(image: UIImage) {
+        // Create a storage reference
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let filename = UUID().uuidString + ".jpg"
+        let storageRef = storage.reference().child("\(uid)/\(filename)")
+        self.SR = storageRef
+        // Resize the image to 200px with a custom extension
+        //        let resizedImage = image.aspectFittedToHeight(200)
+        
+        // Convert the image into JPEG and compress the quality to reduce its size
+        let data = image.jpegData(compressionQuality: 0.2)
+        
+        // Change the content type to jpg. If you don't, it'll be saved as application/octet-stream type
+        let metadata = StorageMetadata()
+//        metadata.contentType = filename + ".jpg"
+        
+
+        // Upload the image
+        if let data = data {
+            storageRef.putData(data, metadata: metadata) { (metadata, error) in
+                if let error = error {
+                    print("Error while uploading file: ", error)
+                }
+                
+                if let metadata = metadata {
+                    print("Metadata: ", metadata)
+                    // Fetch the download URL
+                    storageRef.downloadURL { url, error in
+                        if error != nil {
+                          print("fkuuuuuuuuuu")
+                      } else {
+                          //Do something with url
+                          print(url?.absoluteString ?? "")
+                          self.addImageArray(imageURL: url?.absoluteString ?? "")
+                      }
+                    }
+
+                }
+            }
+          
+        }
+    }
+       
+    func listAllFiles() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+            // Create a reference
+            let storageRef = storage.reference().child(uid)
+
+            // List all items in the images folder
+            storageRef.listAll { (result, error) in
+              if let error = error {
+                print("Error while listing all files: ", error)
+              }
+
+                for item in result!.items {
+                print("Item in images folder: ", item)
+//                    user.image.append(item)
+                    item.downloadURL(completion: { (url, error) in
+                        if error != nil {
+                            print("Failed to download url:", error!)
+                            return
+                        } else {
+                            //Do something with url
+                            print(url?.absoluteString ?? "")
+                            self.user.images.append(url?.absoluteString ?? "")
+                            print("hioooooooooooooooooooooooooooooo\(self.user.images)" )
+                            self.addImageArray(imageURL: url?.absoluteString ?? "")
+                        }
+
+                    })
+              }
+                
+             
+            }
+        }
+    
+    func deleteItem(item: StorageReference) {
+           item.delete { error in
+               if let error = error {
+                   print("Error deleting item", error)
+               }
+           }
+       }
     func fetchData() {
         db.collection("Users").getDocuments { doucments, error in
 

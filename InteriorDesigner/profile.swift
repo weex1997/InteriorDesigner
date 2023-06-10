@@ -15,6 +15,7 @@ struct profil: View {
     @State var userIDE = Auth.auth().currentUser?.uid
     @StateObject var viewModel = ViewModel()
     @State var isDesigner = false
+    @FocusState var isInputActive: Bool
 
     var body: some View {
         // Group{
@@ -38,8 +39,15 @@ struct profil: View {
                         .offset(x: -100 , y: -60)
                         .padding(.top,100)
                     VStack{
-                        TextField(self.viewModel.user.name ?? "name", text: $viewModel.user.name.defaultValue(""))
-                            .foregroundColor(Color("Primary"))
+                        VStack(){
+                            Text("Name")
+                                .foregroundColor(Color("Primary"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.system(size: 17))
+                                .padding(.vertical, 5.0)
+                        }
+                        TextField(self.viewModel.user.name ?? "name", text: $viewModel.user.name.defaultValue("name"))
+                            .foregroundColor(Color("TextC"))
                             .multilineTextAlignment(.leading)
                             .font(.body)
                             .padding(11)
@@ -48,9 +56,24 @@ struct profil: View {
                                     .stroke(Color("line"), lineWidth: 2)
                             )
                             .padding(2)
-                        
-                        TextField(self.viewModel.user.phoneNumber ?? "phoneNumber", text: $viewModel.user.phoneNumber.defaultValue(""))
-                            .foregroundColor(Color("Primary"))
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+
+                                    Button("Done") {
+                                        isInputActive = false
+                                    }
+                                }
+                            }
+                        VStack(){
+                            Text("Phone Number")
+                                .foregroundColor(Color("Primary"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.system(size: 17))
+                                .padding(.vertical, 5.0)
+                        }
+                        TextField(self.viewModel.user.phoneNumber ?? "phoneNumber", text: $viewModel.user.phoneNumber.defaultValue("phoneNumber"))
+                            .foregroundColor(Color("TextC"))
                             .multilineTextAlignment(.leading)
                             .font(.body)
                             .padding(11)
@@ -59,6 +82,15 @@ struct profil: View {
                                     .stroke(Color("line"), lineWidth: 2)
                             )
                             .padding(2)
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+
+                                    Button("Done") {
+                                        isInputActive = false
+                                    }
+                                }
+                            }
                     }.padding()
                         .padding(.top, -50.0)
                     
@@ -82,7 +114,7 @@ struct profil: View {
                     .padding([.leading, .bottom, .trailing])
 
                     
-                }.frame(width: 320, height: 340)
+                }.frame(width: 320, height: 430)
                     .padding()
                     .background(Color.white)
                     .cornerRadius(8)
@@ -94,7 +126,7 @@ struct profil: View {
                 VStack{
                     
                     Button("Update") {
-                        viewModel.updateData(id: self.viewModel.user.id)
+                        viewModel.updateData()
                         GotoHome = true
                     }
                     .bold()
@@ -113,7 +145,7 @@ struct profil: View {
         
         
         .onAppear(){
-            self.viewModel.getData(id: Auth.auth().currentUser?.uid ?? "1234")
+            self.viewModel.getData()
         }
         
         //   }

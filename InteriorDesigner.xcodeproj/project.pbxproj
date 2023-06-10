@@ -44,6 +44,9 @@
 		4ECA52552A306A6700EEAF63 /* ChatGPT3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECA52542A306A6700EEAF63 /* ChatGPT3View.swift */; };
 		4ECA52592A306B0000EEAF63 /* OpenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECA52582A306B0000EEAF63 /* OpenAIService.swift */; };
 		FC6F7EEB2A2F1858000003A5 /* GridPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6F7EEA2A2F1858000003A5 /* GridPicker.swift */; };
+		FC6F7EED2A30F8A8000003A5 /* DesingerPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6F7EEC2A30F8A8000003A5 /* DesingerPhotoPicker.swift */; };
+		FC6F7EEF2A30FB6B000003A5 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6F7EEE2A30FB6B000003A5 /* ImagePicker.swift */; };
+		FCDA209C2A33B42B00F9D922 /* WaterfallGrid in Frameworks */ = {isa = PBXBuildFile; productRef = FCDA209B2A33B42B00F9D922 /* WaterfallGrid */; };
 		FCF59BB72A10DB0A00543D51 /* InteriorDesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */; };
 		FCF59BB92A10DB0A00543D51 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF59BB82A10DB0A00543D51 /* ContentView.swift */; };
 		FCF59BBB2A10DB0B00543D51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCF59BBA2A10DB0B00543D51 /* Assets.xcassets */; };
@@ -95,6 +98,8 @@
 		4ECA52542A306A6700EEAF63 /* ChatGPT3View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGPT3View.swift; sourceTree = "<group>"; };
 		4ECA52582A306B0000EEAF63 /* OpenAIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAIService.swift; sourceTree = "<group>"; };
 		FC6F7EEA2A2F1858000003A5 /* GridPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPicker.swift; sourceTree = "<group>"; };
+		FC6F7EEC2A30F8A8000003A5 /* DesingerPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesingerPhotoPicker.swift; sourceTree = "<group>"; };
+		FC6F7EEE2A30FB6B000003A5 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		FC81D6C42A2BF46F00004BC0 /* InteriorDesigner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InteriorDesigner.entitlements; sourceTree = "<group>"; };
 		FCF59BB32A10DB0A00543D51 /* InteriorDesigner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteriorDesigner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteriorDesignerApp.swift; sourceTree = "<group>"; };
@@ -118,6 +123,7 @@
 				FCFB0B5E2A2A50BE0093BEF0 /* FirebaseFirestore in Frameworks */,
 				4ECA51D32A30023400EEAF63 /* Alamofire in Frameworks */,
 				FCFB0B642A2A50BE0093BEF0 /* FirebaseStorage in Frameworks */,
+				FCDA209C2A33B42B00F9D922 /* WaterfallGrid in Frameworks */,
 				FCFB0B602A2A50BE0093BEF0 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,11 +204,19 @@
 			path = EventSource;
 			sourceTree = "<group>";
 		};
+		FCDA20972A33B32700F9D922 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FCF59BAA2A10DB0A00543D51 = {
 			isa = PBXGroup;
 			children = (
 				FCF59BB52A10DB0A00543D51 /* InteriorDesigner */,
 				FCF59BB42A10DB0A00543D51 /* Products */,
+				FCDA20972A33B32700F9D922 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -224,6 +238,8 @@
 				FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */,
 				26DD7C592A19F06F0030A521 /* UserProfile.swift */,
 				2657C69F2A2F3BFA0092050E /* UserP2.swift */,
+				FC6F7EEC2A30F8A8000003A5 /* DesingerPhotoPicker.swift */,
+				FC6F7EEE2A30FB6B000003A5 /* ImagePicker.swift */,
 				4E0FF4712A2AA1B000250475 /* chatView.swift */,
 				4E0FF4732A2AA1B800250475 /* home.swift */,
 				4E0FF46F2A2AA1A800250475 /* profile.swift */,
@@ -304,6 +320,8 @@
 				FCFB0B632A2A50BE0093BEF0 /* FirebaseStorage */,
 				4ECA51D22A30023400EEAF63 /* Alamofire */,
 				4EC535122A3158BA0007EE69 /* SDWebImageSwiftUI */,
+				FCDA209B2A33B42B00F9D922 /* WaterfallGrid */,
+                58e1385071431a2228b87d93e9ad0cf202474ccb
 			);
 			productName = InteriorDesigner;
 			productReference = FCF59BB32A10DB0A00543D51 /* InteriorDesigner.app */;
@@ -336,7 +354,12 @@
 			packageReferences = (
 				FCFB0B5A2A2A50BE0093BEF0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4ECA51D12A30023400EEAF63 /* XCRemoteSwiftPackageReference "Alamofire" */,
+
 				4EC535112A3158BA0007EE69 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+
+				FCDA209A2A33B42B00F9D922 /* XCRemoteSwiftPackageReference "WaterfallGrid" */,
+
+ 58e1385071431a2228b87d93e9ad0cf202474ccb
 			);
 			productRefGroup = FCF59BB42A10DB0A00543D51 /* Products */;
 			projectDirPath = "";
@@ -372,6 +395,7 @@
 				4ECA52472A30650C00EEAF63 /* EventSourceSerializer.swift in Sources */,
 				FC6F7EEB2A2F1858000003A5 /* GridPicker.swift in Sources */,
 				4ECA52482A30650C00EEAF63 /* Alamofire+EventSource.swift in Sources */,
+				FC6F7EEF2A30FB6B000003A5 /* ImagePicker.swift in Sources */,
 				26DD7C682A1DEC980030A521 /* ScrollDetector.swift in Sources */,
 				4EC535012A31579F0007EE69 /* RecentMessage.swift in Sources */,
 				4ECA52552A306A6700EEAF63 /* ChatGPT3View.swift in Sources */,
@@ -403,7 +427,11 @@
 				4EC535062A3158150007EE69 /* FirebaseConstants.swift in Sources */,
 				2657C6A42A2F3CF90092050E /* InterFace2.swift in Sources */,
 				FCFB0B702A2A51B30093BEF0 /* Users.swift in Sources */,
+
 				4EC535152A315B870007EE69 /* LoginView.swift in Sources */,
+
+				FC6F7EED2A30F8A8000003A5 /* DesingerPhotoPicker.swift in Sources */,
+ 58e1385071431a2228b87d93e9ad0cf202474ccb
 				2657C6A62A2F3D160092050E /* InterFace3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,9 +577,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Team13.InteriorDesigner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -579,9 +610,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Team13.InteriorDesigner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -625,6 +659,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		FCDA209A2A33B42B00F9D922 /* XCRemoteSwiftPackageReference "WaterfallGrid" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/paololeonardi/WaterfallGrid.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.1;
+			};
+		};
 		FCFB0B5A2A2A50BE0093BEF0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -645,6 +687,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4ECA51D12A30023400EEAF63 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		FCDA209B2A33B42B00F9D922 /* WaterfallGrid */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FCDA209A2A33B42B00F9D922 /* XCRemoteSwiftPackageReference "WaterfallGrid" */;
+			productName = WaterfallGrid;
 		};
 		FCFB0B5B2A2A50BE0093BEF0 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

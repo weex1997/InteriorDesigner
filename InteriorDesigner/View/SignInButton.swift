@@ -141,7 +141,7 @@ struct SignInButton: View {
                                                 ref.getDocument { (document, error) in
                                                     if let document = document, document.exists {
                                                         print("User Exists")
-                                                        viewModel.getData(id: uid)
+                                                        viewModel.getData()
                                                         dismiss()
                                                     } else {
                                                         print("User does not exist in firestore")

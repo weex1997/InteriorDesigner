@@ -13,7 +13,7 @@ struct CreateAccount: View {
     @StateObject var viewModel = ViewModel()
     @State var Next = false
     @State var Done = false
-
+    @FocusState var isInputActive: Bool
     @State var isDesigner = false
     
     var body: some View {
@@ -28,8 +28,15 @@ struct CreateAccount: View {
                 VStack{
                     VStack{
                         Spacer()
-                        TextField("Name", text: $viewModel.user.name.defaultValue(""))
-                            .foregroundColor(Color("Primary"))
+                        VStack(){
+                            Text("Name")
+                                .foregroundColor(Color("Primary"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.system(size: 17))
+                                .padding(.vertical, 5.0)
+                        }
+                        TextField("Name", text: $viewModel.user.name.defaultValue("Name"))
+                            .foregroundColor(Color("TextC"))
                             .multilineTextAlignment(.leading)
                             .padding(11)
                             .font(.body)
@@ -38,9 +45,24 @@ struct CreateAccount: View {
                                     .stroke(Color("line"), lineWidth: 2)
                             )
                             .padding(2)
-                        
-                        TextField("Phone Number", text: $viewModel.user.phoneNumber.defaultValue(""))
-                            .foregroundColor(Color("Primary"))
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+
+                                    Button("Done") {
+                                        isInputActive = false
+                                    }
+                                }
+                            }
+                        VStack(){
+                            Text("Phone Number")
+                                .foregroundColor(Color("Primary"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.system(size: 17))
+                                .padding(.vertical, 5.0)
+                        }
+                        TextField("Phone Number", text: $viewModel.user.phoneNumber.defaultValue("Phone Number"))
+                            .foregroundColor(Color("TextC"))
                             .multilineTextAlignment(.leading)
                             .font(.body)
                             .padding(11)
@@ -49,13 +71,29 @@ struct CreateAccount: View {
                                     .stroke(Color("line"), lineWidth: 2)
                             )
                             .padding(2)
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+
+                                    Button("Done") {
+                                        isInputActive = false
+                                    }
+                                }
+                            }
+                        VStack(){
+                            Text("Gender")
+                                .foregroundColor(Color("Primary"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.system(size: 17))
+                                .padding(.vertical, 5.0)
+                        }
                         
                         VStack(){
                             HStack{
-                                Text("Gender")
+                                Text("Select your gender")
                                     .padding(.horizontal)
                                     .padding(.vertical, 12)
-                                    .foregroundColor(Color("Primary"))
+                                    .foregroundColor(Color("line"))
                                 
                                 Spacer()
                                 
@@ -90,13 +128,13 @@ struct CreateAccount: View {
                         Spacer()
                         
                         
-                    }.frame(width: 320, height: 250)
+                    }.frame(width: 320, height: 350)
                         .padding()
                         .background(Color.white)
                         .cornerRadius(8)                    .shadow(color: Color.gray.opacity(0.2), radius: 5, x: 0, y: 0)
                     VStack{
                         Button() {
-                            viewModel.updateData(id: viewModel.user.id)
+                            viewModel.updateData()
                             if(isDesigner){
                                 Next = true
                             }else{
@@ -117,7 +155,7 @@ struct CreateAccount: View {
                 
             .navigationBarBackButtonHidden(false)
         }.onAppear(){
-            self.viewModel.getData(id: userIDE ?? "123")
+            self.viewModel.getData()
         }
         .accentColor(Color("Primary"))
     }

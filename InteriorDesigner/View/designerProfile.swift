@@ -6,23 +6,44 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 
 struct designerProfile: View {
+    
     var size: CGSize
     var safeArea: EdgeInsets
+    @State var goToEdit = false
     @StateObject var viewModel = ViewModel()
-    @State var userIDE = Auth.auth().currentUser?.uid
-
-    var body: some View {
     
-            // NavigationView{
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 0) {
-                    HeaderView()
-                    info()
-                    // SampleCardsView()
-                        .zIndex(1000)
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            ZStack{
+                NavigationLink(destination: UserProfile().navigationBarBackButtonHidden(false), isActive: $goToEdit){}
+                
+                VStack(spacing: -30) {
+                    
+                    VStack{
+                        HeaderView()
+                        VStack(alignment: .trailing){
+                            Button {
+                                goToEdit = true
+                                
+                            } label: {
+                                Image(systemName: "pencil")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 25, height: 25)
+                                    .foregroundColor(Color("line"))
+                                
+                            }
+                        }.offset(x: 160 , y: -60)
+                    }
+                    .frame (height: 420)
+
+                    VStack{
+                        info()
+                        // SampleCardsView()
+                        //                        .zIndex(1000)
+                    }
                 }
                 .background {
                     ScrollDetector { offset in
@@ -33,89 +54,97 @@ struct designerProfile: View {
                     }
                 }
             }
-            ZStack{
-                
-                Button {
-                    print("Edit")
-                    
-                } label: {
-                    Image("Pen")
-                }
-                
-                .frame(width: 700,height: 150)
-            }
-            .ignoresSafeArea(.all, edges: .top)
         }
-        
+            .onAppear(){
+                self.viewModel.getData()
+            }
+//        ZStack{
+//
+//            Button {
+//                print("Edit")
+//
+//            } label: {
+//                Image("Pen")
+//            }
+//
+//            .frame(width: 700,height: 150)
+//        }
 
-        
-    @ViewBuilder
-    func HeaderView( ) -> some View {
-        let headerHeight = (size.height * 0.3) + safeArea .top
-        let minimumHeaderHeight = 65 + safeArea.top
-        
-        GeometryReader { _ in
+    }
+    struct HeaderView : View {
+      
+        @StateObject var viewModel = ViewModel()
+
+//        GeometryReader { _ in
+        var body: some View {
             
             ZStack {
                 Rectangle()
                     .fill (Color("Primary").gradient)
                 
                 
-                VStack(spacing: 15) {
+                VStack(spacing: 10) {
                     
-                    GeometryReader {
-                        let rect = $0.frame (in: .global)
-                        Image ("b")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame (width: rect.width, height: rect.height)
-                            .clipShape (Circle ())
-                    }
-                    .frame (width: headerHeight * 0.5, height: headerHeight * 0.5)
-                    Text (self.viewModel.user.name ?? "Best Designer")
-                        .font (.title)
-                        .fontWeight (.bold)
-                        .foregroundColor (.white)
-                    Text(self.viewModel.user.styles ?? "Modern , Classic")
-                        .foregroundColor (.white)
-                    HStack{
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                        Text(self.viewModel.user.rate ?? "4.5")
-                            .foregroundColor(.white)
+                    ZStack{
+                        
+                        Circle()
+                            .foregroundColor(Color("line").opacity(0.2))
+                        Image ("b").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
+                        
+                    }.frame(width: 130 , height: 130)
+                       
+                   
+                    .padding(.top, 70)
+                    VStack(spacing: 10){
+                        VStack{
+                            Text (self.viewModel.user.name ?? "Best Designer")
+                                .font (.title)
+                                .fontWeight (.bold)
+                                .foregroundColor (.white)
+                        }
+                        VStack{
+                            Text(self.viewModel.user.styles ?? "Modren , Classic")
+                                .foregroundColor (.white)
+                        }
+                        VStack{
+                            HStack{
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(.yellow)
+                                Text("4.5")
+                                    .foregroundColor(.white)
+                            }
+                        }
                     }
                     
                 }
-                .padding (.top, safeArea.top)
-                .padding (.bottom)
-            }
-            .frame (height: headerHeight)
+            }                    .edgesIgnoringSafeArea(.top)
+                    .onAppear(){
+                        self.viewModel.getData()
+                    }
             // .offset(y: -offsetY)
             
-        }
-        .frame (height: headerHeight)
-        .onAppear(){
-            self.viewModel.getData(id: userIDE ?? "123")
+            //        }
+            //        .frame (height: 350)
         }
     }
-    @ViewBuilder
-    func SampleCardsView() -> some View {
-        VStack(spacing: 15) {
-            ForEach(1...25, id: \.self) { _ in
-                RoundedRectangle (cornerRadius: 10, style: .continuous)
-                    .fill(.black.opacity (0.05))
-                    .frame (height: 75)
-            }
-        }
-        .padding(15)
-        
-    }
+//    @ViewBuilder
+//    func SampleCardsView() -> some View {
+//        VStack(spacing: 15) {
+//            ForEach(1...25, id: \.self) { _ in
+//                RoundedRectangle (cornerRadius: 10, style: .continuous)
+//                    .fill(.black.opacity (0.05))
+//                    .frame (height: 75)
+//            }
+//        }
+//        .padding(15)
+//
+//    }
     
     
     
 }
 
-struct Home_Previews: PreviewProvider {
+struct designerProfile_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
