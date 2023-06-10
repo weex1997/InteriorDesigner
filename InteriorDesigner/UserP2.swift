@@ -71,7 +71,7 @@ struct UserP2: View {
                         //                            .padding(.trailing,200)
                         
                         VStack(alignment: .leading, spacing: 6){
-                            Text(self.viewModel.user.name ?? "Beautiful Name")
+                            Text(self.viewModel.user.name ?? "Name")
                                 .font(.title2)
                                 .foregroundColor(Color("Primary"))
                                 
@@ -169,7 +169,7 @@ struct UserP2: View {
                 .padding()
             }//vstack
         }.onAppear(){
-            self.viewModel.getData(id: Auth.auth().currentUser?.uid ?? "1234")
+            self.viewModel.getData()
         }
         .navigationTitle("My Profile")
         .navigationBarTitleDisplayMode(.inline)

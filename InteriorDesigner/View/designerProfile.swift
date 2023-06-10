@@ -55,6 +55,9 @@ struct designerProfile: View {
                 }
             }
         }
+            .onAppear(){
+                self.viewModel.getData()
+            }
 //        ZStack{
 //
 //            Button {
@@ -68,28 +71,29 @@ struct designerProfile: View {
 //        }
 
     }
-    @ViewBuilder
-    func HeaderView( ) -> some View {
-        let headerHeight = (size.height * 0.3) + safeArea .top
-        let minimumHeaderHeight = 65 + safeArea.top
-        
+    struct HeaderView : View {
+      
+        @StateObject var viewModel = ViewModel()
+
 //        GeometryReader { _ in
+        var body: some View {
+            
             ZStack {
                 Rectangle()
                     .fill (Color("Primary").gradient)
-
+                
                 
                 VStack(spacing: 10) {
                     
-                    GeometryReader {
-                        let rect = $0.frame (in: .global)
-                        Image ("b")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame (width: rect.width, height: rect.height)
-                            .clipShape (Circle ())
-                    }
-                    .frame (width: headerHeight * 0.5, height: headerHeight * 0.5)
+                    ZStack{
+                        
+                        Circle()
+                            .foregroundColor(Color("line").opacity(0.2))
+                        Image ("b").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
+                        
+                    }.frame(width: 130 , height: 130)
+                       
+                   
                     .padding(.top, 70)
                     VStack(spacing: 10){
                         VStack{
@@ -114,12 +118,14 @@ struct designerProfile: View {
                     
                 }
             }                    .edgesIgnoringSafeArea(.top)
-            
+                    .onAppear(){
+                        self.viewModel.getData()
+                    }
             // .offset(y: -offsetY)
             
-//        }
-//        .frame (height: 350)
-
+            //        }
+            //        .frame (height: 350)
+        }
     }
 //    @ViewBuilder
 //    func SampleCardsView() -> some View {

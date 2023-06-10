@@ -11,6 +11,9 @@ import FirebaseAuth
 struct UserProfile: View {
     @State var userIDE = Auth.auth().currentUser?.uid ?? ""
     @StateObject var viewModel = ViewModel()
+    @State var GotoHome = false
+    @FocusState var isInputActive: Bool
+
 //    @State var users : Users
 //    init(){
 //        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
@@ -21,7 +24,7 @@ struct UserProfile: View {
         // Group{
         ZStack(alignment: .top){
             
-//            NavigationLink(destination: home().navigationBarBackButtonHidden(false), isActive: $GotoHome){}
+            NavigationLink(destination: home().navigationBarBackButtonHidden(false), isActive: $GotoHome){}
             
             Color("BC")
                 .ignoresSafeArea()
@@ -41,9 +44,18 @@ struct UserProfile: View {
                                 .padding(.leading)
                                 .offset(x: -100 , y: 1)
                                 .padding()
+                            
                             VStack{
-                                TextField(self.viewModel.user.name ?? "name", text: $viewModel.user.name.defaultValue(""))
+                                VStack(){
+                                    Text("Name")
+                                        .foregroundColor(Color("Primary"))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .font(.system(size: 17))
+                                        .padding(.vertical, 5.0)
+                                }
+                                TextField(self.viewModel.user.name ?? "name", text: $viewModel.user.name.defaultValue("name"))
                                     .foregroundColor(Color("TextC"))
+                                    .multilineTextAlignment(.leading)
                                     .font(.body)
                                     .padding(11)
                                     .font(.body)
@@ -52,8 +64,23 @@ struct UserProfile: View {
                                             .stroke(Color("line"), lineWidth: 2)
                                     )
                                     .padding(2)
-                                
-                                TextField(self.viewModel.user.phoneNumber ?? "phoneNumber", text: $viewModel.user.phoneNumber.defaultValue(""))
+                                    .toolbar {
+                                        ToolbarItemGroup(placement: .keyboard) {
+                                            Spacer()
+
+                                            Button("Done") {
+                                                isInputActive = false
+                                            }
+                                        }
+                                    }
+                                VStack(){
+                                    Text("Phone Number")
+                                        .foregroundColor(Color("Primary"))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .font(.system(size: 17))
+                                        .padding(.vertical, 5.0)
+                                }
+                                TextField(self.viewModel.user.phoneNumber ?? "phoneNumber", text: $viewModel.user.phoneNumber.defaultValue("phoneNumber"))
                                     .foregroundColor(Color("TextC"))
                                     .multilineTextAlignment(.leading)
                                     .font(.body)
@@ -63,11 +90,27 @@ struct UserProfile: View {
                                             .stroke(Color("line"), lineWidth: 2)
                                     )
                                     .padding(2)
+                                    .toolbar {
+                                        ToolbarItemGroup(placement: .keyboard) {
+                                            Spacer()
+
+                                            Button("Done") {
+                                                isInputActive = false
+                                            }
+                                        }
+                                    }
                             }
                             .padding(.top, -10.0)
-                            
-                            TextField(self.viewModel.user.styles ?? "Styles, Ex: Modern, classic, new classic", text: $viewModel.user.styles.defaultValue(""))
+                            VStack(){
+                                Text("Styles")
+                                    .foregroundColor(Color("Primary"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .font(.system(size: 17))
+                                    .padding(.vertical, 5.0)
+                            }
+                            TextField(self.viewModel.user.styles ?? "Styles, Ex: Modern, classic, new classic", text: $viewModel.user.styles.defaultValue("Styles, Ex: Modern, classic, new classic"))
                                 .foregroundColor(Color("TextC"))
+                                .multilineTextAlignment(.leading)
                                 .font(.body)
                                 .padding(11)
                                 .font(.body)
@@ -76,6 +119,15 @@ struct UserProfile: View {
                                         .stroke(Color("line"), lineWidth: 2)
                                 )
                                 .padding(2)
+                                .toolbar {
+                                    ToolbarItemGroup(placement: .keyboard) {
+                                        Spacer()
+
+                                        Button("Done") {
+                                            isInputActive = false
+                                        }
+                                    }
+                                }
                             VStack{
                                 Text("Field")
                                     .font(.body)
@@ -91,9 +143,17 @@ struct UserProfile: View {
                             GridPicker()
                         }.padding()
                             .frame(width: 330, height: 60)
+                        VStack(){
+                            Text("About")
+                                .foregroundColor(Color("Primary"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.system(size: 17))
+                                .padding(.vertical, 5.0)
+                        }
                         VStack{
-                            TextField(self.viewModel.user.brief ?? "About, Here are space to write some information about you..",text: self.$viewModel.user.brief.defaultValue(""), axis: .vertical)
+                            TextField(self.viewModel.user.brief ?? "About, Here are space to write some information about you..",text: self.$viewModel.user.brief.defaultValue("About, Here are space to write some information about you.."), axis: .vertical)
                                 .foregroundColor(Color("TextC"))
+                                .multilineTextAlignment(.leading)
                                 .lineLimit(3, reservesSpace: true)
                                 .padding()
                                 .font(.body)
@@ -101,13 +161,22 @@ struct UserProfile: View {
                                     RoundedRectangle(cornerRadius: 9)
                                         .stroke(Color("line"), lineWidth: 2)
                                 )
+                                .toolbar {
+                                    ToolbarItemGroup(placement: .keyboard) {
+                                        Spacer()
+
+                                        Button("Done") {
+                                            isInputActive = false
+                                        }
+                                    }
+                                }
                         }
                         VStack{
                             DesingerPhotoPicker()
                         }.padding(.vertical)
                         
                         
-                    }.frame(width: 320, height: 630)
+                    }.frame(width: 320, height: 800)
                         .padding()
                         .background(Color.white)
                         .cornerRadius(8)
@@ -125,8 +194,8 @@ struct UserProfile: View {
                     VStack{
                         
                         Button("Update") {
-                            viewModel.updateData(id: self.viewModel.user.id)
-                            //                        GotoHome = true
+                            viewModel.updateData()
+                                                    GotoHome = true
                         }
                         .bold()
                         .foregroundColor(.white)
@@ -179,7 +248,7 @@ struct UserProfile: View {
         
         
         .onAppear(){
-            self.viewModel.getData(id: Auth.auth().currentUser?.uid ?? "1234")
+            self.viewModel.getData()
         }
         
         //   }

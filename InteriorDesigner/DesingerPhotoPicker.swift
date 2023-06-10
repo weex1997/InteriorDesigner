@@ -67,7 +67,7 @@ struct DesingerPhotoPicker: View {
                     }
                     .sheet(isPresented: $showSheet,onDismiss: {
                         viewModel.upload(image: image)
-                        viewModel.getData(id: Auth.auth().currentUser?.uid ?? "123")
+                        viewModel.getData()
 //                        images.append(image)
                     }) {
                         // Pick an image from the photo library:
@@ -77,7 +77,7 @@ struct DesingerPhotoPicker: View {
                     }
            
         }.onAppear(){
-            self.viewModel.getData(id: Auth.auth().currentUser?.uid ?? "123")}
+            self.viewModel.getData()}
         
            
     }

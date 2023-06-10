@@ -14,8 +14,9 @@ struct CreateAccountD: View {
     @State var userIDE = Auth.auth().currentUser?.uid
     @State var GoHome = false
     @State var gridPicher = GridPicker()
-    
-    
+    @FocusState var isInputActive: Bool
+
+   
     
     //    init() {
     //
@@ -34,11 +35,18 @@ struct CreateAccountD: View {
             NavigationLink(destination: home().navigationBarBackButtonHidden(false), isActive: $GoHome){}
             VStack{
             VStack {
-
+                VStack(){
+                    Text("Styles")
+                        .foregroundColor(Color("Primary"))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.system(size: 17))
+                        .padding(.vertical, 5.0)
+                }
                 VStack{
                     
-                    TextField("Styles, Ex: Modern, classic, new classic", text: $viewModel.user.styles.defaultValue(""))
+                    TextField("Styles, Ex: Modern, classic, new classic", text: $viewModel.user.styles.defaultValue("Styles, Ex: Modern, classic, new classic"))
                         .foregroundColor(Color("TextC"))
+                        .multilineTextAlignment(.leading)
                         .font(.body)
                         .padding(11)
                         .font(.body)
@@ -47,6 +55,15 @@ struct CreateAccountD: View {
                                 .stroke(Color("line"), lineWidth: 2)
                         )
                         .padding(2)
+                        .toolbar {
+                            ToolbarItemGroup(placement: .keyboard) {
+                                Spacer()
+
+                                Button("Done") {
+                                    isInputActive = false
+                                }
+                            }
+                        }
                     VStack{
                         Text("Field")
                             .font(.body)
@@ -62,9 +79,19 @@ struct CreateAccountD: View {
                     GridPicker()
                 }.padding()
                     .frame(width: 330, height: 60)
+                
+                VStack(){
+                    Text("About")
+                        .foregroundColor(Color("Primary"))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.system(size: 17))
+                        .padding(.vertical, 5.0)
+                }
+                
                 VStack{
-                    TextField("About, Here are space to write some information about you..",text: self.$viewModel.user.brief.defaultValue(""), axis: .vertical)
+                    TextField("About, Here are space to write some information about you..",text: self.$viewModel.user.brief.defaultValue("About, Here are space to write some information about you.."), axis: .vertical)
                         .foregroundColor(Color("TextC"))
+                        .multilineTextAlignment(.leading)
                         .lineLimit(3, reservesSpace: true)
                         .padding()
                         .font(.body)
@@ -72,13 +99,31 @@ struct CreateAccountD: View {
                             RoundedRectangle(cornerRadius: 9)
                                 .stroke(Color("line"), lineWidth: 2)
                         )
+                        .focused($isInputActive)
+                                        .toolbar {
+                                            ToolbarItemGroup(placement: .keyboard) {
+                                                Spacer()
+
+                                                Button("Done") {
+                                                    isInputActive = false
+                                                }
+                                            }
+                                        }
                 }
+                VStack(){
+                    Text("Portfolio")
+                        .foregroundColor(Color("Primary"))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.system(size: 17))
+                        .padding(.vertical, 5.0)
+                }
+                VStack{
+                    DesingerPhotoPicker()
+                }.padding(.vertical)
                 
                 
                 
-                
-                
-            }.frame(width: 320, height: 280)
+            }.frame(width: 320, height: 530)
                 .padding()
                 .background(Color.white)
                 .cornerRadius(8)
@@ -88,7 +133,8 @@ struct CreateAccountD: View {
                 
                 
                 Button("Done") {
-                    viewModel.updateData(id: viewModel.user.id)
+                    viewModel.getData()
+                    viewModel.updateData()
                     GoHome = true                            }
                 .bold()
                 .foregroundColor(.white)
@@ -113,7 +159,7 @@ struct CreateAccountD: View {
                     .foregroundColor(Color("Primary"))
             })
         .onAppear(){
-            self.viewModel.getData(id: userIDE ?? "123")
+            self.viewModel.getData()
         }
         
     }

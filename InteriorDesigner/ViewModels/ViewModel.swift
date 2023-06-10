@@ -14,7 +14,7 @@ import FirebaseStorage
 import FirebaseFirestoreSwift
 
 class ViewModel: ObservableObject {
-    @State var userIDE = Auth.auth().currentUser?.uid
+    @State var userIDE = Auth.auth().currentUser?.uid ?? "123"
     @Published var user = User(id: (Auth.auth().currentUser?.uid.description) ?? "")
     @Published var designers = [Users]()
     private var db = Firestore.firestore()
@@ -23,28 +23,32 @@ class ViewModel: ObservableObject {
    
     //----------------------------------
     
-    func updateData(id: String) {
-        
+    func updateData() {
         let db = Firestore.firestore()
-            db.collection("Users").whereField("id", isEqualTo: id).getDocuments { (result, error) in
-                if error == nil{
-                    for document in result!.documents{
-                        //document.setValue("1", forKey: "isolationDate")
-                        db.collection("Users").document(document.documentID).setData([
-                            "name": self.user.name ?? "",
+
+        let washingtonRef = db.collection("Users").document(userIDE)
+
+        // Set the "capital" field of the city 'DC'
+        washingtonRef.updateData([
+            
+            "name": self.user.name ?? "",
                             "phoneNumber": self.user.phoneNumber ?? "",
                             "gender": self.user.gender ?? "",
                             "desinger": self.user.desinger ?? false,
                             "brief": self.user.brief ?? "",
-                            "field": self.user.field ?? [],
-                            "image": self.user.field as Any,
+            //                            "field": self.user.field ?? [],
+            //                            "images": self.user.field as Any,
                             "styles": self.user.styles ?? "",
-                            "rate": self.user.rate ?? 0], merge: true)
-                    }
-                    
-                }
+                            "rate": self.user.rate ?? 0
+            
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
             }
-    }
+        }
+            }
     
     //----------------------------------
     
@@ -72,7 +76,15 @@ class ViewModel: ObservableObject {
                     
                 }
                 
-                
+//                "name": self.user.name ?? "",
+//                "phoneNumber": self.user.phoneNumber ?? "",
+//                "gender": self.user.gender ?? "",
+//                "desinger": self.user.desinger ?? false,
+//                "brief": self.user.brief ?? "",
+////                            "field": self.user.field ?? [],
+////                            "images": self.user.field as Any,
+//                "styles": self.user.styles ?? "",
+//                "rate": self.user.rate ?? 0], merge: true)
             }
         }
         signOut()
@@ -97,7 +109,7 @@ class ViewModel: ObservableObject {
                 // No errors
                 
                 // Call get data to retrieve latest data
-                self.getData(id: id)
+                self.getData()
             }
             else {
                 // Handle the error
@@ -107,9 +119,9 @@ class ViewModel: ObservableObject {
     
     //----------------------------------
     
-    func getData(id : String) {
+    func getData() {
 
-        let docRef = db.collection("Users").document(id)
+        let docRef = db.collection("Users").document(userIDE)
 
           docRef.getDocument { document, error in
               if let error = error {
@@ -184,7 +196,7 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "favorite": FieldValue.arrayUnion([otherUserID])
         ])
-        self.getData(id: userIDE ?? "123")
+        self.getData()
 
       }
     
@@ -196,7 +208,7 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "field": FieldValue.arrayUnion([Feilds])
         ])
-        self.getData(id: userIDE ?? "123")
+        self.getData()
 
       }
     
@@ -208,7 +220,7 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "images": FieldValue.arrayUnion([imageURL])
         ])
-        self.getData(id: userIDE ?? "123")
+        self.getData()
 
       }
     
@@ -221,7 +233,7 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "favorite": FieldValue.arrayRemove([otherUserID])
         ])
-        self.getData(id: userIDE ?? "123")
+        self.getData()
 
       }
     
@@ -233,7 +245,7 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "field": FieldValue.arrayRemove([Feilds])
         ])
-        self.getData(id: userIDE ?? "123")
+        self.getData()
 
       }
     
@@ -244,7 +256,7 @@ class ViewModel: ObservableObject {
         washingtonRef.updateData([
             "images": FieldValue.arrayRemove([ImageURL])
         ])
-        self.getData(id: userIDE ?? "123")
+        self.getData()
 
       }
 //    func Rate(otherUserID : String, rateingValue : Int32) {
@@ -343,10 +355,6 @@ class ViewModel: ObservableObject {
             }
           
         }
-    }
-    func delete() {
-      
-
     }
        
     func listAllFiles() {
