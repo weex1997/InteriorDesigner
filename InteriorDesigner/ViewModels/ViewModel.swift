@@ -112,6 +112,7 @@ class ViewModel: ObservableObject {
                   let id =  document.documentID
                   let data = document.data()
                   let name = data?["name"] as? String ?? ""
+                  let uid = data?["id"] as? String ?? ""
                   let email = data?["email"] as? String ?? ""
                   let phoneNumber = data?["phoneNumber"] as? String ?? ""
                   let gender = data?["gender"] as? String ?? ""
@@ -133,7 +134,7 @@ class ViewModel: ObservableObject {
 //                  UserDefaults.standard.set(rate, forKey: "rate")
                  
                   
-                  self.user = User(id: id, name: name ,email: email ,phoneNumber: phoneNumber ,desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )
+                  self.user = User(id: id, name: name , uid: uid, email: email ,phoneNumber: phoneNumber ,desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )
                   print(self.user.name ?? "" )
               }
             }
@@ -262,6 +263,8 @@ class ViewModel: ObservableObject {
                 for document in documents {
                 
                     let id =  document.data()["id"] as? String
+                    let uid =  document.data()["uid"] as? String
+
 //                    let userId =  document.data()["userId"] as? UUID
                     let name = document.data()["name"] as? String
                     let email = document.data()["email"] as? String
@@ -274,7 +277,7 @@ class ViewModel: ObservableObject {
                     let rate = document.data()["rate"] as? String
 
                     
-                    let user = Users(id: id ?? "", name: name ?? "",email: email ?? "" ,phoneNumber: phoneNumber ?? "",desinger: desinger ?? false , brief: brief ?? "",field: field ?? "" ,styles: styles ?? "", rate: rate ?? "" )
+                    let user = Users(id: id ?? "", uid: uid ?? "", name: name ?? "",email: email ?? "" ,phoneNumber: phoneNumber ?? "",desinger: desinger ?? false , brief: brief ?? "",field: field ?? "" ,styles: styles ?? "", rate: rate ?? "" )
                     self.designers.append(user)
                     print("SSSS:\(self.designers.count)")
                     print("MMM:\(self.designers[0].name)")
