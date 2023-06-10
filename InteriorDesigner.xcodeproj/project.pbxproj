@@ -38,6 +38,8 @@
 		FC6F7EED2A30F8A8000003A5 /* DesingerPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6F7EEC2A30F8A8000003A5 /* DesingerPhotoPicker.swift */; };
 		FC6F7EEF2A30FB6B000003A5 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6F7EEE2A30FB6B000003A5 /* ImagePicker.swift */; };
 		FCDA209C2A33B42B00F9D922 /* WaterfallGrid in Frameworks */ = {isa = PBXBuildFile; productRef = FCDA209B2A33B42B00F9D922 /* WaterfallGrid */; };
+		FCDA209E2A341BB400F9D922 /* OtherDesinerPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDA209D2A341BB400F9D922 /* OtherDesinerPage.swift */; };
+		FCDA20A02A35367100F9D922 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDA209F2A35367100F9D922 /* test.swift */; };
 		FCF59BB72A10DB0A00543D51 /* InteriorDesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */; };
 		FCF59BB92A10DB0A00543D51 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF59BB82A10DB0A00543D51 /* ContentView.swift */; };
 		FCF59BBB2A10DB0B00543D51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCF59BBA2A10DB0B00543D51 /* Assets.xcassets */; };
@@ -84,6 +86,8 @@
 		FC6F7EEC2A30F8A8000003A5 /* DesingerPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesingerPhotoPicker.swift; sourceTree = "<group>"; };
 		FC6F7EEE2A30FB6B000003A5 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		FC81D6C42A2BF46F00004BC0 /* InteriorDesigner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InteriorDesigner.entitlements; sourceTree = "<group>"; };
+		FCDA209D2A341BB400F9D922 /* OtherDesinerPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherDesinerPage.swift; sourceTree = "<group>"; };
+		FCDA209F2A35367100F9D922 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		FCF59BB32A10DB0A00543D51 /* InteriorDesigner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteriorDesigner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCF59BB62A10DB0A00543D51 /* InteriorDesignerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteriorDesignerApp.swift; sourceTree = "<group>"; };
 		FCF59BB82A10DB0A00543D51 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -116,10 +120,12 @@
 		26DD7C632A1CBF780030A521 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FCF59BB82A10DB0A00543D51 /* ContentView.swift */,
 				FCFB0B762A2A51F90093BEF0 /* SignInButton.swift */,
+				FCF59BB82A10DB0A00543D51 /* ContentView.swift */,
 				26DD7C642A1CBFBD0030A521 /* designerProfile.swift */,
 				26DD7C692A1DF6B80030A521 /* info.swift */,
+				FCDA209F2A35367100F9D922 /* test.swift */,
+				FCDA209D2A341BB400F9D922 /* OtherDesinerPage.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -328,6 +334,7 @@
 				2657C6A22A2F3CDE0092050E /* InterFace1.swift in Sources */,
 				FCF59BB92A10DB0A00543D51 /* ContentView.swift in Sources */,
 				26DD7C602A1A10D60030A521 /* DesignerInfo.swift in Sources */,
+				FCDA20A02A35367100F9D922 /* test.swift in Sources */,
 				26DD7C6A2A1DF6B80030A521 /* info.swift in Sources */,
 				4ECA524B2A30650C00EEAF63 /* DecodableEventSourceMessage.swift in Sources */,
 				4ECA524A2A30650C00EEAF63 /* EventSourceMessage.swift in Sources */,
@@ -341,6 +348,7 @@
 				4E0FF4702A2AA1A800250475 /* profile.swift in Sources */,
 				4E0FF4722A2AA1B000250475 /* chatView.swift in Sources */,
 				FCFB0B752A2A51D10093BEF0 /* ViewModel.swift in Sources */,
+				FCDA209E2A341BB400F9D922 /* OtherDesinerPage.swift in Sources */,
 				4ECA52492A30650C00EEAF63 /* DecodableEventSourceSerializer.swift in Sources */,
 				4EC534EE2A306BB10007EE69 /* ChatViewModel.swift in Sources */,
 				4ECA52532A306A4200EEAF63 /* ChatViewModel.swift in Sources */,

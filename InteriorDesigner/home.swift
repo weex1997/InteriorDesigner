@@ -155,43 +155,44 @@ struct home: View {
 }
 
 
-struct Destination: Hashable {
-    let name, country, imageName, rate: String
-}
 
 struct PopularDestinationsView: View {
-    let destinations: [Destination] = [
-        .init(name: "Nasser", country: "Modern, classic, new classic", imageName: "mo", rate:"5.00"),
-        .init(name: "Nasser", country: "Modern, classic, new classic", imageName: "dr", rate:"5.00"),
-        .init(name: "Nasser", country: "Modern, classic, new classic", imageName: "in" , rate:"5.00"),
-    ]
+
     @StateObject var viewModel = ViewModel()
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
-                VStack {
-                    ForEach(viewModel.designers, id: \.id) { designer in
-                        
-                        NavigationLink(destination: profil()){
+                ForEach(self.viewModel.designers, id: \.id) { d in
+                    if (d.desinger == true){
+                        NavigationLink(destination: OtherDesinerPage(users: .init(id:d.id,name: d.name,desinger: d.desinger, brief: d.brief, field: d.field, styles: d.styles, rate: d.rate, images: d.images)).navigationBarBackButtonHidden(false)){
                             VStack( spacing: 0) {
                                 VStack{
-                                    Image("mo")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 327, height: 154)
-                                        .cornerRadius(4)
-                                        .padding(.horizontal, 6)
-                                        .padding(.vertical, 6)
+                                    let im = d.images[0]
+                                    AsyncImage(url: URL(string: "\(im)"))
+                                    { image in
+                                        image
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 327, height: 154)
+                                            .cornerRadius(4)
+                                            .padding(.horizontal, 6)
+                                            .padding(.vertical, 6)
+                                        
+                                    } placeholder: {
+                                        Color.gray
+//                                         
+                                    }
+                                        
                                 }
                                 VStack(alignment: .leading){
-                                    Text(designer.name!)
+                                    Text(d.name)
                                         .font(.system(size: 12, weight: .semibold))
                                     
                                         .padding(.horizontal, 12)
                                         .padding(.bottom, 8)
                                     
                                     HStack{
-                                        Text(designer.field!)
+                                        Text(d.styles)
                                             .font(.system(size: 12, weight: .semibold))
                                             .foregroundColor(.gray)
                                         Spacer()
@@ -205,7 +206,7 @@ struct PopularDestinationsView: View {
                                     
                                     
                                     HStack{
-                                        Text(designer.rate!+(".00"))
+                                        Text("\(d.rate).00")
                                             .font(.system(size: 12, weight: .semibold))
                                             .foregroundColor(.gray)
                                         Image(systemName: "star.fill")
@@ -221,7 +222,7 @@ struct PopularDestinationsView: View {
                             .shadow(color: Color.gray.opacity(0.2), radius: 5, x: 0, y: 0)
                         }.padding(.vertical, 10)
                     }
-                }
+                    }
             }
         }.onAppear(){
             self.viewModel.fetchData()

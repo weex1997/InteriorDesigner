@@ -397,42 +397,47 @@ class ViewModel: ObservableObject {
                }
            }
        }
-    func fetchData() {
-        db.collection("Users").getDocuments { doucments, error in
-
-            if let error = error {
-                print("error!:\(error.localizedDescription)")
-            } else {
-                guard let documents = doucments?.documents else {
-                    print("No documents")
-                    return
-                }
-                for document in documents {
-                
-                    let id =  document.data()["id"] as? String
-//                    let userId =  document.data()["userId"] as? UUID
-                    let name = document.data()["name"] as? String
-                    let email = document.data()["email"] as? String
-                    let phoneNumber = document.data()["name"] as? String
-                    let favorite = document.data()["phoneNumber"] as? String
-                    let desinger = document.data()["desinger"] as? Bool
-                    let brief = document.data()["brief"] as? String
-                    let field = document.data()["field"] as? String
-                    let styles = document.data()["styles"] as? String
-                    let rate = document.data()["rate"] as? String
-
-                    
-                    let user = Users(id: id ?? "", name: name ?? "",email: email ?? "" ,phoneNumber: phoneNumber ?? "",desinger: desinger ?? false , brief: brief ?? "",field: field ?? "" ,styles: styles ?? "", rate: rate ?? "" )
-                    self.designers.append(user)
-                    print("SSSS:\(self.designers.count)")
-                    print("MMM:\(self.designers[0].name)")
-                    print("Hello")
-
-                
-                }
-                
-            }
+    func fetchData() { // Read the documents at a specific path
+        db.collection("Users").getDocuments { snapshot, error in
             
+            // Check for errors
+            if error == nil {
+                // No errors
+                
+                if let snapshot = snapshot {
+                    
+                    // Update the list property in the main thread
+                    DispatchQueue.main.async {
+                        
+                        // Get all the documents and create Todos
+                        self.designers = snapshot.documents.map { d in
+                            
+                            // Create a Todo item for each document returned
+                            return Users(id: d.documentID,
+                                        name: d["name"] as? String ?? "",
+                                         email: d["email"] as? String ?? "",
+                                         phoneNumber: d["phoneNumber"] as? String ?? "",
+//                                         gender: d["gender"] as? String ?? "",
+                                         favorite: d["favorite"] as? [String] ?? [],
+                                         desinger: d["desinger"] as? Bool ?? false,
+                                         brief: d["brief"] as? String ?? "",
+                                         field: d["field"] as? [String] ?? [],
+//                                         images: d["images"] as? [String] ?? []
+                                         styles: d["styles"] as? String ?? "",
+                                         rate: d["rate"] as? String ?? "",
+                                         images: d["images"] as? [String] ?? []
+                            
+                            
+                            )
+                        }
+                    }
+                    
+                    
+                }
+            }
+            else {
+                // Handle the error
+            }
         }
-}
+    }
 }
