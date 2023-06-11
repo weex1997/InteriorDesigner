@@ -398,7 +398,7 @@ class ViewModel: ObservableObject {
            }
        }
     func fetchData() { // Read the documents at a specific path
-        db.collection("Users").getDocuments { snapshot, error in
+        db.collection("Users").whereField("desinger", isEqualTo: true).getDocuments { snapshot, error in
             
             // Check for errors
             if error == nil {

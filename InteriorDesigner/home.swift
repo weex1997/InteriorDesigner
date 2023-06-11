@@ -52,7 +52,7 @@ struct home: View {
                                         .padding()                        }
                                     HStack {
                                         Image(systemName: "magnifyingglass")
-                                        Text("Search About Styles...")
+                                        Text("Search by style or designer name.")
                                         Spacer()
                                         
                                     }.font(.system(size: 14, weight: .semibold))
@@ -158,11 +158,14 @@ struct home: View {
 struct PopularDestinationsView: View {
     @State var im = ""
     @StateObject var viewModel = ViewModel()
+//    let items = ["Houses", "Coffee"]
+//    let filteredBooks = viewModel.designers.filter { items.contains($0.field) }
+//    if (d.field.contains("Houses")) {
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
                 ForEach(self.viewModel.designers, id: \.id) { d in
-                    if (d.desinger == true){
+//                    if (d.field.contains("Houses")){
                         NavigationLink(destination: OtherDesinerPage(users:.init(id:d.id,name: d.name,gender:d.gender, desinger: d.desinger, brief: d.brief, field: d.field, styles: d.styles, rate: d.rate, images: d.images)).navigationBarBackButtonHidden(false)){
                             VStack( spacing: 0) {
                                 VStack{
@@ -248,7 +251,7 @@ struct PopularDestinationsView: View {
                             .shadow(color: Color.gray.opacity(0.2), radius: 5, x: 0, y: 0)
                         }.padding(.vertical, 10)
                     }
-                    }
+//                    }
             }
         }.onAppear(){
             self.viewModel.fetchData()

@@ -47,11 +47,10 @@ struct allchat: View {
                     VStack {
                         NavigationLink(destination:ChatGPT3View().navigationBarHidden(true)){
                             HStack(spacing: 30) {
-                                Image("assistant")
+                                Image("Ai")
                                     .resizable()
                                     .scaledToFit()
                                     .font(.system(size: 5))
-                                
                                     .padding(8)
                                 // .overlay(RoundedRectangle(cornerRadius: 44)
                                 //  .stroke(Color(.label), //lineWidth: 1)
@@ -61,7 +60,7 @@ struct allchat: View {
                                 VStack(alignment: .leading) {
                                     Text("ChatGPT")
                                         .font(.system(size: 16, weight: .bold))
-                                    Text("-")
+                                    Text("Ask me About home design")
                                         .font(.system(size: 14))
                                         .foregroundColor(Color(.lightGray))
                                 }
@@ -102,9 +101,8 @@ struct allchat: View {
                 ForEach(0..<4, id: \.self) { num in
                     VStack {
                         HStack(spacing: 30) {
-                            Image("man")
-                                .font(.system(size: 5))
-                            
+                            Image("Female")
+                                .resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
                                 .padding(8)
                                // .overlay(RoundedRectangle(cornerRadius: 44)
                                           //  .stroke(Color(.label), //lineWidth: 1)
@@ -124,7 +122,6 @@ struct allchat: View {
                                 .font(.system(size: 14, weight: .semibold))
                               //  .resizable()
                                 .scaledToFill()
-                              
                                 .clipped()
                                 .cornerRadius(5)
                             
