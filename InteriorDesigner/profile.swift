@@ -30,14 +30,26 @@ struct profil: View {
                 VStack{
                     ZStack{
                         
-                        Circle()
-                            .foregroundColor(Color("line"))
-                        Image ("b").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
+                        ZStack{
+                            if (self.viewModel.user.gender == "1") {
+                                Circle()
+                                    .foregroundColor(Color("light"))
+                                
+                                Image ("male").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
+                            }
+                            else {
+                                Circle()
+                                    .foregroundColor(Color("light"))
+                                
+                                Image ("Female").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
+                            }
+                            //                            .padding(.trailing,-200)
+                            
+                        }.frame(width: 110 , height: 110)
+                            .padding(.leading)
                         
-                    }.frame(width: 110 , height: 110)
-                        .padding(.leading)
-                        .offset(x: -100 , y: -60)
-                        .padding(.top,100)
+                    }.frame(width: 130,height: 130)
+                        .padding(.trailing)
                     VStack{
                         VStack(){
                             Text("Name")

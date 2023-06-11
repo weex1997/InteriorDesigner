@@ -154,7 +154,7 @@ class ViewModel: ObservableObject {
 //                  UserDefaults.standard.set(rate, forKey: "rate")
                  
                   
-                  self.user = User(id: id, name: name ,email: email ,phoneNumber: phoneNumber ,images: images, desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate )
+                  self.user = User(id: id, name: name ,email: email ,phoneNumber: phoneNumber ,gender: gender ,images: images, desinger: desinger , brief: brief ,field: field ,styles: styles , rate: rate)
                   print(self.user.name ?? "" )
               }
             }
@@ -417,7 +417,7 @@ class ViewModel: ObservableObject {
                                         name: d["name"] as? String ?? "",
                                          email: d["email"] as? String ?? "",
                                          phoneNumber: d["phoneNumber"] as? String ?? "",
-//                                         gender: d["gender"] as? String ?? "",
+                                         gender: d["gender"] as? String ?? "",
                                          favorite: d["favorite"] as? [String] ?? [],
                                          desinger: d["desinger"] as? Bool ?? false,
                                          brief: d["brief"] as? String ?? "",

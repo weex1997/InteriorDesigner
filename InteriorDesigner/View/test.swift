@@ -39,12 +39,22 @@ struct Test: View {
                             VStack(spacing: 10) {
                                 
                                 ZStack{
-                                    
-                                    Circle()
-                                        .foregroundColor(Color("line").opacity(0.2))
-                                    Image ("b").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
+                                    if (self.viewModel.user.gender == "1") {
+                                        Circle()
+                                            .foregroundColor(Color("light"))
+                                        
+                                        Image ("male").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
+                                    }
+                                    else {
+                                        Circle()
+                                            .foregroundColor(Color("light"))
+                                        
+                                        Image ("Female").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
+                                    }
+                                    //                            .padding(.trailing,-200)
                                     
                                 }.frame(width: 130 , height: 130)
+                                    .padding(.leading)
                                    
                                
                                 .padding(.top, 70)

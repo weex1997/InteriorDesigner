@@ -52,7 +52,7 @@ struct home: View {
                                         .padding()                        }
                                     HStack {
                                         Image(systemName: "magnifyingglass")
-                                        Text("Search here...")
+                                        Text("Search About Styles...")
                                         Spacer()
                                         
                                     }.font(.system(size: 14, weight: .semibold))
@@ -163,7 +163,7 @@ struct PopularDestinationsView: View {
             ScrollView(.horizontal) {
                 ForEach(self.viewModel.designers, id: \.id) { d in
                     if (d.desinger == true){
-                        NavigationLink(destination: OtherDesinerPage(users: .init(id:d.id,name: d.name,desinger: d.desinger, brief: d.brief, field: d.field, styles: d.styles, rate: d.rate, images: d.images)).navigationBarBackButtonHidden(false)){
+                        NavigationLink(destination: OtherDesinerPage(users:.init(id:d.id,name: d.name,gender:d.gender, desinger: d.desinger, brief: d.brief, field: d.field, styles: d.styles, rate: d.rate, images: d.images)).navigationBarBackButtonHidden(false)){
                             VStack( spacing: 0) {
                                 VStack{
                                     if 0 == d.images.count {

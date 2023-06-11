@@ -15,6 +15,7 @@ struct Users: Identifiable {
     var name: String
     var email: String?
     var phoneNumber: String?
+    var gender: String?
     var favorite: [String]?
     var desinger : Bool
     var brief : String

@@ -38,16 +38,23 @@ struct UserP2: View {
                     }.offset(x: 135 , y: 10)
                     HStack{
                         ZStack{
-                            
-                            Circle()
-                                .foregroundColor(Color("line"))
-
-                            Image ("b").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
-                            
+                            if (self.viewModel.user.gender == "1") {
+                                Circle()
+                                    .foregroundColor(Color("light"))
+                                
+                                Image ("male").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
+                            }
+                            else {
+                                Circle()
+                                    .foregroundColor(Color("light"))
+                                
+                                Image ("Female").resizable().aspectRatio(contentMode: .fill).clipShape (Circle ())
+                            }
                             //                            .padding(.trailing,-200)
                             
                         }.frame(width: 110 , height: 110)
                             .padding(.leading)
+                            
                         
                         
                         
