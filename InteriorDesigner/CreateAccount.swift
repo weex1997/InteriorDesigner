@@ -98,8 +98,8 @@ struct CreateAccount: View {
                                 Spacer()
                                 
                                 Picker("Gender", selection: $viewModel.user.gender.defaultValue("")) {
-                                    Text("Male").tag("0")
-                                    Text("Female").tag("1")
+                                    Text("Male").tag("1")
+                                    Text("Female").tag("2")
                                 }.accentColor(Color("Primary"))
                                     .font(.system(size: 16))
                             }   .overlay(
