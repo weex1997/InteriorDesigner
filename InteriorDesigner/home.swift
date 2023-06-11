@@ -16,7 +16,6 @@ struct home: View {
     @State var showSheet = false
     @State var showChat = false
     @State var showProfile = false
-    
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [
             .foregroundColor: UIColor.white
@@ -157,7 +156,7 @@ struct home: View {
 
 
 struct PopularDestinationsView: View {
-
+    @State var im = ""
     @StateObject var viewModel = ViewModel()
     var body: some View {
         VStack {
@@ -167,22 +166,49 @@ struct PopularDestinationsView: View {
                         NavigationLink(destination: OtherDesinerPage(users: .init(id:d.id,name: d.name,desinger: d.desinger, brief: d.brief, field: d.field, styles: d.styles, rate: d.rate, images: d.images)).navigationBarBackButtonHidden(false)){
                             VStack( spacing: 0) {
                                 VStack{
-                                    let im = d.images[0]
-                                    AsyncImage(url: URL(string: "\(im)"))
-                                    { image in
-                                        image
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: 327, height: 154)
-                                            .cornerRadius(4)
-                                            .padding(.horizontal, 6)
-                                            .padding(.vertical, 6)
+                                    if 0 == d.images.count {
                                         
-                                    } placeholder: {
-                                        Color.gray
-//                                         
+                                        AsyncImage(url: URL(string: "" ))
+                                            { image in
+                                                image
+                                                    .resizable()
+                                                    .scaledToFill()
+                                                    .frame(width: 327, height: 154)
+                                                    .cornerRadius(4)
+                                                    .padding(.horizontal, 6)
+                                                    .padding(.vertical, 6)
+                                                
+                                            } placeholder: {
+                                                Color.gray
+                                                    .scaledToFill()
+                                                    .frame(width: 327, height: 154)
+                                                    .cornerRadius(4)
+                                                    .padding(.horizontal, 6)
+                                                    .padding(.vertical, 6)                                         }
+                                        
+                                    }else{
+
+
+                                    
+                                    AsyncImage(url: URL(string: d.images[0] ))
+                                        { image in
+                                            image
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 327, height: 154)
+                                                .cornerRadius(4)
+                                                .padding(.horizontal, 6)
+                                                .padding(.vertical, 6)
+                                            
+                                        } placeholder: {
+                                            Color.gray
+                                                .scaledToFill()
+                                                .frame(width: 327, height: 154)
+                                                .cornerRadius(4)
+                                                .padding(.horizontal, 6)
+                                                .padding(.vertical, 6)   
+                                                                               }
                                     }
-                                        
                                 }
                                 VStack(alignment: .leading){
                                     Text(d.name)
