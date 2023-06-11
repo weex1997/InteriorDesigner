@@ -9,7 +9,7 @@ import SwiftUI
 
 enum Items: String, CaseIterable, Equatable {
     case Houses = "Houses"
-    case Cofe = "Cofe"
+    case Coffee = "Coffee"
     case Resturant = "Resturant"
 
 }
