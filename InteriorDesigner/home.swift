@@ -255,7 +255,7 @@ struct FilterPicker: View {
                     LazyHGrid(rows: rows) {
                         
                         ForEach(Items.allCases, id: \.self) { item in
-                            FilterColumn(item: item, items: $selectedItems)
+                            GridColumn(item: item, items: $selectedItems)
                             
                         }
                         
