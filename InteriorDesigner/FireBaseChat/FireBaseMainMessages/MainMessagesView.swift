@@ -137,16 +137,31 @@ struct MainMessagesView: View {
         HStack(spacing: 16) {
             
 //            WebImage(url: URL(string: vm.chatUser?.profileImageUrl ?? ""))
-            Image("Female")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 50, height: 50)
-                .clipped()
-                .cornerRadius(50)
-                .overlay(RoundedRectangle(cornerRadius: 44)
-                            .stroke(Color(.label), lineWidth: 1)
-                )
-                .shadow(radius: 5)
+            if(vm.chatUser?.gender=="1"){
+                Image("male")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 50, height: 50)
+                    .clipped()
+                    .cornerRadius(50)
+                    .overlay(RoundedRectangle(cornerRadius: 44)
+                                .stroke(Color(.label), lineWidth: 1)
+                    )
+                    .shadow(radius: 5)
+            }
+            else{
+                Image("Female")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 50, height: 50)
+                    .clipped()
+                    .cornerRadius(50)
+                    .overlay(RoundedRectangle(cornerRadius: 44)
+                                .stroke(Color(.label), lineWidth: 1)
+                    )
+                    .shadow(radius: 5)
+            }
+            
             
             
             VStack(alignment: .leading, spacing: 4) {
@@ -166,13 +181,13 @@ struct MainMessagesView: View {
             }
             
             Spacer()
-            Button {
-                shouldShowLogOutOptions.toggle()
-            } label: {
-                Image(systemName: "gear")
-                    .font(.system(size: 24, weight: .bold))
-                    .foregroundColor(Color(.label))
-            }
+//            Button {
+//                shouldShowLogOutOptions.toggle()
+//            } label: {
+//                Image(systemName: "gear")
+//                    .font(.system(size: 24, weight: .bold))
+//                    .foregroundColor(Color(.label))
+//            }
         }
         .padding()
         .actionSheet(isPresented: $shouldShowLogOutOptions) {
@@ -201,7 +216,7 @@ struct MainMessagesView: View {
                     Button {
                         let uid = FirebaseManager.shared.auth.currentUser?.uid == recentMessage.fromId ? recentMessage.toId : recentMessage.fromId
                         
-                        self.chatUser = .init(id: uid, uid: uid, email: recentMessage.email, profileImageUrl: recentMessage.profileImageUrl)
+                        self.chatUser = .init(id: uid, uid: uid, email: recentMessage.email, profileImageUrl: recentMessage.profileImageUrl,gender: recentMessage.gender)
                         
                         self.chatLogViewModel.chatUser = self.chatUser
                         self.chatLogViewModel.fetchMessages()
@@ -209,17 +224,27 @@ struct MainMessagesView: View {
                     } label: {
                         HStack(spacing: 16) {
 //                            WebImage(url: URL(string: recentMessage.profileImageUrl ?? ""))
-                            Image("Female")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 64, height: 64)
-                                .clipped()
-                                .cornerRadius(64)
-                                .overlay(RoundedRectangle(cornerRadius: 64)
-                                            .stroke(Color.black, lineWidth: 1))
-                                .shadow(radius: 5)
-                            
-                            
+                            if(recentMessage.gender=="1"){
+                                Image("male")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 64, height: 64)
+                                    .clipped()
+                                    .cornerRadius(64)
+                                    .overlay(RoundedRectangle(cornerRadius: 64)
+                                                .stroke(Color.black, lineWidth: 1))
+                                    .shadow(radius: 5)
+                            }else{
+                                Image("Female")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 64, height: 64)
+                                    .clipped()
+                                    .cornerRadius(64)
+                                    .overlay(RoundedRectangle(cornerRadius: 64)
+                                                .stroke(Color.black, lineWidth: 1))
+                                    .shadow(radius: 5)
+                            }
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(recentMessage.name ?? "")
                                     .font(.system(size: 16, weight: .bold))
