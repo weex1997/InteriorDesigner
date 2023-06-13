@@ -123,7 +123,7 @@ struct home: View {
                             showChat = true
                         } label: {
                             if ((userIDE) != nil) {
-                                NavigationLink(destination:allchat(),isActive: $showChat){}
+                                NavigationLink(destination:MainMessagesView(),isActive: $showChat){}
                                 Image(systemName: "message")
                                     .foregroundColor(.white)
                             }
