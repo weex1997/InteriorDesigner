@@ -30,6 +30,9 @@ class ChatLogViewModel: ObservableObject {
         guard let toId = chatUser?.id else {
             return
         }
+        guard let gender = chatUser?.gender else {
+            return
+        }
         firestoreListener?.remove()
         chatMessages.removeAll()
         firestoreListener = FirebaseManager.shared.firestore
@@ -72,13 +75,14 @@ class ChatLogViewModel: ObservableObject {
         guard let fromId = FirebaseManager.shared.auth.currentUser?.uid else { return }
         
         guard let toId = chatUser?.id else { return }
+        guard let gender = chatUser?.gender else { return }
         
         let document = FirebaseManager.shared.firestore.collection(FirebaseConstants.messages)
             .document(fromId)
             .collection(toId)
             .document()
         
-        let msg = ChatMessage(id: nil, fromId: fromId, toId: toId, text: chatText, timestamp: Date())
+        let msg = ChatMessage(id: nil, fromId: fromId, toId: toId, text: chatText, timestamp: Date(),gender: gender)
         
         try? document.setData(from: msg) { error in
             if let error = error {
@@ -116,6 +120,7 @@ class ChatLogViewModel: ObservableObject {
         
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
         guard let toId = self.chatUser?.id else { return }
+        guard let gender = self.chatUser?.gender else { return }
         
         let document = FirebaseManager.shared.firestore
             .collection(FirebaseConstants.recentMessages)
@@ -136,7 +141,8 @@ class ChatLogViewModel: ObservableObject {
             FirebaseConstants.text: self.chatText,
             FirebaseConstants.fromId: uid,
             FirebaseConstants.toId: toId,
-            FirebaseConstants.name: chatUser.name ?? ""
+            FirebaseConstants.name: chatUser.name ?? "",
+            FirebaseConstants.gender: gender ?? ""
         
         ] as [String : Any]
         
@@ -164,7 +170,8 @@ class ChatLogViewModel: ObservableObject {
             FirebaseConstants.text: self.chatText,
             FirebaseConstants.fromId: uid,
             FirebaseConstants.toId: toId,
-            FirebaseConstants.name: currentUser.name ?? ""
+            FirebaseConstants.name: currentUser.name ?? "",
+            FirebaseConstants.gender: gender ?? ""
         
         ] as [String : Any]
         
