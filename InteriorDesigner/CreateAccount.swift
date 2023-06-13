@@ -28,32 +28,8 @@ struct CreateAccount: View {
                 VStack{
                     VStack{
                         Spacer()
-                        VStack(){
-                            Text("Name")
-                                .foregroundColor(Color("Primary"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .font(.system(size: 17))
-                                .padding(.vertical, 5.0)
-                        }
-                        TextField("Name", text: $viewModel.user.name.defaultValue("Name"))
-                            .foregroundColor(Color("TextC"))
-                            .multilineTextAlignment(.leading)
-                            .padding(11)
-                            .font(.body)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 9)
-                                    .stroke(Color("line"), lineWidth: 2)
-                            )
-                            .padding(2)
-                            .toolbar {
-                                ToolbarItemGroup(placement: .keyboard) {
-                                    Spacer()
-
-                                    Button("Done") {
-                                        isInputActive = false
-                                    }
-                                }
-                            }
+                       
+                       
                         VStack(){
                             Text("Phone Number")
                                 .foregroundColor(Color("Primary"))

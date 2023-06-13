@@ -14,18 +14,18 @@ import _AuthenticationServices_SwiftUI
 struct SignInButton: View {
     @StateObject var viewModel = ViewModel()
     @State var GoToCreate = false
-
-    @Environment(\.dismiss) var dismiss
-
     
-//    @State var users : Users
-//    
-//    init(){
-//        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
-//        self._users = .init(initialValue: user)
-//        
-//    }
-
+    @Environment(\.dismiss) var dismiss
+    
+    
+    //    @State var users : Users
+    //
+    //    init(){
+    //        let user = Users(id: (Auth.auth().currentUser?.uid.description) ?? "")
+    //        self._users = .init(initialValue: user)
+    //
+    //    }
+    
     
     @State var currentNonce:String?
     @State var SaveData = false
@@ -114,48 +114,53 @@ struct SignInButton: View {
                                         }
                                         print("signed in")
                                         
+                                        
+                                        if let _ = authResult?.user {
+                                            let changeRequest = authResult?.user.createProfileChangeRequest()
+                                            
+                                            if let givenName = appleIDCredential.fullName?.givenName,
+                                               let familyName = appleIDCredential.fullName?.familyName {
+                                                
+                                                changeRequest?.displayName = "\(givenName) \(familyName)"
+                                            }
+                                            
+                                            changeRequest?.commitChanges(completion: { (error) in
+                                                
+                                                if let error = error {
+                                                    print(error.localizedDescription)
+                                                } else {
+                                                    print("Updated display name: \(changeRequest?.displayName ?? "")")
+                                               
+                                        
+                                        
                                         let db = Firestore.firestore()
-//                                        let docRef = db.collection("Users").document(users.id)
-//
-//                                        docRef.getDocument { (document, error) in
-//                                            if let document = document, document.exists {
-//                                                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-//                                                print("Document data: \(dataDescription)")
-//                                                viewModel.getData()
-//                                                dismiss()
-//
-//                                            } else {
-//                                                print("Document does not exist")
-//
-//                                                guard let user = authResult?.user else { return }
-//                                                let email = user.email ?? ""
-//                                                let displayName = user.displayName ?? ""
-//                                                guard let uid = Auth.auth().currentUser?.uid else { return }
-//
-//                                                viewModel.addData(id: uid, email: email, name: displayName)
-//                                                GoToCreate = true
-//                                            }
-//                                        }
+                                        
+                                        
                                         guard let uid = Auth.auth().currentUser?.uid else { return }
                                         let ref = db.collection("Users").document(uid)
-                                                ref.getDocument { (document, error) in
-                                                    if let document = document, document.exists {
-                                                        print("User Exists")
-                                                        viewModel.getData()
-                                                        dismiss()
-                                                    } else {
-                                                        print("User does not exist in firestore")
-                                                        
-                                                        guard let user = authResult?.user else { return }
-                                                        let email = user.email ?? ""
-                                                        let displayName = user.displayName ?? ""
-                                                       
-                                                       
-                                                                                                       viewModel.addData(id:uid, email: email, name: displayName)
-                                                                                                    GoToCreate = true
-                                                    }
+                                        ref.getDocument { (document, error) in
+                                            if let document = document, document.exists {
+                                                print("User Exists")
+                                                viewModel.getData()
+                                                dismiss()
+                                            } else {
+                                                print("User does not exist in firestore")
+                                                
+                                                guard let user = authResult?.user else { return }
+                                                let email = user.email ?? ""
+                                                let displayName = changeRequest?.displayName ?? ""
+                                                
+                                                
+                                                viewModel.addData(id:uid, email: email, name: displayName)
+                                                GoToCreate = true
+                                            }
+                                        }
                                                 }
+                                            })
+                                        }
+                                        
                                     }
+                                                
                                     print("\(String(describing: Auth.auth().currentUser?.uid))")
                                 default:
                                     break
@@ -174,34 +179,34 @@ struct SignInButton: View {
             CreateAccount()
                 .interactiveDismissDisabled()
         })
-
         
-//        VStack{
-//            Text("name")
-//            TextField("Placeholder", text: $users.name.defaultValue(""))
-//            Text("phoneNumber")
-//            TextField("Placeholder", text: $users.phoneNumber.defaultValue(""))
-//            
-//            Button("submit") {
-//                viewModel.updateData(UsersUpdate: users)
-//            }
-//
-//            Button("sign out") {
-//                viewModel.signOut()
-//            }
-//            Button("delete user") {
-//                viewModel.deleteData(UsersDelete: users)
-//            }
-//            Button("favorate user") {
-//                viewModel.addFavoriteArray(otherUserID: users.id)
-//            }
-//            Button("favorate user del") {
-//                viewModel.removeFavoriteArray(otherUserID: users.id)
-//            }
-//            Button("favorate user") {
-////                viewModel.Rate(otherUserID: users.id, rateingValue: 4)
-//            }
-//        }
+        
+        //        VStack{
+        //            Text("name")
+        //            TextField("Placeholder", text: $users.name.defaultValue(""))
+        //            Text("phoneNumber")
+        //            TextField("Placeholder", text: $users.phoneNumber.defaultValue(""))
+        //
+        //            Button("submit") {
+        //                viewModel.updateData(UsersUpdate: users)
+        //            }
+        //
+        //            Button("sign out") {
+        //                viewModel.signOut()
+        //            }
+        //            Button("delete user") {
+        //                viewModel.deleteData(UsersDelete: users)
+        //            }
+        //            Button("favorate user") {
+        //                viewModel.addFavoriteArray(otherUserID: users.id)
+        //            }
+        //            Button("favorate user del") {
+        //                viewModel.removeFavoriteArray(otherUserID: users.id)
+        //            }
+        //            Button("favorate user") {
+        ////                viewModel.Rate(otherUserID: users.id, rateingValue: 4)
+        //            }
+        //        }
     }
     
     
