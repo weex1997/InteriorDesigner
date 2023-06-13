@@ -235,7 +235,7 @@ struct PopularDestinationsView: View {
                                     
                                     
                                     HStack{
-                                        Text("\(d.rate).00")
+                                        Text("\(d.rate ?? "5").00")
                                             .font(.system(size: 12, weight: .semibold))
                                             .foregroundColor(.gray)
                                         Image(systemName: "star.fill")
@@ -250,8 +250,8 @@ struct PopularDestinationsView: View {
                             .cornerRadius(5)
                             .shadow(color: Color.gray.opacity(0.2), radius: 5, x: 0, y: 0)
                         }.padding(.vertical, 10)
-                    }
 //                    }
+                    }
             }
         }.onAppear(){
             self.viewModel.fetchData()

@@ -84,10 +84,10 @@ struct allchat: View {
                                 }
                             }
                         }
-                        Divider()
+                        Spacer()
                             .padding(.vertical, 1)
                     }.padding(.horizontal)
-                    messagesView
+//                    messagesView
                 }
                 .overlay(
                     newMessageButton, alignment: .bottom)
@@ -110,15 +110,15 @@ struct allchat: View {
                             
                             
                             VStack(alignment: .leading) {
-                                Text("Username")
+                                Text("Designer")
                                     .font(.system(size: 16, weight: .bold))
-                                Text("Message sent to user")
+                                Text("Message sent to designer")
                                     .font(.system(size: 14))
                                     .foregroundColor(Color(.lightGray))
                             }
                             Spacer()
                             
-                            Text("22d")
+                            Text("5H")
                                 .font(.system(size: 14, weight: .semibold))
                               //  .resizable()
                                 .scaledToFill()

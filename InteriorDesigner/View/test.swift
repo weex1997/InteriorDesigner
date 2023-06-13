@@ -73,7 +73,7 @@ struct Test: View {
                                         HStack{
                                             Image(systemName: "star.fill")
                                                 .foregroundColor(.yellow)
-                                            Text("4.5")
+                                            Text("\(self.viewModel.user.rate ?? "5").00")
                                                 .foregroundColor(.white)
                                         }
                                     }

@@ -39,7 +39,7 @@ class ViewModel: ObservableObject {
             //                            "field": self.user.field ?? [],
             //                            "images": self.user.field as Any,
                             "styles": self.user.styles ?? "",
-                            "rate": self.user.rate ?? 0
+                            "rate": self.user.rate ?? "5"
             
         ]) { err in
             if let err = err {
@@ -141,7 +141,7 @@ class ViewModel: ObservableObject {
                   let field = data?["field"] as? [String] ?? []
                   let images = data?["images"] as? [String] ?? []
                   let styles = data?["styles"] as? String ?? ""
-                  let rate = data?["rate"] as? String ?? ""
+                  let rate = data?["rate"] as? String ?? "5"
                   
                   
 //                  UserDefaults.standard.set(name, forKey: "name")

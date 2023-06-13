@@ -71,7 +71,7 @@ struct OtherDesinerPage: View {
                                         HStack{
                                             Image(systemName: "star.fill")
                                                 .foregroundColor(.yellow)
-                                            Text("4.5")
+                                            Text("\(self.users.rate ?? "5" ).00")
                                                 .foregroundColor(.white)
                                         }
                                     }
