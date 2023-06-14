@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Firebase
+import AVFoundation
+import SDWebImageSwiftUI
 
 class ChatLogViewModel: ObservableObject {
     
@@ -14,7 +16,8 @@ class ChatLogViewModel: ObservableObject {
     @Published var errorMessage = ""
     
     @Published var chatMessages = [ChatMessage]()
-    
+    @Published var mediaItem = ""
+
     var chatUser: ChatUser?
     
     init(chatUser: ChatUser?) {
@@ -82,8 +85,8 @@ class ChatLogViewModel: ObservableObject {
             .collection(toId)
             .document()
         
-        let msg = ChatMessage(id: nil, fromId: fromId, toId: toId, text: chatText, timestamp: Date(),gender: gender)
-        
+        let msg = ChatMessage(id: nil, fromId: fromId, toId: toId, text: chatText, timestamp: Date() , gender: gender, mediaItem: mediaItem)
+
         try? document.setData(from: msg) { error in
             if let error = error {
                 print(error)
@@ -201,6 +204,11 @@ struct ChatLogView: View {
 //    }
     
     @ObservedObject var vm: ChatLogViewModel
+    @State private var selectedImages: [UIImage] = []
+    @State private var selectedVideos: [AVPlayer] = []
+    @State private var isMediaPickerPresented = false
+    @State private var mediaUrl : String?
+    
     
     var body: some View {
         ZStack {
@@ -254,71 +262,142 @@ struct ChatLogView: View {
     
     private var chatBottomBar: some View {
         HStack(spacing: 16) {
-            Image(systemName: "photo.on.rectangle")
-                .font(.system(size: 24))
-                .foregroundColor(Color(.darkGray))
+            Image(systemName: "plus.viewfinder")
+                .resizable()
+                .frame(width: 22, height: 22)
+                .foregroundColor(.purple)
+                .padding()
+                .onTapGesture {
+                    isMediaPickerPresented = true
+                }
             ZStack {
                 DescriptionPlaceholder()
                 TextEditor(text: $vm.chatText)
                     .opacity(vm.chatText.isEmpty ? 0.5 : 1)
+                    .disableAutocorrection(true)
             }
             .frame(height: 40)
             
             Button {
                 vm.handleSend()
             } label: {
-                Text("Send")
-                    .foregroundColor(.white)
+                Image(systemName: "paperplane.fill")
+                    .resizable()
+                    .frame(width: 22, height: 22)
+                    .foregroundColor(Color.purple)
+                    .padding()
             }
             .padding(.horizontal)
             .padding(.vertical, 8)
-            .background(Color.blue)
             .cornerRadius(4)
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
+        .sheet(isPresented: $isMediaPickerPresented) {
+            MediaPicker(selectedImages: $selectedImages, selectedVideos: $selectedVideos, mediaUrl: $mediaUrl)
+        }.onChange(of: selectedImages) {newValue in
+            FirebaseManager.shared.uploadMedia(image: newValue[0]) { url in
+                guard let url = url else {return}
+                vm.mediaItem = url
+                vm.handleSend()
+            }
+        }
     }
 }
+
 
 struct MessageView: View {
     
     let message: ChatMessage
     
     var body: some View {
-        VStack {
+        VStack(alignment: message.fromId == FirebaseManager.shared.auth.currentUser?.uid ? .leading : .trailing) {
             if message.fromId == FirebaseManager.shared.auth.currentUser?.uid {
                 HStack {
                     Spacer()
-                    HStack {
-                        Text(message.text)
-                            .foregroundColor(.white)
+                    
+                    VStack {
+                        if let image = message.mediaItem  {
+                            
+                            let isEmptyImage = message.mediaItem?.isEmpty
+                            
+                            if !isEmptyImage!{
+                                WebImage(url: URL(string: image ?? ""))
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 100, height: 100)
+                                    .clipped()
+                                    .cornerRadius(0)
+                                    .overlay(RoundedRectangle(cornerRadius: 0)
+                                        .stroke(Color(.label), lineWidth: 0.5)
+                                    )
+                                Spacer()
+                            }
+                        }
+                        HStack {
+                            Text(message.text)
+                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                .foregroundColor(.white)
+                        }.frame( alignment: .trailing)
+
+                        //                        .padding()
+                        //                        .background(Color.blue)
+                        //                        .cornerRadius(8)
                     }
                     .padding()
-                    .background(Color.blue)
+                    .background(Color.purple)
                     .cornerRadius(8)
                 }
             } else {
                 HStack {
-                    HStack {
-                        Text(message.text)
-                            .foregroundColor(.black)
-                    }
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(8)
+                    Spacer()
+                    
+                    VStack {
+                        if let image = message.mediaItem  {
+                            
+                            let isEmptyImage = message.mediaItem?.isEmpty
+                            
+                            if !isEmptyImage!{
+                                WebImage(url: URL(string: image ?? ""))
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 100, height: 100)
+                                    .clipped()
+                                    .cornerRadius(0)
+                                    .overlay(RoundedRectangle(cornerRadius: 0)
+                                        .stroke(Color(.label), lineWidth: 0.5)
+                                    )
+                                Spacer()
+                            }
+                        }
+                        
+                        
+                        HStack {
+                            Text(message.text)
+                                .foregroundColor(Color.purple)
+                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                        }.frame( alignment: .leading)
+                        //                    .padding()
+                        //                    .background(Color.white)
+                        //                    .cornerRadius(8)
+                        //                    Spacer()
+                    }.padding()
+                        .background(Color.purple.opacity(0.2))
+                        .cornerRadius(8)
                     Spacer()
                 }
             }
-        }
-        .padding(.horizontal)
-        .padding(.top, 8)
+            //        .padding(.horizontal)
+            //        .padding(.top, 8)
+        }.padding(.horizontal)
+            .padding(.top, 8)
     }
 }
 
 private struct DescriptionPlaceholder: View {
     var body: some View {
         HStack {
-            Text("Description")
+            Text("Enter your message here")
                 .foregroundColor(Color(.gray))
                 .font(.system(size: 17))
                 .padding(.leading, 5)
@@ -330,9 +409,6 @@ private struct DescriptionPlaceholder: View {
 
 struct ChatLogView_Previews: PreviewProvider {
     static var previews: some View {
-//        NavigationView {
-//            ChatLogView(chatUser: .init(data: ["uid": "R8ZrxIT4uRZMVZeWwWeQWPI5zUE3", "email": "waterfall1@gmail.com"]))
-//        }
         MainMessagesView()
     }
 }

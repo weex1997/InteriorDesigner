@@ -13,4 +13,6 @@ struct ChatMessage: Codable, Identifiable {
     let fromId, toId, text: String
     let timestamp: Date
     let gender: String?
+    let mediaItem : String?
+
 }

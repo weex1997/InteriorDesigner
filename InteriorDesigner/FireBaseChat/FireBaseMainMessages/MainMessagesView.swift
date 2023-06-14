@@ -113,7 +113,13 @@ struct MainMessagesView: View {
         NavigationView {
             
             VStack {
-                customNavBar
+//                customNavBar
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Chats")
+                        .foregroundColor(.purple)
+                        .frame(width: 500, height: 50)
+                        .font(.system(size: 24, weight: .bold))
+                }
                 messagesView
                 
                 NavigationLink("", isActive: $shouldNavigateToChatLogView) {
@@ -287,7 +293,7 @@ struct MainMessagesView: View {
             }
             .foregroundColor(.white)
             .padding(.vertical)
-                .background(Color.blue)
+                .background(Color.purple)
                 .cornerRadius(32)
                 .padding(.horizontal)
                 .shadow(radius: 15)

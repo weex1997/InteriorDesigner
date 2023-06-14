@@ -17,6 +17,8 @@ struct RecentMessage: Codable, Identifiable {
     let profileImageUrl: String?
     let timestamp: Date
     let gender: String?
+    let mediaItem : String?
+
 
     
     var username: String {
